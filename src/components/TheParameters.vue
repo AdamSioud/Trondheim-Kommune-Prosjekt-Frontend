@@ -5,9 +5,10 @@
       <div id="parameters" ref="divParameters">
         <app-slider :min="0" :max="100" :step="1"
         />
-        {{ value }}
+        Active : {{ active }} | Visible : {{ visible }}
 
-        <app-menu-collapse title="test 1">
+        <app-menu-collapse title="test 1" color="#C4DFAA"
+                           v-model="active" v-model:visible="visible">
           <div style="text-align: center">
             <ul>
               <li>Option 1</li>
@@ -20,7 +21,7 @@
             </ul>
           </div>
         </app-menu-collapse>
-        <app-menu-collapse title="test 2">
+        <app-menu-collapse title="test 2" color="#98A8F8">
           <div style="text-align: center">
             <ul>
               <li>Option 1</li>
@@ -33,7 +34,7 @@
             </ul>
           </div>
         </app-menu-collapse>
-        <app-menu-collapse title="test 3">
+        <app-menu-collapse title="test 3" color="#FFDBA4">
           <div style="text-align: center">
             <ul>
               <li>Option 1</li>
@@ -46,7 +47,33 @@
             </ul>
           </div>
         </app-menu-collapse>
-        <app-menu-collapse title="test 4">
+        <app-menu-collapse title="test 4" color="#FFB3B3">
+          <div style="text-align: center">
+            <ul>
+              <li>Option 1</li>
+              <li>Option 2</li>
+              <li>Option 3</li>
+              <li>Option 4</li>
+              <li>Option 5</li>
+              <li>Option 6</li>
+              <li>Option 7</li>
+            </ul>
+          </div>
+        </app-menu-collapse>
+        <app-menu-collapse title="test 4" color="#FFB3B3">
+          <div style="text-align: center">
+            <ul>
+              <li>Option 1</li>
+              <li>Option 2</li>
+              <li>Option 3</li>
+              <li>Option 4</li>
+              <li>Option 5</li>
+              <li>Option 6</li>
+              <li>Option 7</li>
+            </ul>
+          </div>
+        </app-menu-collapse>
+        <app-menu-collapse title="test 4" color="#FFB3B3">
           <div style="text-align: center">
             <ul>
               <li>Option 1</li>
@@ -77,8 +104,9 @@ export default defineComponent({
   },
   data () {
     return {
-      value: 10
-      // maxHeight: 0
+      value: 10,
+      active: false,
+      visible: false
     }
   },
   mounted () {
@@ -114,6 +142,9 @@ export default defineComponent({
     bottom: 0;
     left: 0;
     overflow-y: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
   }
 }
 </style>

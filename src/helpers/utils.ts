@@ -82,3 +82,9 @@ export function closestArrayValue (arr: number[], number: number): number {
     return (Math.abs(curr - number) < Math.abs(prev - number) ? curr : prev)
   })
 }
+
+export function removeItem<T> (arr: Array<T>, value: T): Array<T> {
+  const index = arr.indexOf(value)
+  if (index > -1) arr.splice(index, 1)
+  return arr
+}

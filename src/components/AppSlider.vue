@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <div id="slider" style="margin-bottom: 30px">
-      <div ref="rangeSlider" id="range-slider">
-        <div ref="one" id="range-slider-thumb-one"
-             @mousedown="moveStart" @touchstart="moveStart"></div>
-        <div ref="include" id="range-slider-include" ></div>
-        <div ref="two" id="range-slider-thumb-two" v-if="isTwoInput()"
-             @mousedown="moveStart" @touchstart="moveStart"></div>
-      </div>
-      <div id="slider-values">
-        <span class="range-values" v-for="(item, index) of internalRange" :key="index"
-              :style="{left: (getPosFromValue(item.value) !== 0 ? getPosFromValue(item.value) : this.padding) + 'px'}">
-          <span class="range-values-labels" :style="{left: (index === internalRange.length - 1) ? '2px' : '0', transform: 'translate(' + (index === internalRange.length - 1 ? '-100%' : index === 0 ? '-2px' : '-50%') + ',0)' }">{{ item.label }}</span>
-        </span>
-      </div>
+  <div class="slider">
+    <div ref="rangeSlider" id="range-slider">
+      <div ref="one" id="range-slider-thumb-one"
+           @mousedown="moveStart" @touchstart="moveStart"></div>
+      <div ref="include" id="range-slider-include" ></div>
+      <div ref="two" id="range-slider-thumb-two" v-if="isTwoInput()"
+           @mousedown="moveStart" @touchstart="moveStart"></div>
+    </div>
+    <div id="slider-values">
+      <span class="range-values" v-for="(item, index) of internalRange" :key="index"
+            :style="{left: (getPosFromValue(item.value) !== 0 ? getPosFromValue(item.value) : this.padding) + 'px'}">
+        <span class="range-values-labels" :style="{left: (index === internalRange.length - 1) ? '2px' : '0', transform: 'translate(' + (index === internalRange.length - 1 ? '-100%' : index === 0 ? '-2px' : '-50%') + ',0)' }">{{ item.label }}</span>
+      </span>
     </div>
   </div>
 </template>
@@ -320,7 +318,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-#slider {
+.slider {
   margin: 10px;
 }
 

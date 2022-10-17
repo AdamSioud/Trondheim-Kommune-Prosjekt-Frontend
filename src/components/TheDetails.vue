@@ -1,5 +1,8 @@
 <template>
-  <div id="theDetails">The details</div>
+  <div id="theDetails">
+    <div>The details</div>
+    <slot></slot>
+  </div>
 </template>
 
 <script lang="ts">
@@ -17,6 +20,8 @@ export default defineComponent({
 @media only screen and (min-width: 768px) {
   #theDetails{
     height: 150px;
+    overflow: scroll;
+    color: black;
   }
 }
 </style>

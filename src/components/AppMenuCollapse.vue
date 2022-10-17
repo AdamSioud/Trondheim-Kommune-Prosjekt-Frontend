@@ -7,7 +7,7 @@
     </div>
     <Transition name="menu-collapse"
                 @before-leave="onBeforeLeave" @leave="onLeave" @enter="onEnter">
-      <div v-if="internalVisible">
+      <div v-if="internalVisible" class="menu-collapse-content">
         <slot>
         </slot>
       </div>
@@ -74,6 +74,7 @@ export default defineComponent({
 .menu-collapse-leave-active{
   height: 0;
   transition: height 0.30s ease;
+  overflow: hidden;
 }
 
 .menu-collapse-enter-from,
@@ -95,6 +96,10 @@ export default defineComponent({
     cursor: pointer;
     font-size: 1.5rem;
     text-align: left;
+    user-select: none;
+  }
+  .menu-collapse-content {
+    padding-bottom: 5px;
   }
 }
 </style>

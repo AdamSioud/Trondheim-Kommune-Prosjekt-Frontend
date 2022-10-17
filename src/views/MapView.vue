@@ -1,9 +1,11 @@
 <template>
   <div id="mapView">
-    <TheParameters/>
+    <TheParameters v-model:param-input="paramInput"/>
     <div id="mapAndDetailsWrapper">
       <TheMap/>
-      <TheDetails/>
+      <TheDetails>
+        {{ paramInput }}
+      </TheDetails>
     </div>
   </div>
 </template>
@@ -20,6 +22,44 @@ export default defineComponent({
     TheParameters,
     TheMap,
     TheDetails
+  },
+  data () {
+    return {
+      paramInput: {
+        priceInput: {
+          selected: ['medium'],
+          budget: 40
+        },
+        ageInput: {
+          selected: ['0-17'],
+          percent: 40
+        },
+        wellBeingInput: {
+          weight: 0
+        },
+        safetyInput: {
+          weight: 1
+        },
+        cultureInput: {
+          weight: 2
+        },
+        outdoorInput: {
+          weight: 3
+        },
+        transportInput: {
+          weight: 4
+        },
+        walkwayInput: {
+          weight: 5
+        },
+        noiseTrafficInput: {
+          weight: 2
+        },
+        noiseOtherInput: {
+          weight: 3
+        }
+      }
+    }
   }
 })
 </script>

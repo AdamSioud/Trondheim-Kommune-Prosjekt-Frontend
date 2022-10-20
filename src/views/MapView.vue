@@ -1,6 +1,6 @@
 <template>
   <div id="mapView">
-    <the-parameters :param-input="paramInput" @update:paramInput="test"/>
+    <the-parameters :param-input="paramInput" @update:paramInput="updateParamInput"/>
     <div id="mapAndDetailsWrapper">
       <the-map/>
       <the-details>
@@ -30,7 +30,7 @@ export default defineComponent({
     }
   },
   methods: {
-    test (res:never) {
+    updateParamInput (res:never) {
       this.paramInput = res
     }
   }

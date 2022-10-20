@@ -23,11 +23,11 @@ export default defineComponent({
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map)
     axios.get('/data2.geojson').then(function (res) {
-      console.log(res.status)
+      // console.log(res.status)
       // console.log(res.data)
       const tmp = res.data.replace(/(NaN|-?Infinity)/g, '"***$1***"')
       // const tmp = '{"a":NaN","b":"Infinity"}'
-      console.log(tmp)
+      // console.log(tmp)
       const obj = JSON.parse(tmp, (key, value) => {
         // console.log(key, value)
         if (value === '***NaN***') {

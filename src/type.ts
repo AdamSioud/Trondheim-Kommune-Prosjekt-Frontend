@@ -13,14 +13,50 @@ export interface EnvironmentInput {
 }
 
 export interface ParamInput{
-  priceInput?: PriceInput,
-  ageInput?: AgeInput,
-  wellBeingInput?: EnvironmentInput,
-  safetyInput?: EnvironmentInput,
-  cultureInput?: EnvironmentInput,
-  outdoorInput?: EnvironmentInput,
-  transportInput?: EnvironmentInput,
-  walkwayInput?: EnvironmentInput,
-  noiseTrafficInput?: EnvironmentInput,
-  noiseOtherInput?: EnvironmentInput
+  // eslint-disable-next-line camelcase
+  price_input?: PriceInput,
+  // eslint-disable-next-line camelcase
+  age_input?: AgeInput,
+  // eslint-disable-next-line camelcase
+  wellBeing_input?: EnvironmentInput,
+  // eslint-disable-next-line camelcase
+  safety_input?: EnvironmentInput,
+  // eslint-disable-next-line camelcase
+  culture_input?: EnvironmentInput,
+  // eslint-disable-next-line camelcase
+  outdoor_input?: EnvironmentInput,
+  // eslint-disable-next-line camelcase
+  transport_input?: EnvironmentInput,
+  // eslint-disable-next-line camelcase
+  walkway_input?: EnvironmentInput,
+  // eslint-disable-next-line camelcase
+  noiseTraffic_input?: EnvironmentInput,
+  // eslint-disable-next-line camelcase
+  noiseOther_input?: EnvironmentInput
+}
+
+interface Element {
+  type?: string | undefined,
+  input?: string | undefined,
+  layout?: string | undefined,
+  items?: Element[] | undefined
+}
+
+interface Checkbox extends Element {
+  title?: string,
+  picture?: string,
+  size?: string
+}
+
+interface Menu {
+  title?: string | undefined,
+  datatype?: string | undefined,
+  input?: string | undefined,
+  color?: string | undefined,
+  active?: boolean | undefined,
+  elements?: Element[] | undefined
+}
+
+export interface ConfigParameters {
+  [key: string]: Menu
 }

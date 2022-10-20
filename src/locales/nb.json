@@ -1,5 +1,42 @@
 {
   "parameters": {
-    "title": "Parameters"
+    "title": "Parameters",
+    "price": {
+      "title": "Price",
+      "small": "Small",
+      "medium": "Medium",
+      "big": "Big"
+    },
+    "age": {
+      "title": "Age",
+      "017": "0-17",
+      "1834": "18-34",
+      "3566": "35-66",
+      "67": "67+"
+    },
+    "wellbeing": {
+      "title": "Well being"
+    },
+    "safety": {
+      "title": "Safety"
+    },
+    "culture": {
+      "title": "Culture"
+    },
+    "outdoor": {
+      "title": "Outdoor"
+    },
+    "transport": {
+      "title": "Transport"
+    },
+    "walkway": {
+      "title": "Walkway"
+    },
+    "noiseTraffic": {
+      "title": "Traffic noise"
+    },
+    "noiseOther": {
+      "title": "Other noises"
+    }
   }
 }

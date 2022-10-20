@@ -1,0 +1,34 @@
+{
+  "price_input": {
+    "selected": ["medium"],
+    "budget": 40
+  },
+  "age_input": {
+    "selected": ["0-17"],
+    "percent": 40
+  },
+  "wellBeing_input": {
+    "weight": 2
+  },
+  "safety_input": {
+    "weight": 1
+  },
+  "culture_input": {
+    "weight": 2
+  },
+  "outdoor_input": {
+    "weight": 3
+  },
+  "transport_input": {
+    "weight": 4
+  },
+  "walkway_input": {
+    "weight": 5
+  },
+  "noiseTraffic_input": {
+    "weight": 2
+  },
+  "noiseOther_input": {
+    "weight": 3
+  }
+}

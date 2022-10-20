@@ -3,47 +3,33 @@
     <h1>{{ $t("parameters.title") }}</h1>
     <div id="parameters-wrapper">
       <div id="parameters" ref="divParameters">
-        <app-menu-collapse title="Price" color="#C4DFAA" v-model="price.priceActive">
-          <app-price :price-input="paramInput.priceInput" :disabled="!price.priceActive"
-                     @change="changePrice"/>
+        <app-menu-collapse v-for="(menu, key) in configParameters" :key="key"
+                           :title="$t(menu.title)" :color="menu.color"
+                           @change-active="isActive => setActive(key, menu.input, isActive)" :model-value="(menu.active === undefined ? true : menu.active)">
+          <template v-for="(element, key, i) in menu.elements" :key="i">
+            <div v-if="element.type === 'group'" :class="'group-' + element.layout">
+              <template v-for="(item, index) in element.items" :key="index">
+                <template v-if="item.type === 'checkbox'">
+                  <app-checkbox :checked="internalParamInput[menu.input][element.input].indexOf(item.input) !== -1" @input="res => changeValue(menu.input, element.input, manageArray(internalParamInput[menu.input][element.input], item.input, res))"
+                                :disabled="!menu.active">
+                    <div class="wrapper-checkbox-content">
+                      <div class="wrapper-checkbox-content-icon">
+                        <font-awesome-icon v-if="new RegExp('^fa').test(item.picture)" :icon="'fa-solid ' + item.picture" :size="item.size"/>
+                      </div>
+                      <div>{{ $t(item.title) }}</div>
+                    </div>
+                  </app-checkbox>
+                </template>
+              </template>
+            </div>
+            <template v-else-if="element.type === 'slider'">
+              <app-slider :min="element.min" :max="element.max" :step="element.step"
+                          :disabled="!menu.active"
+                          :value="internalParamInput[menu.input][element.input]" @input-value="res => changeValue(menu.input,element.input,res)"/>
+              {{internalParamInput[menu.input][element.input]}}
+            </template>
+          </template>
         </app-menu-collapse>
-        <app-menu-collapse title="Age" color="#B8E8FC" v-model="age.ageActive">
-          <app-age :age-input="paramInput.ageInput" :disabled="!age.ageActive"
-                   @change="changeAge"/>
-        </app-menu-collapse>
-        <app-menu-collapse title="Well being" color="#FFD1D1" v-model="wellBeing.wellBeingActive">
-          <app-environment :environment-input="wellBeing.wellBeingInput" :disabled="!wellBeing.wellBeingActive"
-                           @change="changeWellBeing"/>
-        </app-menu-collapse>
-        <app-menu-collapse title="Safety" color="#C8FFD4" v-model="safety.safetyActive">
-          <app-environment :environment-input="safety.safetyInput" :disabled="!safety.safetyActive"
-                           @change="changeSafety"/>
-        </app-menu-collapse>
-        <app-menu-collapse title="Culture" color="#DFD3C3" v-model="culture.cultureActive">
-          <app-environment :environment-input="culture.cultureInput" :disabled="!culture.cultureActive"
-                           @change="changeCulture"/>
-        </app-menu-collapse>
-        <app-menu-collapse title="Outdoor" color="#AEBDCA" v-model="outdoor.outdoorActive">
-          <app-environment :environment-input="outdoor.outdoorInput" :disabled="!outdoor.outdoorActive"
-                           @change="changeOutdoor"/>
-        </app-menu-collapse>
-        <app-menu-collapse title="Transport" color="#ECC5FB" v-model="transport.transportActive">
-          <app-environment :environment-input="transport.transportInput" :disabled="!transport.transportActive"
-                           @change="changeTransport"/>
-        </app-menu-collapse>
-        <app-menu-collapse title="Walkway" color="#CDF0EA" v-model="walkway.walkwayActive">
-          <app-environment :environment-input="walkway.walkwayInput" :disabled="!walkway.walkwayActive"
-                           @change="changeWalkway"/>
-        </app-menu-collapse>
-        <app-menu-collapse title="Traffic noise" color="#DEB6AB" v-model="noiseTraffic.noiseTrafficActive">
-          <app-environment :environment-input="noiseTraffic.noiseTrafficInput" :disabled="!noiseTraffic.noiseTrafficActive"
-                           @change="changeNoiseTraffic"/>
-        </app-menu-collapse>
-        <app-menu-collapse title="Other noises" color="#AF7AB3" v-model="noiseOther.noiseOtherActive">
-          <app-environment :environment-input="noiseOther.noiseOtherInput" :disabled="noiseOther.noiseOtherActive"
-                           @change="changeNoiseOther"/>
-        </app-menu-collapse>
-<!--        {{internalParamInput}}-->
       </div>
     </div>
   </div>
@@ -52,18 +38,18 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import AppMenuCollapse from '@/components/AppMenuCollapse.vue'
-import AppPrice from '@/components/AppPrice.vue'
-import { AgeInput, EnvironmentInput, ParamInput, PriceInput } from '@/type'
-import AppAge from '@/components/AppAge.vue'
-import AppEnvironment from '@/components/AppEnvironment.vue'
+import { ConfigParameters, ParamInput, PriceInput } from '@/type'
+import configParameters from '../assets/configParameters.json'
+import AppSlider from '@/components/AppSlider.vue'
+import AppCheckbox from '@/components/AppCheckbox.vue'
+import { removeItem } from '@/helpers/utils'
 
 export default defineComponent({
   name: 'TheParameters',
   components: {
     AppMenuCollapse,
-    AppPrice,
-    AppAge,
-    AppEnvironment
+    AppSlider,
+    AppCheckbox
   },
   props: {
     paramInput: {
@@ -77,134 +63,60 @@ export default defineComponent({
   emits: ['update:paramInput'],
   data () {
     return {
-      internalParamInput: { ...this.paramInput },
+      internalParamInput: JSON.parse(JSON.stringify(this.paramInput)),
+      resultParamInput: JSON.parse(JSON.stringify(this.paramInput)),
+      configParameters: configParameters as ConfigParameters,
       price: {
         priceActive: true,
-        priceInput: this.paramInput?.priceInput
-      },
-      age: {
-        ageActive: true,
-        ageInput: this.paramInput?.ageInput
-      },
-      wellBeing: {
-        wellBeingActive: true,
-        wellBeingInput: this.paramInput?.wellBeingInput
-      },
-      safety: {
-        safetyActive: true,
-        safetyInput: this.paramInput?.safetyInput
-      },
-      culture: {
-        cultureActive: true,
-        cultureInput: this.paramInput?.cultureInput
-      },
-      outdoor: {
-        outdoorActive: true,
-        outdoorInput: this.paramInput?.outdoorInput
-      },
-      transport: {
-        transportActive: true,
-        transportInput: this.paramInput?.transportInput
-      },
-      walkway: {
-        walkwayActive: true,
-        walkwayInput: this.paramInput?.walkwayInput
-      },
-      noiseTraffic: {
-        noiseTrafficActive: true,
-        noiseTrafficInput: this.paramInput?.noiseTrafficInput
-      },
-      noiseOther: {
-        noiseOtherActive: true,
-        noiseOtherInput: this.paramInput?.noiseOtherInput
+        priceInput: this.paramInput?.price_input
       }
     }
   },
   watch: {
     'price.priceActive' (newValue) {
-      this.update('priceInput', newValue ? this.price.priceInput : null)
-    },
-    'age.ageActive' (newValue) {
-      this.update('ageInput', newValue ? this.age.ageInput : null)
-    },
-    'wellBeing.wellBeingActive' (newValue) {
-      this.update('wellBeingInput', newValue ? this.wellBeing.wellBeingInput : null)
-    },
-    'safety.safetyActive' (newValue) {
-      this.update('safetyInput', newValue ? this.safety.safetyInput : null)
-    },
-    'culture.cultureActive' (newValue) {
-      this.update('cultureInput', newValue ? this.culture.cultureInput : null)
-    },
-    'outdoor.outdoorActive' (newValue) {
-      this.update('outdoorInput', newValue ? this.outdoor.outdoorInput : null)
-    },
-    'transport.transportActive' (newValue) {
-      this.update('transportInput', newValue ? this.transport.transportInput : null)
-    },
-    'walkway.walkwayActive' (newValue) {
-      this.update('walkwayInput', newValue ? this.walkway.walkwayInput : null)
-    },
-    'noiseTraffic.noiseTrafficActive' (newValue) {
-      this.update('noiseTrafficInput', newValue ? this.noiseTraffic.noiseTrafficInput : null)
-    },
-    'noiseOther.noiseOtherActive' (newValue) {
-      this.update('noiseOtherInput', newValue ? this.noiseOther.noiseOtherInput : null)
+      this.update('priceInput', newValue ? (this.price.priceInput ? this.price.priceInput : null) : null)
+    }
+  },
+  beforeMount () {
+    for (const menu in this.configParameters) {
+      if (this.configParameters[menu].title === undefined) this.configParameters[menu].title = 'parameters.menu'
+      if (this.configParameters[menu].active === undefined) this.configParameters[menu].active = true
+      if (this.configParameters[menu].color === undefined) this.configParameters[menu].color = 'white'
     }
   },
   mounted () {
-    // console.log(window.innerHeight - 100)
-    // this.maxHeight = window.innerHeight - 100
-    // window.addEventListener('resize', () => { this.maxHeight = window.innerHeight - 110 })
+    for (const menu in this.configParameters) {
+      if (!this.configParameters[menu].active) {
+        delete this.resultParamInput[this.configParameters[menu].input as keyof typeof this.resultParamInput]
+      }
+    }
+    this.$emit('update:paramInput', this.resultParamInput)
   },
   methods: {
+    setActive (menu: string, input: string, active: boolean) {
+      this.configParameters[menu].active = active
+      this.update(input, active ? this.internalParamInput[input as keyof typeof this.internalParamInput] : null)
+    },
     changePrice (priceObj: PriceInput) {
       this.price.priceInput = priceObj
       this.update('priceInput', this.price.priceActive ? priceObj : null)
     },
-    changeAge (ageObj: AgeInput) {
-      this.age.ageInput = ageObj
-      this.update('ageInput', this.age.ageActive ? ageObj : null)
+    manageArray<T> (arr:Array<T>, value: T, toPush: boolean): Array<T> {
+      if (toPush) arr.push(value)
+      else arr = removeItem(arr, value)
+      return arr
     },
-    changeWellBeing (wellBeingObj: EnvironmentInput) {
-      this.wellBeing.wellBeingInput = wellBeingObj
-      this.update('wellBeingInput', this.wellBeing.wellBeingActive ? wellBeingObj : null)
+    changeValue (key: string, input: string, value: unknown) {
+      this.internalParamInput[key][input] = value
+      this.update(key, this.internalParamInput[key])
     },
-    changeSafety (safetyObj: EnvironmentInput) {
-      this.safety.safetyInput = safetyObj
-      this.update('safetyInput', this.safety.safetyActive ? safetyObj : null)
-    },
-    changeCulture (cultureObj: EnvironmentInput) {
-      this.culture.cultureInput = cultureObj
-      this.update('cultureInput', this.culture.cultureActive ? cultureObj : null)
-    },
-    changeOutdoor (outdoorObj: EnvironmentInput) {
-      this.outdoor.outdoorInput = outdoorObj
-      this.update('outdoorInput', this.outdoor.outdoorActive ? outdoorObj : null)
-    },
-    changeTransport (transportObj: EnvironmentInput) {
-      this.transport.transportInput = transportObj
-      this.update('transportInput', this.transport.transportActive ? transportObj : null)
-    },
-    changeWalkway (walkwayObj: EnvironmentInput) {
-      this.walkway.walkwayInput = walkwayObj
-      this.update('walkwayInput', this.walkway.walkwayActive ? walkwayObj : null)
-    },
-    changeNoiseTraffic (noiseTrafficObj: EnvironmentInput) {
-      this.noiseTraffic.noiseTrafficInput = noiseTrafficObj
-      this.update('noiseTrafficInput', this.noiseTraffic.noiseTrafficActive ? noiseTrafficObj : null)
-    },
-    changeNoiseOther (noiseOtherObj: EnvironmentInput) {
-      this.noiseOther.noiseOtherInput = noiseOtherObj
-      this.update('noiseOtherInput', this.noiseOther.noiseOtherActive ? noiseOtherObj : null)
-    },
-    update (key: string, value: unknown) {
+    update (key: string, value: object | null) {
       if (value === null) {
-        delete this.internalParamInput[key as keyof typeof this.internalParamInput]
+        delete this.resultParamInput[key as keyof typeof this.resultParamInput]
       } else {
-        this.internalParamInput = { ...this.internalParamInput, [key]: value }
+        this.resultParamInput = { ...this.resultParamInput, [key]: { ...value } }
       }
-      this.$emit('update:paramInput', this.internalParamInput)
+      this.$emit('update:paramInput', JSON.parse(JSON.stringify(this.resultParamInput)))
     }
   }
 })
@@ -238,6 +150,25 @@ export default defineComponent({
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+
+  .group-flex {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+  .wrapper-checkbox-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+  .wrapper-checkbox-content-icon {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
   }
 }
 </style>

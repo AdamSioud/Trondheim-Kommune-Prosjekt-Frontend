@@ -1,11 +1,11 @@
 <template>
   <div id="mapView">
-    <TheParameters v-model:param-input="paramInput"/>
+    <the-parameters :param-input="paramInput" @update:paramInput="test"/>
     <div id="mapAndDetailsWrapper">
-      <TheMap/>
-      <TheDetails>
+      <the-map/>
+      <the-details>
         {{ paramInput }}
-      </TheDetails>
+      </the-details>
     </div>
   </div>
 </template>
@@ -15,6 +15,7 @@ import { defineComponent } from 'vue'
 import TheParameters from '@/components/TheParameters.vue'
 import TheMap from '@/components/TheMap.vue'
 import TheDetails from '@/components/TheDetails.vue'
+import paramInput from '../assets/param_input.json'
 
 export default defineComponent({
   name: 'HomeView',
@@ -25,40 +26,12 @@ export default defineComponent({
   },
   data () {
     return {
-      paramInput: {
-        priceInput: {
-          selected: ['medium'],
-          budget: 40
-        },
-        ageInput: {
-          selected: ['0-17'],
-          percent: 40
-        },
-        wellBeingInput: {
-          weight: 0
-        },
-        safetyInput: {
-          weight: 1
-        },
-        cultureInput: {
-          weight: 2
-        },
-        outdoorInput: {
-          weight: 3
-        },
-        transportInput: {
-          weight: 4
-        },
-        walkwayInput: {
-          weight: 5
-        },
-        noiseTrafficInput: {
-          weight: 2
-        },
-        noiseOtherInput: {
-          weight: 3
-        }
-      }
+      paramInput: paramInput
+    }
+  },
+  methods: {
+    test (res:never) {
+      this.paramInput = res
     }
   }
 })

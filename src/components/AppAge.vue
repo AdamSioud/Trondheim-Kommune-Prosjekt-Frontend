@@ -28,7 +28,7 @@
           <div>35-66</div>
         </div>
       </app-checkbox>
-        <app-checkbox id="67+" name="67+" v-model="age67"
+      <app-checkbox id="67+" name="67+" v-model="age67"
                       :disabled="disabled">
         <div class="wrapper-checkbox-content">
           <div class="wrapper-checkbox-content-icon">

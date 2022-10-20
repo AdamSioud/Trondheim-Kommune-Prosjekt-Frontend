@@ -70,6 +70,10 @@ export default defineComponent({
     step: {
       type: Number,
       default: 1
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['inputValue', 'changeValue', 'update:value', 'inputSecondValue', 'changeSecondValue', 'update:secondValue'],
@@ -171,7 +175,7 @@ export default defineComponent({
       document.removeEventListener('mouseleave', this.moveEnd)
     },
     moveStart (e: MouseEvent | TouchEvent) {
-      this.isMoving = true
+      this.isMoving = !this.disabled
       this.target = e.target as HTMLElement
       document.body.classList.toggle('moving', true)
     },
@@ -190,12 +194,14 @@ export default defineComponent({
     moveEnd () {
       this.isMoving = false
       document.body.classList.toggle('moving', false)
-      if (this.target === this.$refs.one) {
-        this.$emit('changeValue', this.internalValueOne)
-        if ('lazy' in this.valueModifiers) this.$emit('update:value', this.internalValueOne)
-      } else {
-        this.$emit('changeSecondValue', this.internalValueTwo)
-        if ('lazy' in this.secondValueModifiers) this.$emit('update:secondValue', this.internalValueTwo)
+      if (!this.disabled) {
+        if (this.target === this.$refs.one) {
+          this.$emit('changeValue', this.internalValueOne)
+          if ('lazy' in this.valueModifiers) this.$emit('update:value', this.internalValueOne)
+        } else {
+          this.$emit('changeSecondValue', this.internalValueTwo)
+          if ('lazy' in this.secondValueModifiers) this.$emit('update:secondValue', this.internalValueTwo)
+        }
       }
     },
     setPosition (element: HTMLElement, position: number) {
@@ -221,7 +227,7 @@ export default defineComponent({
         value = (this.internalRange) ? closestArrayValue(this.internalRange.map(x => Number(x.value)), this.getValueFromPos(position)) : closestRangeValue(this.internalMin, this.internalMax, this.step, this.getValueFromPos(position))
         position = this.getPosFromValue(value)
       }
-      if (value !== this.internalValueOne) {
+      if (!this.disabled && value !== this.internalValueOne) {
         this.$emit('inputValue', value)
         if (!('lazy' in this.valueModifiers)) this.$emit('update:value', value)
       }
@@ -249,7 +255,7 @@ export default defineComponent({
           value = (this.internalRange) ? closestArrayValue(this.internalRange.map(x => Number(x.value)), this.getValueFromPos(position)) : closestRangeValue(this.internalMin, this.internalMax, this.step, this.getValueFromPos(position))
           position = this.getPosFromValue(value)
         }
-        if (value !== this.internalValueOne) {
+        if (!this.disabled && value !== this.internalValueOne) {
           this.$emit('inputValue', value)
           if (!('lazy' in this.valueModifiers)) this.$emit('update:value', value)
         }
@@ -268,7 +274,7 @@ export default defineComponent({
           position = this.getPosFromValue(value)
         }
         this.internalValueTwo = value
-        if (value !== this.internalValueTwo) {
+        if (!this.disabled && value !== this.internalValueTwo) {
           this.$emit('inputSecondValue', value)
           if (!('lazy' in this.secondValueModifiers)) this.$emit('update:secondValue', value)
         }

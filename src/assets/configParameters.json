@@ -1,0 +1,213 @@
+{
+  "price": {
+    "title": "parameters.price.title",
+    "datatype": "mean",
+    "input": "price_input",
+    "color": "#C4DFAA",
+    "elements": [
+      {
+        "type": "group",
+        "input": "selected",
+        "layout": "flex",
+        "items":  [
+          {
+            "type": "checkbox",
+            "title": "parameters.price.small",
+            "picture": "fa-house",
+            "size": "xs",
+            "input": "small"
+          },
+          {
+            "type": "checkbox",
+            "title": "parameters.price.medium",
+            "picture": "fa-house",
+            "size": "lg",
+            "input": "medium"
+          },
+          {
+            "type": "checkbox",
+            "title": "parameters.price.big",
+            "picture": "fa-house",
+            "size": "2xl",
+            "input": "big"
+          }
+        ]
+      },
+      {
+        "type": "slider",
+        "input": "budget"
+      }
+    ]
+  },
+  "age": {
+    "title": "parameters.age.title",
+    "datatype": "share",
+    "input": "age_input",
+    "color": "#B8E8FC",
+    "elements": [
+      {
+        "type": "group",
+        "input": "selected",
+        "layout": "flex",
+        "items": [
+          {
+            "type": "checkbox",
+            "title": "parameters.age.017",
+            "picture": "fa-child",
+            "size": "xl",
+            "input": "0-17"
+          },
+          {
+            "type": "checkbox",
+            "title": "parameters.age.1834",
+            "picture": "fa-person",
+            "size": "xl",
+            "input": "18-34"
+          },
+          {
+            "type": "checkbox",
+            "title": "parameters.age.3566",
+            "picture": "fa-person",
+            "size": "xl",
+            "input": "35-66"
+          },
+          {
+            "type": "checkbox",
+            "title": "parameters.age.67",
+            "picture": "fa-person-cane",
+            "size": "xl",
+            "input": "67"
+          }
+        ]
+      },
+      {
+        "type": "slider",
+        "input": "percent",
+        "min": 0,
+        "max": 100,
+        "step": 1
+      }
+    ]
+  },
+  "wellBeing": {
+    "title": "parameters.wellbeing.title",
+    "datatype": "",
+    "input": "wellBeing_input",
+    "color": "#FFD1D1",
+    "active": false,
+    "elements": [
+      {
+        "type": "slider",
+        "input": "weight",
+        "min": 1,
+        "max": 5,
+        "step": 1
+      }
+    ]
+  },
+  "safety": {
+    "title": "parameters.safety.title",
+    "datatype": "",
+    "input": "safety_input",
+    "color": "#C8FFD4",
+    "elements": [
+      {
+        "type": "slider",
+        "input": "weight",
+        "min": 1,
+        "max": 5,
+        "step": 1
+      }
+    ]
+  },
+  "culture": {
+    "title": "parameters.culture.title",
+    "datatype": "",
+    "input": "culture_input",
+    "color": "#DFD3C3",
+    "elements": [
+      {
+        "type": "slider",
+        "input": "weight",
+        "min": 1,
+        "max": 5,
+        "step": 1
+      }
+    ]
+  },
+  "outdoor": {
+    "title": "parameters.outdoor.title",
+    "datatype": "",
+    "input": "outdoor_input",
+    "color": "#AEBDCA",
+    "elements": [
+      {
+        "type": "slider",
+        "input": "weight",
+        "min": 1,
+        "max": 5,
+        "step": 1
+      }
+    ]
+  },
+  "transport": {
+    "title": "parameters.transport.title",
+    "datatype": "",
+    "input": "transport_input",
+    "color": "#ECC5FB",
+    "elements": [
+      {
+        "type": "slider",
+        "input": "weight",
+        "min": 1,
+        "max": 5,
+        "step": 1
+      }
+    ]
+  },
+  "walkway": {
+    "title": "parameters.walkway.title",
+    "datatype": "",
+    "input": "walkway_input",
+    "color": "#CDF0EA",
+    "elements": [
+      {
+        "type": "slider",
+        "input": "weight",
+        "min": 1,
+        "max": 5,
+        "step": 1
+      }
+    ]
+  },
+  "noiseTraffic": {
+    "title": "parameters.noiseTraffic.title",
+    "datatype": "",
+    "input": "noiseTraffic_input",
+    "color": "#DEB6AB",
+    "elements": [
+      {
+        "type": "slider",
+        "input": "weight",
+        "min": 1,
+        "max": 5,
+        "step": 1
+      }
+    ]
+  },
+  "noiseOther": {
+    "title": "parameters.noiseOther.title",
+    "datatype": "",
+    "input": "noiseOther_input",
+    "color": "#AF7AB3",
+    "elements": [
+      {
+        "type": "slider",
+        "input": "weight",
+        "min": 1,
+        "max": 5,
+        "step": 1
+      }
+    ]
+  }
+}

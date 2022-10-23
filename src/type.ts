@@ -1,3 +1,5 @@
+import { GeoJsonObject } from 'geojson'
+
 export interface PriceInput {
   selected: string[],
   budget: number
@@ -59,4 +61,12 @@ interface Menu {
 
 export interface ConfigParameters {
   [key: string]: Menu
+}
+interface GeoJSONGlobalProperties {
+  [key: string]: undefined
+}
+
+export interface DataGeoJSON {
+  geoJSON: GeoJsonObject | null,
+  geoJSONGlobalProperties: GeoJSONGlobalProperties | null
 }

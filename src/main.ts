@@ -1,5 +1,6 @@
 import './assets/stylesheets/reset.css'
 import { createApp } from 'vue'
+import axios from 'axios'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -11,4 +12,15 @@ import { faHouse, faPerson, faChild, faPersonCane } from '@fortawesome/free-soli
 
 library.add(faHouse, faPerson, faChild, faPersonCane)
 
-createApp(App).use(i18n).use(store).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+const app = createApp(App)
+
+declare module 'vue' {
+  interface ComponentCustomProperties {
+    $axios: typeof axios
+  }
+}
+const axiosApp = axios.create({
+  baseURL: process.env.VUE_APP_BASE_URL
+})
+app.config.globalProperties.$axios = axiosApp
+app.use(i18n).use(store).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

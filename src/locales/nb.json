@@ -5,7 +5,7 @@
       "title": "Price",
       "small": "Small",
       "medium": "Medium",
-      "big": "Big"
+      "large": "Large"
     },
     "age": {
       "title": "Age",

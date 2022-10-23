@@ -26,10 +26,10 @@
           },
           {
             "type": "checkbox",
-            "title": "parameters.price.big",
+            "title": "parameters.price.large",
             "picture": "fa-house",
             "size": "2xl",
-            "input": "big"
+            "input": "large"
           }
         ]
       },
@@ -55,28 +55,28 @@
             "title": "parameters.age.017",
             "picture": "fa-child",
             "size": "xl",
-            "input": "0-17"
+            "input": "underage (0-17)"
           },
           {
             "type": "checkbox",
             "title": "parameters.age.1834",
             "picture": "fa-person",
             "size": "xl",
-            "input": "18-34"
+            "input": "young adult (18-34)"
           },
           {
             "type": "checkbox",
             "title": "parameters.age.3566",
             "picture": "fa-person",
             "size": "xl",
-            "input": "35-66"
+            "input": "adult (35-66)"
           },
           {
             "type": "checkbox",
             "title": "parameters.age.67",
             "picture": "fa-person-cane",
             "size": "xl",
-            "input": "67"
+            "input": "senior (67+)"
           }
         ]
       },
@@ -110,6 +110,7 @@
     "datatype": "",
     "input": "safety_input",
     "color": "#C8FFD4",
+    "active": false,
     "elements": [
       {
         "type": "slider",
@@ -125,6 +126,7 @@
     "datatype": "",
     "input": "culture_input",
     "color": "#DFD3C3",
+    "active": false,
     "elements": [
       {
         "type": "slider",
@@ -140,6 +142,7 @@
     "datatype": "",
     "input": "outdoor_input",
     "color": "#AEBDCA",
+    "active": false,
     "elements": [
       {
         "type": "slider",
@@ -155,6 +158,7 @@
     "datatype": "",
     "input": "transport_input",
     "color": "#ECC5FB",
+    "active": false,
     "elements": [
       {
         "type": "slider",
@@ -185,6 +189,7 @@
     "datatype": "",
     "input": "noiseTraffic_input",
     "color": "#DEB6AB",
+    "active": false,
     "elements": [
       {
         "type": "slider",
@@ -200,6 +205,7 @@
     "datatype": "",
     "input": "noiseOther_input",
     "color": "#AF7AB3",
+    "active": false,
     "elements": [
       {
         "type": "slider",

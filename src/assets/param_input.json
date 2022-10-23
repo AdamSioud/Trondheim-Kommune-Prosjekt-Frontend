@@ -4,7 +4,7 @@
     "budget": 40
   },
   "age_input": {
-    "selected": ["0-17"],
+    "selected": ["underage (0-17)"],
     "percent": 40
   },
   "wellBeing_input": {
@@ -23,7 +23,7 @@
     "weight": 4
   },
   "walkway_input": {
-    "weight": 5
+    "weight": 4
   },
   "noiseTraffic_input": {
     "weight": 2

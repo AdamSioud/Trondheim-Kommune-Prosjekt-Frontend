@@ -2,7 +2,7 @@
   <div id="mapView">
     <the-parameters :param-input="paramInput" @update:paramInput="updateParamInput"/>
     <div id="mapAndDetailsWrapper">
-      <the-map/>
+      <the-map :data-geo-json="dataGeoJSON"/>
       <the-details>
         {{ paramInput }}
       </the-details>
@@ -16,6 +16,7 @@ import TheParameters from '@/components/TheParameters.vue'
 import TheMap from '@/components/TheMap.vue'
 import TheDetails from '@/components/TheDetails.vue'
 import paramInput from '../assets/param_input.json'
+import { DataGeoJSON } from '@/type'
 
 export default defineComponent({
   name: 'HomeView',
@@ -26,12 +27,31 @@ export default defineComponent({
   },
   data () {
     return {
-      paramInput: paramInput
+      paramInput: paramInput,
+      dataGeoJSON: null as DataGeoJSON | null,
+      lastTimeoutID: 0
     }
+  },
+  mounted () {
+    this.getGeoJSON()
   },
   methods: {
     updateParamInput (res:never) {
+      // if (this.dataGeoJSON !== null) this.dataGeoJSON.geoJSON = null
+      this.dataGeoJSON = null
+      clearTimeout(this.lastTimeoutID)
       this.paramInput = res
+      this.lastTimeoutID = setTimeout(() => {
+        this.getGeoJSON()
+      }, 1000)
+    },
+    getGeoJSON () {
+      this.$axios.post('/Map', this.paramInput).then(response => {
+        console.log({ ...response.data, geoJSON: JSON.parse(response.data.geoJSON) })
+        this.dataGeoJSON = { ...response.data, geoJSON: JSON.parse(response.data.geoJSON) }
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 })

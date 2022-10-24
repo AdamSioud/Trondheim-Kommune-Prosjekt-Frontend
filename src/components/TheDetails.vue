@@ -2,7 +2,8 @@
   <div>The Details</div>
   <div id="theDetails">
     <!-- <slot></slot> -->
-    <AppCard class="card-body" v-for="card in cards" :key="card.id">
+    <AppCard class="card-body" v-for="card in cards" :key="card.id"
+    :name="card.id" :text="card.text">
     </AppCard>
   </div>
 </template>
@@ -16,11 +17,11 @@ export default defineComponent({
   data () {
     return {
       cards: [
-        { id: 1 },
-        { id: 2 },
-        { id: 3 },
-        { id: 4 },
-        { id: 5 }
+        { id: 'Price', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...' },
+        { id: 'Age', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...' },
+        { id: 'Noise', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...' },
+        { id: 'Safety', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...' },
+        { id: 'Well-being', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...' }
       ]
     }
   },

@@ -23,7 +23,7 @@ export default {
         ['2016', 660, 720, 300]
       ],
       chartOptions: {
-        height: 143,
+        height: 140,
         chart: {
           title: 'Company Performance',
           subtitle: 'Sales, Expenses, and Profit: 2014-2017'

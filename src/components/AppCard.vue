@@ -1,6 +1,9 @@
 <template>
     <div class="card">
-        <div class="title">{{name}}</div>
+        <div class="title">
+          <div class="name">{{name}}</div>
+          <div class="checkbox"> Insert checkbox </div>
+        </div>
         <div class="diagram">
             <AppDiagram></AppDiagram>
         </div>
@@ -33,11 +36,19 @@ export default defineComponent({
 display: grid;
 grid-template-columns: repeat(8, 1fr);
 grid-template-rows: repeat(12, 1fr);
-grid-column-gap: 0px;
-grid-row-gap: 0px;
+grid-column-gap: 10px;
+grid-row-gap: 10px;
 }
 .diagram { grid-area: 4 / 1 / 13 / 6;}
-.title { grid-area: 1 / 1 / 4 / 9; font-weight: bold;}
+.title { grid-area: 1 / 1 / 4 / 9; display: flex;
+  flex-flow: row wrap;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;}
 .text { grid-area: 4 / 6 / 13 / 9; font-size: small;}
+
+.checkbox{font-size: large;}
+
+.name{font-weight: bold;}
 
 </style>

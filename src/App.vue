@@ -27,7 +27,6 @@ export default defineComponent({
   },
   methods: {
     onresize () {
-      console.log(window.innerHeight)
       const app = document.getElementById('app')
       if (app) app.style.maxHeight = '' + window.innerHeight
     }

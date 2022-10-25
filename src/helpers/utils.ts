@@ -88,3 +88,9 @@ export function removeItem<T> (arr: Array<T>, value: T): Array<T> {
   if (index > -1) arr.splice(index, 1)
   return arr
 }
+
+export function manageArray<T> (arr: Array<T>, value: T, toPush: boolean): Array<T> {
+  if (toPush) arr.push(value)
+  else arr = removeItem(arr, value)
+  return arr
+}

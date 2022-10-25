@@ -15,29 +15,32 @@
       "3566": "35-66",
       "67": "67+"
     },
-    "wellbeing": {
-      "title": "Well being"
-    },
-    "safety": {
-      "title": "Safety"
-    },
-    "culture": {
-      "title": "Culture"
-    },
-    "outdoor": {
-      "title": "Outdoor"
-    },
-    "transport": {
-      "title": "Transport"
-    },
-    "walkway": {
-      "title": "Walkway"
-    },
-    "noiseTraffic": {
-      "title": "Traffic noise"
-    },
-    "noiseOther": {
-      "title": "Other noises"
+    "environment": {
+      "title": "Environment",
+      "wellbeing": {
+        "title": "Well being"
+      },
+      "safety": {
+        "title": "Safety"
+      },
+      "culture": {
+        "title": "Culture"
+      },
+      "outdoor": {
+        "title": "Outdoor"
+      },
+      "transport": {
+        "title": "Transport"
+      },
+      "walkway": {
+        "title": "Walkway"
+      },
+      "grocery": {
+        "title": "Grocery"
+      },
+      "noise": {
+        "title": "Noises"
+      }
     }
   }
 }

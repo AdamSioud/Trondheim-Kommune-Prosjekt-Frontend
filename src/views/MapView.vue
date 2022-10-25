@@ -38,7 +38,7 @@ export default defineComponent({
   methods: {
     updateParamInput (res:never) {
       // if (this.dataGeoJSON !== null) this.dataGeoJSON.geoJSON = null
-      this.dataGeoJSON = null
+      // this.dataGeoJSON = null
       clearTimeout(this.lastTimeoutID)
       this.paramInput = res
       this.lastTimeoutID = setTimeout(() => {

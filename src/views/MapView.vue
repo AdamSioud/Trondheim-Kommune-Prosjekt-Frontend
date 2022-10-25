@@ -33,7 +33,7 @@ export default defineComponent({
     }
   },
   mounted () {
-    this.getGeoJSON()
+    // this.getGeoJSON()
   },
   methods: {
     updateParamInput (res:never) {

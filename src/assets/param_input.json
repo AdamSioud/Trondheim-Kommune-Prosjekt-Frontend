@@ -1,34 +1,42 @@
 {
   "price_input": {
-    "selected": ["medium"],
-    "budget": 40
+    "selected": [
+      "medium"
+    ],
+    "budget": 1200000,
+    "weight": 4
   },
   "age_input": {
-    "selected": ["underage (0-17)"],
-    "percent": 40
-  },
-  "wellBeing_input": {
-    "weight": 2
-  },
-  "safety_input": {
-    "weight": 1
-  },
-  "culture_input": {
-    "weight": 2
-  },
-  "outdoor_input": {
-    "weight": 3
-  },
-  "transport_input": {
+    "selected": [
+      "underage (0-17)"
+    ],
+    "percent": 40,
     "weight": 4
   },
-  "walkway_input": {
-    "weight": 4
-  },
-  "noiseTraffic_input": {
-    "weight": 2
-  },
-  "noiseOther_input": {
-    "weight": 3
+  "environment": {
+    "well_being_input": {
+      "weight": 2
+    },
+    "safety_input": {
+      "weight": 1
+    },
+    "culture_input": {
+      "weight": 2
+    },
+    "outdoor_input": {
+      "weight": 3
+    },
+    "transport_input": {
+      "weight": 4
+    },
+    "walkway_input": {
+      "weight": 4
+    },
+    "grocery_input": {
+      "weight": 2
+    },
+    "noise_input": {
+      "weight": 3
+    }
   }
 }

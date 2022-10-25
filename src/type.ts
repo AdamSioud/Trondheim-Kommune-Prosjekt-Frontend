@@ -14,7 +14,7 @@ export interface EnvironmentInput {
   weight: number
 }
 
-export interface ParamInput{
+interface ParamInput{
   // eslint-disable-next-line camelcase
   price_input?: PriceInput,
   // eslint-disable-next-line camelcase
@@ -50,18 +50,19 @@ interface Checkbox extends Element {
   size?: string
 }
 
-interface Menu {
+export interface Menu {
   title?: string | undefined,
   datatype?: string | undefined,
   input?: string | undefined,
   color?: string | undefined,
   active?: boolean | undefined,
-  elements?: Element[] | undefined
+  elements?: Element[] | { [key: string]: Menu } | undefined
 }
 
 export interface ConfigParameters {
   [key: string]: Menu
 }
+
 interface GeoJSONGlobalProperties {
   [key: string]: undefined
 }

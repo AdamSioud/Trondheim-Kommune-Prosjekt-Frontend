@@ -1,4 +1,3 @@
-import { shallowMount } from '@vue/test-utils'
 import { isInRange, closestRangeValue } from '@/helpers/utils'
 
 describe('isInRange', () => {

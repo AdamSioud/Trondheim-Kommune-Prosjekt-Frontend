@@ -28,7 +28,7 @@
             <template v-else-if="element.type === 'slider'">
               <app-slider :min="element.min" :max="element.max" :step="element.step"
                           :disabled="!internalActive"
-                          :value="paramInput[element.input]" @input-value="res => emitChangeValue([], element.input, res)"/>
+                          :value="paramInput[element.input]" @input-value="res => emitChangeValue([], element.input, callConverterFunction('toPercent', res, 1,0))"/>
               {{ paramInput[element.input] }}
             </template>
           </template>
@@ -127,6 +127,22 @@ export default defineComponent({
       this.$emit('update:visible', this.internalVisible)
     },
     manageArray: manageArray,
+    callConverterFunction (functionName: string, ...args: unknown[]) {
+      const fn = Converters[functionName as keyof typeof Converters]
+      try {
+        if (typeof fn === 'function' && fn.length <= args.length) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          const test = fn.apply(null, args)
+          console.log(...args, test)
+          return test
+        }
+        return undefined
+      } catch (e) {
+        console.error(e)
+        return undefined
+      }
+    },
     emitChangeValue (menuInputs: string[], input: string, value: unknown) {
       menuInputs.unshift(this.input)
       this.$emit('changeValue', menuInputs, input, value)

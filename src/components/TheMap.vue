@@ -71,7 +71,7 @@ export default defineComponent({
           this.geoJSONLayer = L.geoJson(this.dataGeoJson.geoJSON, {
             style: (feature) => {
               let color = 'blue'
-              if (this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMin && this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMax) {
+              if (this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMin !== undefined && this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMax !== undefined) {
                 const newMax = this.dataGeoJson.geoJSONGlobalProperties.scoreMax - this.dataGeoJson.geoJSONGlobalProperties.scoreMin
                 const hue = ((feature?.properties.Score - this.dataGeoJson.geoJSONGlobalProperties.scoreMin) * 120 / newMax).toString(10)
                 color = `hsl(${hue},70%,50%)`

@@ -2,6 +2,10 @@
   "parameters": {
     "title": "Parameters",
     "menu": "Menu",
+    "point": {
+      "label": "Marker",
+      "add": "Add a new marker"
+    },
     "price": {
       "title": "Price",
       "small": "Small",

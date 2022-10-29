@@ -33,7 +33,7 @@
             </template>
           </template>
         </template>
-        <app-menu-collapse2 v-else v-for="(menu, key) in elements" :key="key"
+        <the-parameters-menu-collapse v-else v-for="(menu, key) in elements" :key="key"
                             :title="$t(menu.title)" :color="menu.color" :model-value="menu.active"
                             :elements="menu.elements" :input="menu.input" :menu-key="String(key)"
                             :param-input="paramInput[menu.input]" :totally-disabled="!internalActive"
@@ -51,7 +51,7 @@ import AppCheckbox from '@/components/AppCheckbox.vue'
 import { manageArray } from '@/helpers/utils'
 
 export default defineComponent({
-  name: 'AppMenuCollapse2',
+  name: 'TheParametersMenuCollapse',
   components: {
     AppSlider,
     AppCheckbox

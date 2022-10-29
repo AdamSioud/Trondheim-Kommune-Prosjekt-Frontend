@@ -18,17 +18,31 @@ export default defineComponent({
       default: () => {
         return null
       }
+    },
+    isAddingPoint: {
+      type: Boolean,
+      default: false
     }
   },
+  emit: ['pointAdded'],
   data () {
     return {
       map: null as Map | null,
-      geoJSONLayer: null as GeoJSON | null
+      geoJSONLayer: null as GeoJSON | null,
+      internalIsAddingPoint: this.isAddingPoint
     }
   },
   watch: {
     dataGeoJson (newValue) {
       this.updateGeoJSONLayer()
+    },
+    isAddingPoint () {
+      if (this.geoJSONLayer != null) {
+        this.geoJSONLayer.eachLayer((layer: Layer) => {
+          console.log(layer)
+          layer.unbindPopup()
+        }, { test: 'test' })
+      }
     }
   },
   mounted () {
@@ -36,7 +50,10 @@ export default defineComponent({
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 14,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map as Map)
+    }).addTo(this.map as Map);
+    (this.map as Map).on('click', event => {
+      console.log('Map clicked')
+    })
     /* axios.get('/data2.geojson').then(function (res) {
       // console.log(res.status)
       // console.log(res.data)
@@ -69,30 +86,41 @@ export default defineComponent({
         }
         if (this.dataGeoJson !== null && this.dataGeoJson.geoJSON !== null) {
           this.geoJSONLayer = L.geoJson(this.dataGeoJson.geoJSON, {
-            style: (feature) => {
-              let color = 'blue'
-              if (this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMin !== undefined && this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMax !== undefined) {
-                const newMax = this.dataGeoJson.geoJSONGlobalProperties.scoreMax - this.dataGeoJson.geoJSONGlobalProperties.scoreMin
-                const hue = ((feature?.properties.Score - this.dataGeoJson.geoJSONGlobalProperties.scoreMin) * 120 / newMax).toString(10)
-                color = `hsl(${hue},70%,50%)`
-                if (feature?.properties.Levekårsnavn === 'Ila') {
-                  console.log(feature?.properties.Score, this.dataGeoJson.geoJSONGlobalProperties.scoreMin, this.dataGeoJson.geoJSONGlobalProperties.scoreMax, newMax)
-                  console.log(((feature?.properties.Score - this.dataGeoJson.geoJSONGlobalProperties.scoreMin) * 120 / newMax), ((feature?.properties.Score - this.dataGeoJson.geoJSONGlobalProperties.scoreMin) * 120 / newMax).toString(10))
-                }
-                // console.log(this.dataGeoJson.geoJSONGlobalProperties.scoreMin, this.dataGeoJson.geoJSONGlobalProperties.scoreMax, hue, feature?.properties.Score, color)
-              }
-              return {
-                color: color,
-                fillColor: color
-              }
-            },
-            onEachFeature (feature: Feature<GeometryObject, never>, layer: Layer) {
-              console.log()
-            }
+            style: this.styleHandler,
+            onEachFeature: this.onEachFeatureHandler
           })
           this.geoJSONLayer.addTo(this.map as Map)
         }
       }
+    },
+    styleHandler (feature: Feature<GeometryObject, any> | undefined) {
+      let color = 'blue'
+      if (this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMin !== undefined && this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMax !== undefined) {
+        const newMax = this.dataGeoJson.geoJSONGlobalProperties.scoreMax - this.dataGeoJson.geoJSONGlobalProperties.scoreMin
+        const hue = ((feature?.properties.Score - this.dataGeoJson.geoJSONGlobalProperties.scoreMin) * 120 / newMax).toString(10)
+        color = `hsl(${hue},70%,50%)`
+        if (feature?.properties.Levekårsnavn === 'Ila') {
+          console.log(feature?.properties.Score, this.dataGeoJson.geoJSONGlobalProperties.scoreMin, this.dataGeoJson.geoJSONGlobalProperties.scoreMax, newMax)
+          console.log(((feature?.properties.Score - this.dataGeoJson.geoJSONGlobalProperties.scoreMin) * 120 / newMax), ((feature?.properties.Score - this.dataGeoJson.geoJSONGlobalProperties.scoreMin) * 120 / newMax).toString(10))
+        }
+        // console.log(this.dataGeoJson.geoJSONGlobalProperties.scoreMin, this.dataGeoJson.geoJSONGlobalProperties.scoreMax, hue, feature?.properties.Score, color)
+      }
+      return {
+        color: color,
+        fillColor: color
+      }
+    },
+    onEachFeatureHandler (feature: Feature<GeometryObject, any>, layer: Layer) {
+      // const popup = L.popup().setContent(feature.properties.Levekårsnavn)
+      layer.bindTooltip(feature?.properties.Levekårsnavn, {
+        direction: 'top',
+        sticky: true // TODO: 27/10/2022 Decide if it should be true or false
+      })
+      layer.on('click', event => {
+        if (!this.isAddingPoint) {
+          console.log('clicked on a zone')
+        }
+      })
     }
   }
 })

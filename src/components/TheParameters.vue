@@ -3,6 +3,7 @@
     <h1>{{ $t("parameters.title") }}</h1>
     <div id="parameters-wrapper">
       <div id="parameters" ref="divParameters">
+        <the-parameters-distance-input/>
 <!--        <app-menu-collapse v-for="(menu, key) in configParameters" :key="key"
                            :title="$t(menu.title)" :color="menu.color"
                            @change-active="isActive => setActive(key, menu.input, isActive)" :model-value="(menu.active === undefined ? true : menu.active)">
@@ -30,7 +31,7 @@
             </template>
           </template>
         </app-menu-collapse>-->
-        <app-menu-collapse v-for="(menu, key) in configParameters" :key="key"
+        <menu-collapse v-for="(menu, key) in configParameters" :key="key"
                            :title="$t(menu.title)" :color="menu.color" :model-value="menu.active"
                            :elements="menu.elements" :input="menu.input" :menu-key="key"
                            :param-input="internalParamInput[menu.input]"
@@ -43,14 +44,16 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import AppMenuCollapse from '@/components/AppMenuCollapse2.vue'
+import TheParametersMenuCollapse from '@/components/TheParametersMenuCollapse.vue'
 import { ConfigParameters, Menu } from '@/type'
 import configParameters from '../assets/configParameters.json'
+import TheParametersDistanceInput from '@/components/TheParametersDistanceInput.vue'
 
 export default defineComponent({
   name: 'TheParameters',
   components: {
-    AppMenuCollapse
+    MenuCollapse: TheParametersMenuCollapse,
+    TheParametersDistanceInput
   },
   props: {
     paramInput: {

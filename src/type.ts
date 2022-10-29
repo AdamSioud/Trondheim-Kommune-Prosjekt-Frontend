@@ -71,3 +71,8 @@ export interface DataGeoJSON {
   geoJSON: GeoJsonObject | null,
   geoJSONGlobalProperties: GeoJSONGlobalProperties | null
 }
+
+export interface Point {
+  label?: string,
+  point?: number[]
+}

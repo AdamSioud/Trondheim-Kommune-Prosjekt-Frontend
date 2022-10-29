@@ -2,7 +2,7 @@
   <div id="mapView">
     <the-parameters :param-input="paramInput" @update:paramInput="updateParamInput"/>
     <div id="mapAndDetailsWrapper">
-      <the-map :data-geo-json="dataGeoJSON"/>
+      <the-map :data-geo-json="dataGeoJSON" :is-adding-point="isAddingPoint"/>
       <the-details>
         {{ paramInput }}
       </the-details>
@@ -29,11 +29,12 @@ export default defineComponent({
     return {
       paramInput: paramInput,
       dataGeoJSON: null as DataGeoJSON | null,
-      lastTimeoutID: 0
+      lastTimeoutID: 0,
+      isAddingPoint: false
     }
   },
   mounted () {
-    // this.getGeoJSON()
+    this.getGeoJSON()
   },
   methods: {
     updateParamInput (res:never) {

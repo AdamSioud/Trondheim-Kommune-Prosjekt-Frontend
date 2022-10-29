@@ -112,7 +112,6 @@
     "datatype": "share",
     "input": "environment",
     "color": "#B8E8FC",
-    "active": false,
     "elements": {
       "wellBeing": {
         "title": "parameters.environment.wellbeing.title",

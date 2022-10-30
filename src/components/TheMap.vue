@@ -6,9 +6,12 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import 'leaflet/dist/leaflet.css'
-import L, { GeoJSON, Layer, Map } from 'leaflet'
+import L, { geoJson, GeoJSON, Layer, LayerGroup, Map } from 'leaflet'
 import { Feature, GeometryObject } from 'geojson'
 import { DataGeoJSON } from '@/type'
+import { mapState } from 'pinia'
+import { usePointsStore } from '@/stores/points'
+import * as geojson from 'geojson'
 
 export default defineComponent({
   name: 'TheMap',
@@ -19,9 +22,11 @@ export default defineComponent({
         return null
       }
     },
-    isAddingPoint: {
-      type: Boolean,
-      default: false
+    score: {
+      type: Object,
+      default: () => {
+        return null
+      }
     }
   },
   emit: ['pointAdded'],
@@ -32,16 +37,26 @@ export default defineComponent({
       internalIsAddingPoint: this.isAddingPoint
     }
   },
+  computed: {
+    ...mapState(usePointsStore, ['isAddingPoint'])
+  },
   watch: {
     dataGeoJson (newValue) {
       this.updateGeoJSONLayer()
     },
-    isAddingPoint () {
-      if (this.geoJSONLayer != null) {
-        this.geoJSONLayer.eachLayer((layer: Layer) => {
-          console.log(layer)
-          layer.unbindPopup()
-        }, { test: 'test' })
+    score (newValue) {
+      if (newValue !== null && this.geoJSONLayer !== null) {
+        this.geoJSONLayer.eachLayer((layer : Layer) => {
+          const id = ((layer as LayerGroup).feature as Feature).id as number
+          // console.log(id, newValue, layer.constructor)
+          layer.getTooltip()?.setContent(this.$t('map.tooltip.name') + ': ' + newValue.Levekårsnavn[id] + '<br> ' + this.$t('map.tooltip.score') + ': ' + newValue.Score[id])
+          const color = this.getColorAttribute(0, 100, newValue.Score[id])
+          if (newValue.Levekårsnavn[id] === 'Ila') console.log(color)
+          ;(layer as GeoJSON).setStyle({
+            color: color,
+            fillColor: color
+          })
+        })
       }
     }
   },
@@ -96,10 +111,9 @@ export default defineComponent({
     styleHandler (feature: Feature<GeometryObject, any> | undefined) {
       let color = 'blue'
       if (this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMin !== undefined && this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMax !== undefined) {
-        const newMax = this.dataGeoJson.geoJSONGlobalProperties.scoreMax - this.dataGeoJson.geoJSONGlobalProperties.scoreMin
-        const hue = ((feature?.properties.Score - this.dataGeoJson.geoJSONGlobalProperties.scoreMin) * 120 / newMax).toString(10)
-        color = `hsl(${hue},70%,50%)`
+        color = this.getColorAttribute(this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMin, this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMax, feature?.properties.Score)
         if (feature?.properties.Levekårsnavn === 'Ila') {
+          const newMax = this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMax - this?.dataGeoJson?.geoJSONGlobalProperties?.scoreMin
           console.log(feature?.properties.Score, this.dataGeoJson.geoJSONGlobalProperties.scoreMin, this.dataGeoJson.geoJSONGlobalProperties.scoreMax, newMax)
           console.log(((feature?.properties.Score - this.dataGeoJson.geoJSONGlobalProperties.scoreMin) * 120 / newMax), ((feature?.properties.Score - this.dataGeoJson.geoJSONGlobalProperties.scoreMin) * 120 / newMax).toString(10))
         }
@@ -121,6 +135,11 @@ export default defineComponent({
           console.log('clicked on a zone')
         }
       })
+    },
+    getColorAttribute (scoreMin: number, scoreMax: number, score: number) {
+      const newMax = scoreMax - scoreMin
+      const hue = ((score - scoreMin) * 120 / newMax).toString(10)
+      return `hsl(${hue},70%,50%)`
     }
   }
 })

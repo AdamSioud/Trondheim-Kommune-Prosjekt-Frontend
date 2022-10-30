@@ -2,7 +2,7 @@
   <div id="mapView">
     <the-parameters :param-input="paramInput" @update:paramInput="updateParamInput"/>
     <div id="mapAndDetailsWrapper">
-      <the-map :data-geo-json="dataGeoJSON" :is-adding-point="isAddingPoint"/>
+      <the-map :data-geo-json="dataGeoJSON" :score="score"/>
       <the-details>
         {{ paramInput }}
       </the-details>
@@ -29,6 +29,7 @@ export default defineComponent({
     return {
       paramInput: paramInput,
       dataGeoJSON: null as DataGeoJSON | null,
+      score: null,
       lastTimeoutID: 0,
       isAddingPoint: false
     }
@@ -43,13 +44,21 @@ export default defineComponent({
       clearTimeout(this.lastTimeoutID)
       this.paramInput = res
       this.lastTimeoutID = setTimeout(() => {
-        this.getGeoJSON()
-      }, 1000)
+        this.getScore()
+      }, 500)
     },
     getGeoJSON () {
-      this.$axios.post('/Map', this.paramInput).then(response => {
-        console.log({ ...response.data, geoJSON: JSON.parse(response.data.geoJSON) })
+      this.$axios.post('/map', this.paramInput).then(response => {
+        console.log(response.data)
         this.dataGeoJSON = { ...response.data, geoJSON: JSON.parse(response.data.geoJSON) }
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    getScore () {
+      this.$axios.post('/score', this.paramInput).then(response => {
+        console.log(response)
+        this.score = JSON.parse(response.data)
       }).catch(error => {
         console.log(error)
       })

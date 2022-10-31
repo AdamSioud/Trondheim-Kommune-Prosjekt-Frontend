@@ -7,34 +7,6 @@
     "active": false,
     "elements": [
       {
-        "type": "group",
-        "input": "selected",
-        "layout": "flex",
-        "items": [
-          {
-            "type": "checkbox",
-            "title": "parameters.price.small",
-            "picture": "fa-house",
-            "size": "xs",
-            "input": "small"
-          },
-          {
-            "type": "checkbox",
-            "title": "parameters.price.medium",
-            "picture": "fa-house",
-            "size": "lg",
-            "input": "medium"
-          },
-          {
-            "type": "checkbox",
-            "title": "parameters.price.large",
-            "picture": "fa-house",
-            "size": "2xl",
-            "input": "large"
-          }
-        ]
-      },
-      {
         "type": "slider",
         "input": "budget",
         "min": 1000000,

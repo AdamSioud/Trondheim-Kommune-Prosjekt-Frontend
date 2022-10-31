@@ -1,8 +1,5 @@
 {
   "price_input": {
-    "selected": [
-      "medium"
-    ],
     "budget": 1200000,
     "weight": 4
   },

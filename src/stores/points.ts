@@ -17,6 +17,7 @@ export const usePointsStore = defineStore('points', {
         point: [63.408581, 10.403129]
       }
     ] as Point[],
+    idPointToAdd: -1,
     isAddingPoint: false
   }),
   actions: {
@@ -29,7 +30,8 @@ export const usePointsStore = defineStore('points', {
     updatePoint (id: number, point: Point) {
       this.points[id] = point
     },
-    toggleIsAddingPoint () {
+    addingPoint (id: number) {
+      this.idPointToAdd = id
       this.isAddingPoint = !this.isAddingPoint
     }
   }

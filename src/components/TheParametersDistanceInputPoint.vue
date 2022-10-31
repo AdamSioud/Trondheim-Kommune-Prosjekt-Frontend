@@ -1,7 +1,7 @@
 <template>
   <div class="input-point">
     <input type="text" :value="label" @change="$emit('updateLabel', id, $event.target.value)">
-    <button class="input-button" @click="isMarkerPlaced ? $emit('showPosition', x, y) : emitAddingNewMarker">
+    <button class="input-button" @click.stop="handlerClickOnMarkerIcon">
       <font-awesome-icon v-if="isMarkerPlaced" icon="fa-solid fa-location-crosshairs"/>
       <font-awesome-layers v-else>
         <font-awesome-icon icon="fa-solid fa-location-dot"/>
@@ -18,7 +18,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { usePointsStore } from '@/stores/points'
-import { mapActions } from 'pinia'
+import { mapActions, mapState } from 'pinia'
 
 export default defineComponent({
   name: 'TheParametersDistanceInputPoint',
@@ -41,17 +41,25 @@ export default defineComponent({
   },
   emits: ['showPosition', 'removePoint', 'updateLabel'],
   computed: {
+    ...mapState(usePointsStore, ['isAddingPoint']),
     isMarkerPlaced () {
       return !Number.isNaN(this.x) && !Number.isNaN(this.y)
     }
   },
   methods: {
-    ...mapActions(usePointsStore, ['toggleIsAddingPoint']),
-    emitAddingNewMarker () {
-      this.toggleIsAddingPoint()
-      document.addEventListener('click', () => {
-        this.toggleIsAddingPoint()
-      })
+    ...mapActions(usePointsStore, ['addingPoint']),
+    handlerClickOnMarkerIcon (event: Event) {
+      event.preventDefault()
+      console.log('emitAddingNewMarker', this.addingPoint)
+      if (this.isMarkerPlaced) this.$emit('showPosition', this.x, this.y)
+      else if (!this.isAddingPoint) {
+        this.addingPoint(this.id)
+        document.addEventListener('click', this.documentClickHandler, { once: true })
+      }
+    },
+    documentClickHandler () {
+      this.addingPoint(-1)
+      console.log('documentClickHandler')
     }
   }
 })

@@ -6,10 +6,10 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import 'leaflet/dist/leaflet.css'
-import L, { geoJson, GeoJSON, Layer, LayerGroup, Map } from 'leaflet'
+import L, { geoJson, GeoJSON, Layer, LayerGroup, LeafletMouseEvent, Map } from 'leaflet'
 import { Feature, GeometryObject } from 'geojson'
 import { DataGeoJSON } from '@/type'
-import { mapState } from 'pinia'
+import { mapState, mapWritableState } from 'pinia'
 import { usePointsStore } from '@/stores/points'
 import * as geojson from 'geojson'
 
@@ -38,7 +38,7 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapState(usePointsStore, ['isAddingPoint'])
+    ...mapWritableState(usePointsStore, ['isAddingPoint', 'points', 'idPointToAdd'])
   },
   watch: {
     dataGeoJson (newValue) {
@@ -46,13 +46,15 @@ export default defineComponent({
     },
     score (newValue) {
       if (newValue !== null && this.geoJSONLayer !== null) {
-        this.geoJSONLayer.eachLayer((layer : Layer) => {
+        this.geoJSONLayer.eachLayer((layer: Layer) => {
           const id = ((layer as LayerGroup).feature as Feature).id as number
           // console.log(id, newValue, layer.constructor)
           layer.getTooltip()?.setContent(this.$t('map.tooltip.name') + ': ' + newValue.Levekårsnavn[id] + '<br> ' + this.$t('map.tooltip.score') + ': ' + newValue.Score[id])
           const color = this.getColorAttribute(0, 100, newValue.Score[id])
-          if (newValue.Levekårsnavn[id] === 'Ila') console.log(color)
-          ;(layer as GeoJSON).setStyle({
+          if (newValue.Levekårsnavn[id] === 'Ila') {
+            console.log(color)
+          }
+          (layer as GeoJSON).setStyle({
             color: color,
             fillColor: color
           })
@@ -65,9 +67,24 @@ export default defineComponent({
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 14,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map as Map);
-    (this.map as Map).on('click', event => {
-      console.log('Map clicked')
+    }).addTo(this.map as Map)
+    const svgIcon = L.divIcon({
+      html: `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+        <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+        <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/>
+        </svg>`,
+      className: '',
+      iconSize: [24, 40],
+      iconAnchor: [12, 40]
+    })
+    ;(this.map as Map).on('click', (event: LeafletMouseEvent) => {
+      if (this.isAddingPoint) {
+        console.log('Map clicked', 'lat' + event.latlng.lat, 'lng' + event.latlng.lng, 'x' + event.layerPoint.x, event.layerPoint.y)
+        console.log(this.idPointToAdd)
+        this.points[this.idPointToAdd].point = [event.latlng.lat, event.latlng.lng]
+        L.marker(event.latlng, { icon: svgIcon }).bindTooltip(this.points[this.idPointToAdd].label as string, { direction: 'top' }).addTo(this.map as Map)
+      }
     })
     /* axios.get('/data2.geojson').then(function (res) {
       // console.log(res.status)
@@ -151,6 +168,7 @@ export default defineComponent({
   flex: auto;
   margin: 0 8px;
 }
+
 @media only screen and (min-width: 768px) {
   #theMap {
     margin: 0;

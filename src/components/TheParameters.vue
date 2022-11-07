@@ -1,9 +1,13 @@
 <template>
   <div id="theParameters">
-    <h1>{{ $t("parameters.title") }}</h1>
     <div id="parameters-wrapper">
-      <div id="parameters" ref="divParameters">
-        <the-parameters-distance-input/>
+     <div id="parameters" ref="divParameters">
+      <div class="profile">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Trondheim_komm.svg/1200px-Trondheim_komm.svg.png" alt="profile_picture">
+                <h3>Trondheim kommune</h3>
+                <p>Kart</p>
+            </div>
+     <the-parameters-distance-input/>
 <!--        <app-menu-collapse v-for="(menu, key) in configParameters" :key="key"
                            :title="$t(menu.title)" :color="menu.color"
                            @change-active="isActive => setActive(key, menu.input, isActive)" :model-value="(menu.active === undefined ? true : menu.active)">
@@ -41,7 +45,6 @@
     </div>
   </div>
 </template>
-
 <script lang="ts">
 import { defineComponent } from 'vue'
 import TheParametersMenuCollapse from '@/components/TheParametersMenuCollapse.vue'
@@ -148,7 +151,31 @@ export default defineComponent({
 
 <style scoped lang="scss">
 #theParameters {
-  background: indianred;
+  background-color:rgb(5, 68, 104);
+  padding: 20px;
+}
+
+.profile{
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.profile img{
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.profile h3{
+    color: #ffffff;
+    margin: 10px 0 5px;
+}
+
+.profile p{
+    color: rgb(255, 255, 255);
+    font-size: 14px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -174,6 +201,7 @@ export default defineComponent({
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
+
   }
 
   .group-flex {
@@ -194,5 +222,17 @@ export default defineComponent({
     display: flex;
     align-items: center;
   }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+
+#parameters::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#parameters {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 </style>

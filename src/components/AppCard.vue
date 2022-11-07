@@ -2,7 +2,7 @@
     <div class="card">
         <div class="title">
           <div class="name">{{name}}</div>
-          <div class="checkbox"> Insert checkbox </div>
+          <div class="checkbox"> </div>
         </div>
         <div class="diagram">
             <AppDiagram></AppDiagram>
@@ -22,10 +22,6 @@ export default defineComponent({
     name: {
       type: String,
       default: 'Title'
-    },
-    text: {
-      type: String,
-      default: 'This is an example text'
     }
   }
 })
@@ -39,15 +35,13 @@ grid-template-rows: repeat(12, 1fr);
 grid-column-gap: 10px;
 grid-row-gap: 10px;
 }
-.diagram { grid-area: 4 / 1 / 13 / 6;}
-.title { grid-area: 1 / 1 / 4 / 9; display: flex;
+.diagram { grid-area: 3 / 2 / 13 / 8;}
+.title { grid-area: 1 / 3 / 3 / 9; display: flex;
   flex-flow: row wrap;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-around;}
-.text { grid-area: 4 / 6 / 13 / 9; font-size: small;}
-
-.checkbox{font-size: large;}
+  justify-content: space-around;
+  margin-top: 4px;}
 
 .name{font-weight: bold;}
 

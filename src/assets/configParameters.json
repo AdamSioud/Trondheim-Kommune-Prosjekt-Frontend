@@ -3,7 +3,7 @@
     "title": "parameters.price.title",
     "datatype": "mean",
     "input": "price_input",
-    "color": "#C4DFAA",
+    "color": "transparent",
     "active": false,
     "elements": [
       {
@@ -26,7 +26,7 @@
     "title": "parameters.age.title",
     "datatype": "share",
     "input": "age_input",
-    "color": "#B8E8FC",
+    "color": "transparent",
     "elements": [
       {
         "type": "group",
@@ -83,13 +83,13 @@
     "title": "parameters.environment.title",
     "datatype": "share",
     "input": "environment",
-    "color": "#B8E8FC",
+    "color": "transparent",
     "elements": {
       "wellBeing": {
         "title": "parameters.environment.wellbeing.title",
         "datatype": "",
         "input": "well_being_input",
-        "color": "#FFD1D1",
+        "color": "transparent",
         "active": false,
         "elements": [
           {
@@ -105,7 +105,7 @@
         "title": "parameters.environment.safety.title",
         "datatype": "",
         "input": "safety_input",
-        "color": "#C8FFD4",
+        "color": "transparent",
         "active": false,
         "elements": [
           {
@@ -121,7 +121,7 @@
         "title": "parameters.environment.culture.title",
         "datatype": "",
         "input": "culture_input",
-        "color": "#DFD3C3",
+        "color": "transparent",
         "active": false,
         "elements": [
           {
@@ -137,7 +137,7 @@
         "title": "parameters.environment.outdoor.title",
         "datatype": "",
         "input": "outdoor_input",
-        "color": "#AEBDCA",
+        "color": "transparent",
         "active": false,
         "elements": [
           {
@@ -153,7 +153,7 @@
         "title": "parameters.environment.transport.title",
         "datatype": "",
         "input": "transport_input",
-        "color": "#ECC5FB",
+        "color": "transparent",
         "active": false,
         "elements": [
           {
@@ -169,7 +169,7 @@
         "title": "parameters.environment.walkway.title",
         "datatype": "",
         "input": "walkway_input",
-        "color": "#CDF0EA",
+        "color": "transparent",
         "elements": [
           {
             "type": "slider",
@@ -184,7 +184,7 @@
         "title": "parameters.environment.grocery.title",
         "datatype": "",
         "input": "grocery_input",
-        "color": "#DEB6AB",
+        "color": "transparent",
         "active": false,
         "elements": [
           {
@@ -200,7 +200,7 @@
         "title": "parameters.environment.noise.title",
         "datatype": "",
         "input": "noise_input",
-        "color": "#AF7AB3",
+        "color": "transparent",
         "active": false,
         "elements": [
           {

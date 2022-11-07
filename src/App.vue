@@ -1,5 +1,7 @@
+
 <template>
   <div class="height100 flex-column">
+    <!-- Removed the navbar
     <nav>
       <router-link to="/">
         Home
@@ -13,6 +15,7 @@
         Map
       </router-link>
     </nav>
+     -->
     <router-view />
   </div>
 </template>
@@ -39,25 +42,13 @@ export default defineComponent({
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  text-align: left;
+  color: #ffffff;
+  background-color:rgb(121, 174, 204);
 }
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-
 .height100{
   height: 100%;
+  overflow: hidden;
 }
 
 .flex-column{

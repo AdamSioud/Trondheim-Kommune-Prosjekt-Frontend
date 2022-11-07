@@ -334,7 +334,7 @@ export default defineComponent({
 }
 
 #range-slider {
-  background-color: gray;
+  background-color: rgb(250, 0, 0);
   height: 4px;
   border-radius: 10px;
   position: relative;
@@ -349,7 +349,7 @@ export default defineComponent({
   border-radius: 50%;
   transform: translate(-50%,-40%);
   z-index: 1;
-  border: #0366d6 solid 6px;
+  border: #0365d618 solid 6px;
   box-sizing: border-box;
   cursor: pointer;
 }

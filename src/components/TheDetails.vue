@@ -1,5 +1,4 @@
 <template>
-  <div>The Details</div>
   <div id="theDetails">
     <!-- <slot></slot> -->
     <AppCard class="card-body" v-for="card in cards" :key="card.id"
@@ -17,11 +16,11 @@ export default defineComponent({
   data () {
     return {
       cards: [
-        { id: 'Price', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...' },
-        { id: 'Age', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...' },
-        { id: 'Noise', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...' },
-        { id: 'Safety', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...' },
-        { id: 'Well-being', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...' }
+        { id: 'Price', text: '' },
+        { id: 'Age', text: '' },
+        { id: 'Noise', text: '' },
+        { id: 'Safety', text: '' },
+        { id: 'Well-being', text: '' }
       ]
     }
   },
@@ -31,7 +30,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 #theDetails {
-  background: mediumseagreen;
+  background-color:rgb(121, 174, 204);
   display: flex;
   flex-flow: row wrap;
   flex-wrap: wrap;
@@ -40,20 +39,20 @@ export default defineComponent({
 }
 
 .card-body{
-  background: white;
-  width: 18rem;
+  background: rgba(26, 8, 8, 0.34);
+  width: 14rem;
   height: 12rem;
-  border-radius: 20px;
-  margin-top: 15px;
-  padding: 5px;
-  color: black;
-  font-size: 3em;
+  border-radius: 10px;
+  padding: 1px;
+  color: rgb(249, 249, 249);
+  font-size: 1em;
+  margin: auto;
 }
 @media only screen and (min-width: 768px) {
   #theDetails{
-    height: 150px;
-    overflow: scroll;
-    color: black;
+    height: 300px;
+    color: white;
+
   }
 }
 </style>

@@ -1,50 +1,51 @@
 <template>
   <div id="theParameters">
     <div id="parameters-wrapper">
-     <div id="parameters" ref="divParameters">
-      <div class="profile">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Trondheim_komm.svg/1200px-Trondheim_komm.svg.png" alt="profile_picture">
-                <h3>Trondheim kommune</h3>
-                <p>Kart</p>
-            </div>
-     <the-parameters-distance-input/>
-<!--        <app-menu-collapse v-for="(menu, key) in configParameters" :key="key"
-                           :title="$t(menu.title)" :color="menu.color"
-                           @change-active="isActive => setActive(key, menu.input, isActive)" :model-value="(menu.active === undefined ? true : menu.active)">
-          <template v-for="(element, key, i) in menu.elements" :key="i">
-            <div v-if="element.type === 'group'" :class="'group-' + element.layout">
-              <template v-for="(item, index) in element.items" :key="index">
-                <template v-if="item.type === 'checkbox'">
-                  <app-checkbox :checked="internalParamInput[menu.input][element.input].indexOf(item.input) !== -1" @input="res => changeValue(menu.input, element.input, manageArray(internalParamInput[menu.input][element.input], item.input, res))"
-                                :disabled="!menu.active">
-                    <div class="wrapper-checkbox-content">
-                      <div class="wrapper-checkbox-content-icon">
-                        <font-awesome-icon v-if="new RegExp('^fa').test(item.picture)" :icon="'fa-solid ' + item.picture" :size="item.size"/>
-                      </div>
-                      <div>{{ $t(item.title) }}</div>
+      <div id="parameters" ref="divParameters">
+        <div class="profile">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Trondheim_komm.svg/1200px-Trondheim_komm.svg.png" alt="profile_picture">
+          <h3>Trondheim kommune</h3>
+          <p>Kart</p>
+        </div>
+        <!--        <the-parameters-distance-input/>-->
+        <!--        <app-menu-collapse v-for="(menu, key) in configParameters" :key="key"
+                                   :title="$t(menu.title)" :color="menu.color"
+                                   @change-active="isActive => setActive(key, menu.input, isActive)" :model-value="(menu.active === undefined ? true : menu.active)">
+                  <template v-for="(element, key, i) in menu.elements" :key="i">
+                    <div v-if="element.type === 'group'" :class="'group-' + element.layout">
+                      <template v-for="(item, index) in element.items" :key="index">
+                        <template v-if="item.type === 'checkbox'">
+                          <app-checkbox :checked="internalParamInput[menu.input][element.input].indexOf(item.input) !== -1" @input="res => changeValue(menu.input, element.input, manageArray(internalParamInput[menu.input][element.input], item.input, res))"
+                                        :disabled="!menu.active">
+                            <div class="wrapper-checkbox-content">
+                              <div class="wrapper-checkbox-content-icon">
+                                <font-awesome-icon v-if="new RegExp('^fa').test(item.picture)" :icon="'fa-solid ' + item.picture" :size="item.size"/>
+                              </div>
+                              <div>{{ $t(item.title) }}</div>
+                            </div>
+                          </app-checkbox>
+                        </template>
+                      </template>
                     </div>
-                  </app-checkbox>
-                </template>
-              </template>
-            </div>
-            <template v-else-if="element.type === 'slider'">
-              <app-slider :min="element.min" :max="element.max" :step="element.step"
-                          :disabled="!menu.active"
-                          :value="internalParamInput[menu.input][element.input]" @input-value="res => changeValue(menu.input,element.input,res)"/>
-              {{internalParamInput[menu.input][element.input]}}
-            </template>
-          </template>
-        </app-menu-collapse>-->
+                    <template v-else-if="element.type === 'slider'">
+                      <app-slider :min="element.min" :max="element.max" :step="element.step"
+                                  :disabled="!menu.active"
+                                  :value="internalParamInput[menu.input][element.input]" @input-value="res => changeValue(menu.input,element.input,res)"/>
+                      {{internalParamInput[menu.input][element.input]}}
+                    </template>
+                  </template>
+                </app-menu-collapse>-->
         <menu-collapse v-for="(menu, key) in configParameters" :key="key"
-                           :title="$t(menu.title)" :color="menu.color" :model-value="menu.active"
-                           :elements="menu.elements" :input="menu.input" :menu-key="key"
-                           :param-input="internalParamInput[menu.input]"
-                           @change-active="isActive => setActive([key], [menu.input], isActive)"
-                           @change-value="changeValue" @set-active="setActive"/>
+                       :title="$t(menu.title)" :color="menu.color" :model-value="menu.active"
+                       :elements="menu.elements" :input="menu.input" :menu-key="key"
+                       :param-input="internalParamInput[menu.input]"
+                       @change-active="isActive => setActive([key], [menu.input], isActive)"
+                       @change-value="changeValue" @set-active="setActive"/>
       </div>
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 import TheParametersMenuCollapse from '@/components/TheParametersMenuCollapse.vue'
@@ -55,8 +56,8 @@ import TheParametersDistanceInput from '@/components/TheParametersDistanceInput.
 export default defineComponent({
   name: 'TheParameters',
   components: {
-    MenuCollapse: TheParametersMenuCollapse,
-    TheParametersDistanceInput
+    MenuCollapse: TheParametersMenuCollapse
+    // TheParametersDistanceInput
   },
   props: {
     paramInput: {
@@ -95,14 +96,14 @@ export default defineComponent({
       if (menu.color === undefined) menu.color = 'white'
       if (!Array.isArray(menu.elements)) {
         for (const subMenuKey in menu.elements) {
-          this.initConfigParameters((menu.elements as {[key:string]: Menu})[subMenuKey])
+          this.initConfigParameters((menu.elements as { [key: string]: Menu })[subMenuKey])
         }
       }
     },
     initResultParamInput (menu: Menu, input: any) {
       if (!Array.isArray(menu.elements)) {
         for (const subMenuKey in menu.elements) {
-          const subMenu = (menu.elements as {[key:string]: Menu})[subMenuKey]
+          const subMenu = (menu.elements as { [key: string]: Menu })[subMenuKey]
           this.initResultParamInput(subMenu, input[menu.input as string])
           if (!menu.elements[subMenuKey].active) {
             delete input[subMenu.input as string]
@@ -114,7 +115,7 @@ export default defineComponent({
       if (menuKeys.length !== 0) {
         let menu = this.configParameters[menuKeys[0]]
         for (let i = 1; i < menuKeys.length; i++) {
-          menu = (menu.elements as {[key:string]: Menu})[menuKeys[i]]
+          menu = (menu.elements as { [key: string]: Menu })[menuKeys[i]]
         }
         menu.active = active
         let inputToAdd = null
@@ -201,7 +202,6 @@ export default defineComponent({
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-
   }
 
   .group-flex {

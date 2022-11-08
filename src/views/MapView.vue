@@ -2,10 +2,8 @@
   <div id="mapView">
     <the-parameters :param-input="paramInput" @update:paramInput="updateParamInput"/>
     <div id="mapAndDetailsWrapper">
-      <the-map :data-geo-json="dataGeoJSON" :score="score"/>
-      <the-details>
-        {{ paramInput }}
-      </the-details>
+      <the-map :geo-json="geoJSON" :score="score" @click-on-zone="getDataForZone"/>
+      <the-details :zone-data="zoneData"/>
     </div>
   </div>
 </template>
@@ -16,7 +14,7 @@ import TheParameters from '@/components/TheParameters.vue'
 import TheMap from '@/components/TheMap.vue'
 import TheDetails from '@/components/TheDetails.vue'
 import paramInput from '../assets/param_input.json'
-import { DataGeoJSON } from '@/type'
+import { GeoJsonObject } from 'geojson'
 
 export default defineComponent({
   name: 'HomeView',
@@ -28,10 +26,11 @@ export default defineComponent({
   data () {
     return {
       paramInput: paramInput,
-      dataGeoJSON: null as DataGeoJSON | null,
+      geoJSON: null as GeoJsonObject | null,
       score: null,
       lastTimeoutID: 0,
-      isAddingPoint: false
+      isAddingPoint: false,
+      zoneData: null
     }
   },
   mounted () {
@@ -49,16 +48,22 @@ export default defineComponent({
     },
     getGeoJSON () {
       this.$axios.post('/map', this.paramInput).then(response => {
-        console.log(response.data)
-        this.dataGeoJSON = { ...response.data, geoJSON: JSON.parse(response.data.geoJSON) }
+        this.geoJSON = JSON.parse(response.data)
       }).catch(error => {
         console.log(error)
       })
     },
     getScore () {
       this.$axios.post('/score', this.paramInput).then(response => {
-        console.log(response)
         this.score = JSON.parse(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    getDataForZone (id: number) {
+      this.$axios.get(`/zone/${id}`).then(response => {
+        console.log(JSON.parse(response.data))
+        this.zoneData = JSON.parse(response.data)
       }).catch(error => {
         console.log(error)
       })

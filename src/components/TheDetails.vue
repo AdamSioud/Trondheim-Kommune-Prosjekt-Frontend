@@ -1,30 +1,41 @@
 <template>
   <div id="theDetails">
-    <!-- <slot></slot> -->
-    <AppCard class="card-body" v-for="card in cards" :key="card.id"
-    :name="card.id" :text="card.text">
-    </AppCard>
+    <div v-if="properties === null">Click on zone to display information</div>
+    <template v-else>
+      <AppCard class="card-body" v-for="(property, key) in properties" :key="key"
+               :name="'details.' + key" :text="String(property)" :properties="property">
+      </AppCard>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import AppCard from '@/components/AppCard.vue'
+import { ZoneData } from '@/type'
 
 export default defineComponent({
   name: 'TheDetails',
-  data () {
-    return {
-      cards: [
-        { id: 'Price', text: '' },
-        { id: 'Age', text: '' },
-        { id: 'Noise', text: '' },
-        { id: 'Safety', text: '' },
-        { id: 'Well-being', text: '' }
-      ]
+  components: { AppCard },
+  props: {
+    zoneData: {
+      type: Object as PropType<ZoneData | null>,
+      default: () => {
+        return null
+      }
     }
   },
-  components: { AppCard }
+  data () {
+    return {
+    }
+  },
+  computed: {
+    properties () {
+      if (this.zoneData === null) return null
+      const { zoneName, ...properties } = this.zoneData
+      return properties
+    }
+  }
 })
 </script>
 
@@ -48,6 +59,7 @@ export default defineComponent({
   font-size: 1em;
   margin: auto;
 }
+
 @media only screen and (min-width: 768px) {
   #theDetails{
     height: 300px;

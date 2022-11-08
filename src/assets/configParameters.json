@@ -38,28 +38,28 @@
             "title": "parameters.age.017",
             "picture": "fa-child",
             "size": "xl",
-            "input": "underage (0-17)"
+            "input": "0-17"
           },
           {
             "type": "checkbox",
             "title": "parameters.age.1834",
             "picture": "fa-person",
             "size": "xl",
-            "input": "young adult (18-34)"
+            "input": "18-34"
           },
           {
             "type": "checkbox",
             "title": "parameters.age.3566",
             "picture": "fa-person",
             "size": "xl",
-            "input": "adult (35-66)"
+            "input": "35-66"
           },
           {
             "type": "checkbox",
             "title": "parameters.age.67",
             "picture": "fa-person-cane",
             "size": "xl",
-            "input": "senior (67+)"
+            "input": "67+"
           }
         ]
       },

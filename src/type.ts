@@ -63,16 +63,17 @@ export interface ConfigParameters {
   [key: string]: Menu
 }
 
-interface GeoJSONGlobalProperties {
-  [key: string]: undefined
-}
-
-export interface DataGeoJSON {
-  geoJSON: GeoJsonObject | null,
-  geoJSONGlobalProperties: GeoJSONGlobalProperties | null
-}
-
 export interface Point {
   label?: string,
   point?: number[]
+}
+
+export interface FeatureProperties {
+  score: number,
+  zoneName: string
+}
+
+export interface ZoneData {
+  zoneName: string,
+  [key: string]: unknown
 }

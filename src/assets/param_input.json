@@ -5,7 +5,7 @@
   },
   "age_input": {
     "selected": [
-      "underage (0-17)"
+      "0-17"
     ],
     "percent": 40,
     "weight": 4

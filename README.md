@@ -30,45 +30,66 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Folder structure
 <pre>
+
 .
 ├── README.md
-└── server
-    ├── README.md
-    ├── app.py
-    ├── model
-    │   ├── generated_map.html
-    │   ├── src
-    │   │   ├── data
-    │   │   │   ├── data.geojson
-    │   │   │   ├── data.py
-    │   │   │   └── data_interval.json
-    │   │   ├── models.py
-    │   │   └── parameters
-    │   │       ├── age_param.py
-    │   │       ├── culture_param.py
-    │   │       ├── distance_param.py
-    │   │       ├── environment_param_interface.py
-    │   │       ├── grocery_param.py
-    │   │       ├── noise_param.py
-    │   │       ├── outdoor_param.py
-    │   │       ├── param_interface.py
-    │   │       ├── price_param.py
-    │   │       ├── safety_param.py
-    │   │       ├── transport_param.py
-    │   │       ├── walkway_param.py
-    │   │       └── well_being_param.py
-    │   └── test
-    │       ├── mock_data
-    │       │   ├── age.json
-    │       │   ├── distance.json
-    │       │   ├── general_df.json
-    │       │   ├── neighborhood.json
-    │       │   └── price.json
-    │       ├── test_age_param.py
-    │       ├── test_distance_param.py
-    │       ├── test_models.py
-    │       ├── test_noise_param.py
-    │       ├── test_price_param.py
-    │       └── test_safety_param.py
-    └── requirements.txt
+├── babel.config.js
+├── jest.config.js
+├── node_modules
+├── package-lock.json
+├── package.json
+├── public
+├── src
+    ├── App.vue
+    ├── assets
+    │   ├── configParameters.json
+    │   ├── logo.png
+    │   ├── param_input.json
+    │   └── stylesheets
+    │       └── reset.css
+    ├── components
+    │   ├── AppAge.vue
+    │   ├── AppCard.vue
+    │   ├── AppCheckbox.vue
+    │   ├── AppDiagram.vue
+    │   ├── AppEnvironment.vue
+    │   ├── AppMenuCollapse.vue
+    │   ├── AppPrice.vue
+    │   ├── AppSlider.vue
+    │   ├── HelloI18n.vue
+    │   ├── HelloWorld.vue
+    │   ├── TheDetails.vue
+    │   ├── TheMap.vue
+    │   ├── TheParameters.vue
+    │   ├── TheParametersDistanceInput.vue
+    │   ├── TheParametersDistanceInputPoint.vue
+    │   └── TheParametersMenuCollapse.vue
+    ├── helpers
+    │   ├── convertersParameters.ts
+    │   └── utils.ts
+    ├── i18n.ts
+    ├── locales
+    │   ├── en.json
+    │   └── nb.json
+    ├── main.ts
+    ├── router
+    │   └── index.ts
+    ├── stores
+    │   └── points.ts
+    ├── type.ts
+    └── views
+        ├── AboutView.vue
+        ├── HomeView.vue
+        └── MapView.vue
+├── tests
+    └── unit
+        ├── components
+        │   └── example.spec.ts
+        └── helpers
+            ├── converters.spec.ts
+            └── utils.spec.ts
+├── tsconfig.json
+└── vue.config.js
+.
+
 </pre>

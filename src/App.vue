@@ -48,7 +48,6 @@ export default defineComponent({
 }
 .height100{
   height: 100%;
-  overflow: hidden;
 }
 
 .flex-column{
@@ -58,5 +57,11 @@ export default defineComponent({
 
 h1{
   font-size: 1.5rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .height100 {
+    overflow: hidden;
+  }
 }
 </style>

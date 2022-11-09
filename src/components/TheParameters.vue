@@ -153,7 +153,7 @@ export default defineComponent({
 <style scoped lang="scss">
 #theParameters {
   background-color:rgb(5, 68, 104);
-  padding: 20px;
+  padding: 3px 20px;
 }
 
 .profile{

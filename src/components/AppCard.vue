@@ -2,7 +2,7 @@
   <div class="card">
     <div class="title">
       <div class="name">{{ $t(name) }}</div>
-      <div class="checkbox"> Insert checkbox</div>
+      <div class="checkbox"></div>
     </div>
     <div class="diagram">
       <AppDiagram :chart-data="chartData"></AppDiagram>
@@ -53,8 +53,6 @@ export default defineComponent({
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(12, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
 }
 
 .diagram {
@@ -62,7 +60,7 @@ export default defineComponent({
 }
 
 .title {
-  grid-area: 1 / 3 / 3 / 9;
+  grid-area: 1 / 3 / 1 / 9;
   display: flex;
   flex-flow: row wrap;
   flex-wrap: wrap;

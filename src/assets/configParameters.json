@@ -4,9 +4,12 @@
     "datatype": "mean",
     "input": "price_input",
     "color": "transparent",
-    "active": false,
+    "enabled": false,
+    "visible": true,
     "elements": [
       {
+        "label": "parameters.price.sliderPrice.label",
+        "functionConverter": "toNOK",
         "type": "slider",
         "input": "budget",
         "min": 1000000,
@@ -14,6 +17,7 @@
         "step": 10000
       },
       {
+        "label": "parameters.sliders.weight",
         "type": "slider",
         "input": "weight",
         "min": 1,
@@ -31,7 +35,8 @@
       {
         "type": "group",
         "input": "selected",
-        "layout": "flex",
+        "layout": "grid",
+        "label": "parameters.age.checkboxes.label",
         "items": [
           {
             "type": "checkbox",
@@ -64,6 +69,8 @@
         ]
       },
       {
+        "label": "parameters.age.sliderAge.label",
+        "functionConverter": "toPercent",
         "type": "slider",
         "input": "percent",
         "min": 0,
@@ -71,6 +78,7 @@
         "step": 1
       },
       {
+        "label": "parameters.sliders.weight",
         "type": "slider",
         "input": "weight",
         "min": 1,
@@ -90,9 +98,11 @@
         "datatype": "",
         "input": "well_being_input",
         "color": "transparent",
-        "active": false,
+        "enabled": false,
+        "visible": false,
         "elements": [
           {
+            "label": "parameters.sliders.weight",
             "type": "slider",
             "input": "weight",
             "min": 1,
@@ -106,9 +116,11 @@
         "datatype": "",
         "input": "safety_input",
         "color": "transparent",
-        "active": false,
+        "enabled": false,
+        "visible": false,
         "elements": [
           {
+            "label": "parameters.sliders.weight",
             "type": "slider",
             "input": "weight",
             "min": 1,
@@ -122,9 +134,11 @@
         "datatype": "",
         "input": "culture_input",
         "color": "transparent",
-        "active": false,
+        "enabled": false,
+        "visible": false,
         "elements": [
           {
+            "label": "parameters.sliders.weight",
             "type": "slider",
             "input": "weight",
             "min": 1,
@@ -138,9 +152,11 @@
         "datatype": "",
         "input": "outdoor_input",
         "color": "transparent",
-        "active": false,
+        "enabled": false,
+        "visible": false,
         "elements": [
           {
+            "label": "parameters.sliders.weight",
             "type": "slider",
             "input": "weight",
             "min": 1,
@@ -154,9 +170,11 @@
         "datatype": "",
         "input": "transport_input",
         "color": "transparent",
-        "active": false,
+        "enabled": false,
+        "visible": false,
         "elements": [
           {
+            "label": "parameters.sliders.weight",
             "type": "slider",
             "input": "weight",
             "min": 1,
@@ -172,6 +190,7 @@
         "color": "transparent",
         "elements": [
           {
+            "label": "parameters.sliders.weight",
             "type": "slider",
             "input": "weight",
             "min": 1,
@@ -185,9 +204,11 @@
         "datatype": "",
         "input": "grocery_input",
         "color": "transparent",
-        "active": false,
+        "enabled": false,
+        "visible": false,
         "elements": [
           {
+            "label": "parameters.sliders.weight",
             "type": "slider",
             "input": "weight",
             "min": 1,
@@ -201,9 +222,11 @@
         "datatype": "",
         "input": "noise_input",
         "color": "transparent",
-        "active": false,
+        "enabled": false,
+        "visible": false,
         "elements": [
           {
+            "label": "parameters.sliders.weight",
             "type": "slider",
             "input": "weight",
             "min": 1,

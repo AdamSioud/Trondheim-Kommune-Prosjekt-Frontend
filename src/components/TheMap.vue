@@ -55,7 +55,7 @@ export default defineComponent({
     }
   },
   watch: {
-    geoJson (newValue) {
+    geoJson () {
       this.updateGeoJSONLayer()
     },
     score (newScore) {
@@ -77,9 +77,29 @@ export default defineComponent({
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map as L.Map)
     this.setMarkerControl()
+    this.setLegend()
     ;(this.map as L.Map).on('click', this.clickOnMapHandler)
   },
   methods: {
+    setLegend () {
+      const legend = new L.Control({ position: 'bottomright' })
+
+      legend.onAdd = () => {
+        const div = L.DomUtil.create('div', 'info legend')
+        const grades = [0, 20, 40, 60, 80, 100]
+
+        div.innerHTML += `<div style="text-align: center">${this.$t('map.legend.title')}</div>`
+        for (let i = 0; i < grades.length - 1; i++) {
+          div.innerHTML +=
+            '<div><i style="background:' + this.getColorAttribute(grades[i]) + '"></i> ' +
+            grades[i] + '% &ndash; ' + grades[i + 1] + '%</div>'
+        }
+
+        return div
+      }
+
+      legend.addTo(this.map as L.Map)
+    },
     setMarkerControl (): void {
       const markerControl = new L.Control({ position: 'topright' })
 
@@ -150,9 +170,8 @@ export default defineComponent({
         // permanent: true,
         className: 'display-tooltip'
       })
-      layer.on('click', event => {
+      layer.on('click', () => {
         if (!this.isAddingPoint) {
-          console.log('clicked on a zone')
           this.$emit('clickOnZone', feature.id)
         }
       })
@@ -170,17 +189,10 @@ export default defineComponent({
     },
     getColorAttribute (score: number | undefined): string {
       if (typeof score === 'undefined') score = 0
-      if (score < 20) {
-        return '#ffffcc'
-      } else if (score < 40) {
-        return '#a1dab4'
-      } else if (score < 60) {
-        return '#41b6c4'
-      } else if (score < 80) {
-        return '#2c7fb8'
-      } else {
-        return '#253494'
-      }
+      return score < 20 ? '#ffffcc' :
+        score < 40 ? '#a1dab4' :
+        score < 60 ? '#41b6c4' :
+        score < 80 ? '#2c7fb8' : '#253494'
     },
     addMarker (): void {
       L.DomUtil.addClass((this.map as L.Map).getContainer(), 'marker-cursor-enabled')
@@ -198,9 +210,6 @@ export default defineComponent({
 #the-map-wrapper {
   /*background: skyblue;*/
   flex: 0 1 400px;
-  margin-top: 1%;
-  margin-left: 1%;
-  margin-right: 1%;
   border: 1px solid;
 }
 
@@ -216,6 +225,16 @@ export default defineComponent({
   #the-map-add-marker {
     width: 40px;
     height: 40px;
+    background: $map-layer-control-background;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    color: $map-layer-control-color;
+    border: none;
+    cursor: pointer;
+  }
+
+  #the-map-add-marker:hover{
+    background: $map-layer-control-background-hover;
   }
 }
 </style>
@@ -226,11 +245,43 @@ export default defineComponent({
 }
 
 .leaflet-container.marker-cursor-enabled,
-.leaflet-container.marker-cursor-enabled .zone-class{
+.leaflet-container.marker-cursor-enabled .zone-class {
   cursor: url("../../public/location-dot-solid.svg") 10 40, crosshair !important;
 }
 
 .display-tooltip {
   display: v-bind(tooltipDisplay);
+}
+
+.legend {
+  line-height: 18px;
+  color: $map-layer-control-color;
+}
+
+.legend i {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+}
+
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: $map-layer-control-background;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  max-width: 120px;
+}
+
+.leaflet-control-zoom a {
+  background: $map-layer-control-background;
+  border-color: $map-layer-control-background;
+  color: $map-layer-control-color;
+}
+
+.leaflet-control-zoom a:hover {
+  background: $map-layer-control-background-hover;
+  border-color: $map-layer-control-background-hover;
 }
 </style>

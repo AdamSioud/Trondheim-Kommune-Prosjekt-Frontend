@@ -25,7 +25,10 @@ module.exports = {
       multiline: {
         max: 3
       }
-    }]
+    }],
+    'operator-linebreak': ['error', 'after'],
+    'multiline-ternary': 'off',
+    indent: ['error', 2, { flatTernaryExpressions: true }]
   },
 
   overrides: [

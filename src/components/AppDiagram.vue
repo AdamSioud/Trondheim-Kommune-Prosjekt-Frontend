@@ -1,6 +1,6 @@
 <template>
   <GChart class="chart" type="PieChart"
-          :data="chartData" :options="chartOptions"
+          :data="chartData" :options="chartOptions" @ready="$emit('chartReady')"
   />
 </template>
 
@@ -19,6 +19,7 @@ export default {
       }
     }
   },
+  emits: ['chartReady'],
   data () {
     return {
       // chartData: [
@@ -28,7 +29,7 @@ export default {
       //   ['2016', 660, 720, 300]
       // ],
       chartOptions: {
-        height: 140,
+        // height: 140,
         chart: {
           title: 'Company Performance',
           subtitle: 'Sales, Expenses, and Profit: 2014-2017'
@@ -40,7 +41,7 @@ export default {
 </script>
 
 <style scoped lang="css">
-.chart {
-  max-height: 1px;
-}
+/*.chart {*/
+/*  max-height: 1px;*/
+/*}*/
 </style>

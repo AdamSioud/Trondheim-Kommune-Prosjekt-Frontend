@@ -50,7 +50,6 @@ export default defineComponent({
     ...mapActions(usePointsStore, ['addingPoint']),
     handlerClickOnMarkerIcon (event: Event) {
       event.preventDefault()
-      console.log('emitAddingNewMarker', this.addingPoint)
       if (this.isMarkerPlaced) this.$emit('showPosition', this.x, this.y)
       else if (!this.isAddingPoint) {
         this.addingPoint(this.id)
@@ -59,7 +58,6 @@ export default defineComponent({
     },
     documentClickHandler () {
       this.addingPoint(-1)
-      console.log('documentClickHandler')
     }
   }
 })

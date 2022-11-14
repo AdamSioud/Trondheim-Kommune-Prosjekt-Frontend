@@ -44,7 +44,7 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
   color: #ffffff;
-  background-color:rgb(121, 174, 204);
+  background-color: $background-primary;
 }
 .height100{
   height: 100%;

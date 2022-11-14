@@ -3,7 +3,7 @@
     <input type="checkbox" :id="id" :name="name"
            :required="required" :disabled="disabled" :checked="internalChecked"
            :value="value" @change="sendEvent($event)" class="checkbox-input">
-    <label :for="id" class="checkbox-label">
+    <label :for="id" :class="{'checkbox-label': true, selected: isChecked}">
       <slot></slot>
     </label>
   </div>
@@ -47,7 +47,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'input'],
   data () {
     return {
-      borderColor: 'grey'
+      isChecked: false
     }
   },
   computed: {
@@ -61,25 +61,22 @@ export default defineComponent({
       const checkbox = (event.target as HTMLInputElement)
       this.$emit('update:modelValue', checkbox.checked)
       this.$emit('input', checkbox.checked)
-      this.borderColor = checkbox.checked ? 'blue' : 'grey'
+      this.isChecked = checkbox.checked
     }
   },
   mounted () {
-    if (this.internalChecked) this.borderColor = 'blue'
+    this.isChecked = this.internalChecked
   }
 })
 </script>
 
 <style scoped lang="scss">
-
 .checkbox-input {
   display: none;
 }
 
 .checkbox {
   display: inline-block;
-  margin: 5px;
-  flex: 1 1 0;
 }
 
 .checkbox-label {
@@ -90,9 +87,13 @@ export default defineComponent({
   cursor: pointer;
   padding: 5px;
   box-sizing: border-box;
-  border: v-bind(borderColor) 1px solid;
+  border: grey 3px solid;
   border-radius: 8px;
-  user-select: none;
+  @include user-select-custom(none);
+}
+
+.selected {
+  border-color: $input-secondary
 }
 
 </style>

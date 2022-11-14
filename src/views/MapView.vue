@@ -1,7 +1,8 @@
 <template>
-  <div id="mapView">
+  <div id="map-view">
     <the-parameters :param-input="paramInput" @update:paramInput="updateParamInput"/>
-    <div id="mapAndDetailsWrapper">
+    <div id="map-and-details-wrapper">
+<!--      <span style="color: black; margin-bottom: 10px">{{ paramInput }}</span>-->
       <the-map :geo-json="geoJSON" :score="score" @click-on-zone="getDataForZone"/>
       <the-details :zone-data="zoneData"/>
     </div>
@@ -17,7 +18,7 @@ import paramInput from '../assets/param_input.json'
 import { GeoJsonObject } from 'geojson'
 
 export default defineComponent({
-  name: 'HomeView',
+  name: 'MapView',
   components: {
     TheParameters,
     TheMap,
@@ -74,13 +75,13 @@ export default defineComponent({
 
 <style scoped>
 
-#mapView {
+#map-view {
   display: flex;
   flex: auto;
   flex-direction: column;
 }
 
-#mapAndDetailsWrapper {
+#map-and-details-wrapper {
   flex: auto;
   display: flex;
   flex-direction: column;
@@ -95,8 +96,12 @@ export default defineComponent({
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  #mapView {
+  #map-view {
     flex-direction: row;
+  }
+
+  #map-and-details-wrapper {
+    margin: 1%;
   }
 }
 

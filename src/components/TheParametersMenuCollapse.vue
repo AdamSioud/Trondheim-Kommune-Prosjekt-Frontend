@@ -1,20 +1,24 @@
 <template>
-  <div class="menu-collapse-wrapper" :style="{backgroundColor: color, filter: 'brightness(' + (!internalActive ? '50' : '100') + '%)'}">
+  <div class="menu-collapse-wrapper" :style="{backgroundColor: color, filter: 'brightness(' + (!internalEnabled ? '50' : '100') + '%)'}">
     <div class="menu-collapse-title-wrapper">
-      <input type="checkbox" :name="'checkbox' + title" :id="'checkbox' + title"
-             :checked="internalActive" @change="toggleActive" :disabled="totallyDisabled">
-      <h3 class="menu-collapse-title" @click="toggleVisible">{{ title }}</h3>
+      <label class="checkbox-control">
+        <input type="checkbox" :name="'checkbox' + title" :id="'checkbox' + title"
+                :checked="internalEnabled" @change="toggleEnabled" :disabled="totallyDisabled">
+      </label>
+      <h2 class="menu-collapse-title" @click="toggleVisible">{{ title }}</h2>
+      <font-awesome-icon icon="fa-solid fa-caret-down" :transform="{ rotate: internalVisible ? '0' : '90' }"/>
     </div>
     <Transition name="menu-collapse"
                 @before-leave="onBeforeLeave" @leave="onLeave" @enter="onEnter">
       <div v-if="internalVisible" class="menu-collapse-content">
         <template v-if="Array.isArray(elements)">
-          <template v-for="(element, key, i) in elements" :key="i">
-            <div v-if="element.type === 'group'" :class="'group-' + element.layout">
+          <div v-for="(element, key, i) in elements" :key="i" class="parameter-section">
+            <h3 v-if="element.label" class="parameter-label">{{ $t(element.label) }}</h3>
+            <div v-if="element.type === 'group'" :class="'group-' + element.layout" :style="[element.layout === 'grid' ? { 'grid-template-columns': `repeat(${element.items.length},1fr)` } : '']">
               <template v-for="(item, index) in element.items" :key="index">
                 <template v-if="item.type === 'checkbox'">
                   <app-checkbox :checked="paramInput[element.input].indexOf(item.input) !== -1" @input="res => emitChangeValue([], element.input, manageArray(paramInput[element.input], item.input, res))"
-                                :disabled="!internalActive">
+                                :disabled="!internalEnabled">
                     <div class="wrapper-checkbox-content">
                       <div class="wrapper-checkbox-content-icon">
                         <font-awesome-icon v-if="new RegExp('^fa').test(item.picture)" :icon="'fa-solid ' + item.picture" :size="item.size"/>
@@ -27,18 +31,19 @@
             </div>
             <template v-else-if="element.type === 'slider'">
               <app-slider :min="element.min" :max="element.max" :step="element.step"
-                          :disabled="!internalActive"
+                          :disabled="!internalEnabled"
                           :value="paramInput[element.input]" @input-value="res => emitChangeValue([], element.input, res)"/>
-              {{ paramInput[element.input] }}
+              {{ element.functionConverter ? callConverterFunction(element.functionConverter, paramInput[element.input]) : paramInput[element.input] }}
             </template>
-          </template>
+          </div>
+          <div class="space-between-menu"></div>
         </template>
         <the-parameters-menu-collapse v-else v-for="(menu, key) in elements" :key="key"
-                            :title="$t(menu.title)" :color="menu.color" :model-value="menu.active"
-                            :elements="menu.elements" :input="menu.input" :menu-key="String(key)"
-                            :param-input="paramInput[menu.input]" :totally-disabled="!internalActive"
-                            @change-active="isActive => emitSetActive([key], [menu.input], isActive)"
-                            @change-value="emitChangeValue" @set-active="emitSetActive"/>
+                                      :title="$t(menu.title)" :color="menu.color" :model-value="menu.enabled"
+                                      :elements="menu.elements" :input="menu.input" :menu-key="String(key)"
+                                      :param-input="paramInput[menu.input]" :totally-disabled="!internalEnabled" :visible="menu.visible"
+                                      @change-enabled="isEnabled => emitSetEnabled([key], [menu.input], isEnabled)"
+                                      @change-value="emitChangeValue" @set-enabled="emitSetEnabled" @change-visible="(isVisible) => {menu.visible = isVisible}"/>
       </div>
     </Transition>
   </div>
@@ -49,6 +54,7 @@ import { defineComponent } from 'vue'
 import AppSlider from '@/components/AppSlider.vue'
 import AppCheckbox from '@/components/AppCheckbox.vue'
 import { manageArray } from '@/helpers/utils'
+import * as Converters from '../helpers/convertersValueParameters'
 
 export default defineComponent({
   name: 'TheParametersMenuCollapse',
@@ -97,12 +103,20 @@ export default defineComponent({
       }
     }
   },
-  emits: ['changeActive', 'update:modelValue', 'changeVisible', 'update:visible', 'changeValue', 'setActive'],
+  emits: ['changeEnabled', 'update:modelValue', 'changeVisible', 'update:visible', 'changeValue', 'setEnabled'],
   data () {
     return {
       internalVisible: this.visible,
       internalColor: this.color,
-      internalActive: this.modelValue
+      internalEnabled: this.modelValue
+    }
+  },
+  watch: {
+    visible (newValue) {
+      if (newValue !== this.internalVisible) this.internalVisible = newValue
+    },
+    modelValue (newValue) {
+      this.setEnabled(newValue)
     }
   },
   methods: {
@@ -115,26 +129,42 @@ export default defineComponent({
     onEnter (el: HTMLElement) {
       el.style.height = el.scrollHeight + 'px'
     },
-    toggleActive () {
-      this.internalActive = !this.internalActive
-      this.$emit('changeActive', this.internalActive)
-      this.$emit('update:modelValue', this.internalActive)
+    setEnabled (newValue: boolean) {
+      this.internalEnabled = newValue
+      this.$emit('changeEnabled', this.internalEnabled)
+      this.$emit('update:modelValue', this.internalEnabled)
     },
-    toggleVisible () {
-      this.internalVisible = !this.internalVisible
+    toggleEnabled () {
+      this.setEnabled(!this.internalEnabled)
+      this.setVisible(this.internalEnabled)
+    },
+    setVisible (newValue: boolean) {
+      this.internalVisible = newValue
       this.$emit('changeVisible', this.internalVisible)
       this.$emit('update:visible', this.internalVisible)
     },
+    toggleVisible () {
+      this.setVisible(!this.internalVisible)
+    },
     manageArray: manageArray,
+    callConverterFunction (functionName: string, value: never) {
+      const fn = Converters[functionName as keyof typeof Converters]
+      try {
+        if (typeof fn === 'function') return fn(value)
+        return value
+      } catch (e) {
+        return value
+      }
+    },
     emitChangeValue (menuInputs: string[], input: string, value: unknown) {
       menuInputs.unshift(this.input)
       this.$emit('changeValue', menuInputs, input, value)
     },
-    emitSetActive (menuKeys: string[], menuInputs: string[], active: boolean) {
-      if (!this.internalActive) return
+    emitSetEnabled (menuKeys: string[], menuInputs: string[], enabled: boolean) {
+      if (!this.internalEnabled) return
       menuKeys.unshift(this.menuKey)
       menuInputs.unshift(this.input)
-      this.$emit('setActive', menuKeys, menuInputs, active)
+      this.$emit('setEnabled', menuKeys, menuInputs, enabled)
     }
   }
 })
@@ -157,21 +187,57 @@ export default defineComponent({
 //.menu-collapse-leave-from {
 //  height: v-bind() + 'px';
 //}
+.checkbox-control input[type="checkbox"]{
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: $background-primary;
+  margin: 0;
+  font: inherit;
+  color: grey;
+  width: 1.15em;
+  height: 1.15em;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.checkbox-control input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em white;
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.checkbox-control input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+.checkbox-control {
+  display: flex;
+  align-items: center;
+}
 
 @media only screen and (min-width: 768px) {
   .menu-collapse-title-wrapper {
     display: flex;
     padding: 4px 0;
+    gap: 5px;
   }
   .menu-collapse-title {
     flex-grow: 1;
     cursor: pointer;
     font-size: 1.5rem;
     text-align: left;
-    user-select: none;
+    @include user-select-custom(none);
   }
-  .menu-collapse-content {
-    padding-bottom: 5px;
+  .menu-collapse-content {;
+    margin-left: 1em;
   }
 
   .group-flex {
@@ -179,6 +245,39 @@ export default defineComponent({
     justify-content: center;
     align-items: stretch;
     flex-wrap: wrap;
+  }
+
+  .group-grid {
+    display: grid;
+    grid-gap: 5px;
+  }
+
+  .wrapper-checkbox-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+  .wrapper-checkbox-content-icon {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .parameter-label {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .parameter-section {
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .space-between-menu {
+    padding: 0.8em 0;
   }
 }
 </style>

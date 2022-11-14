@@ -1,46 +1,35 @@
 <template>
-  <div id="theParameters">
+  <div id="the-parameters">
     <div id="parameters-wrapper">
       <div id="parameters" ref="divParameters">
         <div class="profile">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Trondheim_komm.svg/1200px-Trondheim_komm.svg.png" alt="profile_picture">
-          <h3>Trondheim kommune</h3>
-          <p>Kart</p>
+          <h1>Trondheim kommune <br> Kart</h1>
         </div>
-        <!--        <the-parameters-distance-input/>-->
-        <!--        <app-menu-collapse v-for="(menu, key) in configParameters" :key="key"
-                                   :title="$t(menu.title)" :color="menu.color"
-                                   @change-active="isActive => setActive(key, menu.input, isActive)" :model-value="(menu.active === undefined ? true : menu.active)">
-                  <template v-for="(element, key, i) in menu.elements" :key="i">
-                    <div v-if="element.type === 'group'" :class="'group-' + element.layout">
-                      <template v-for="(item, index) in element.items" :key="index">
-                        <template v-if="item.type === 'checkbox'">
-                          <app-checkbox :checked="internalParamInput[menu.input][element.input].indexOf(item.input) !== -1" @input="res => changeValue(menu.input, element.input, manageArray(internalParamInput[menu.input][element.input], item.input, res))"
-                                        :disabled="!menu.active">
-                            <div class="wrapper-checkbox-content">
-                              <div class="wrapper-checkbox-content-icon">
-                                <font-awesome-icon v-if="new RegExp('^fa').test(item.picture)" :icon="'fa-solid ' + item.picture" :size="item.size"/>
-                              </div>
-                              <div>{{ $t(item.title) }}</div>
-                            </div>
-                          </app-checkbox>
-                        </template>
-                      </template>
-                    </div>
-                    <template v-else-if="element.type === 'slider'">
-                      <app-slider :min="element.min" :max="element.max" :step="element.step"
-                                  :disabled="!menu.active"
-                                  :value="internalParamInput[menu.input][element.input]" @input-value="res => changeValue(menu.input,element.input,res)"/>
-                      {{internalParamInput[menu.input][element.input]}}
-                    </template>
-                  </template>
-                </app-menu-collapse>-->
+        <div id="parameters-actions">
+          <button v-show="!enableAll" @click="toggleEnableAll">
+            <font-awesome-icon icon="fa-solid fa-square-check" />
+            <span>{{ $t('parameters.actions.enableAll') }}</span>
+          </button>
+          <button v-show="enableAll" @click="toggleEnableAll">
+            <font-awesome-icon icon="fa-solid fa-square-xmark" />
+            <span>{{ $t('parameters.actions.disableAll') }}</span>
+          </button>
+          <button v-show="collapseAll" @click="toggleVisibleAll">
+            <font-awesome-icon icon="fa-solid fa-angles-down" rotation="180"/>
+            <span>{{ $t('parameters.actions.collapseAll') }}</span>
+          </button>
+          <button v-show="!collapseAll" @click="toggleVisibleAll">
+            <font-awesome-icon icon="fa-solid fa-angles-down" />
+            <span>{{ $t('parameters.actions.expendAll') }}</span>
+          </button>
+        </div>
         <menu-collapse v-for="(menu, key) in configParameters" :key="key"
-                       :title="$t(menu.title)" :color="menu.color" :model-value="menu.active"
+                       :title="$t(menu.title)" :color="menu.color" :model-value="menu.enabled"
                        :elements="menu.elements" :input="menu.input" :menu-key="key"
-                       :param-input="internalParamInput[menu.input]"
-                       @change-active="isActive => setActive([key], [menu.input], isActive)"
-                       @change-value="changeValue" @set-active="setActive"/>
+                       :param-input="internalParamInput[menu.input]" :visible="menu.visible"
+                       @change-enabled="isEnabled => setEnabled([key], [menu.input], isEnabled)"
+                       @change-value="changeValue" @set-enabled="setEnabled" @change-visible="(isVisible) => {menu.visible = isVisible}"/>
       </div>
     </div>
   </div>
@@ -51,7 +40,6 @@ import { defineComponent } from 'vue'
 import TheParametersMenuCollapse from '@/components/TheParametersMenuCollapse.vue'
 import { ConfigParameters, Menu } from '@/type'
 import configParameters from '../assets/configParameters.json'
-import TheParametersDistanceInput from '@/components/TheParametersDistanceInput.vue'
 
 export default defineComponent({
   name: 'TheParameters',
@@ -72,7 +60,9 @@ export default defineComponent({
     return {
       internalParamInput: JSON.parse(JSON.stringify(this.paramInput)),
       resultParamInput: JSON.parse(JSON.stringify(this.paramInput)),
-      configParameters: configParameters as ConfigParameters
+      configParameters: configParameters as ConfigParameters,
+      collapseAll: true,
+      enableAll: true
     }
   },
   beforeMount () {
@@ -83,7 +73,7 @@ export default defineComponent({
   mounted () {
     for (const menu in this.configParameters) {
       this.initResultParamInput(this.configParameters[menu], this.resultParamInput[this.configParameters[menu].input as string])
-      if (!this.configParameters[menu].active) {
+      if (!this.configParameters[menu].enabled) {
         delete this.resultParamInput[this.configParameters[menu].input as string]
       }
     }
@@ -92,7 +82,8 @@ export default defineComponent({
   methods: {
     initConfigParameters (menu: Menu) {
       if (menu.title === undefined) menu.title = 'parameters.menu'
-      if (menu.active === undefined) menu.active = true
+      if (menu.enabled === undefined) menu.enabled = true
+      if (menu.visible === undefined) menu.visible = true
       if (menu.color === undefined) menu.color = 'white'
       if (!Array.isArray(menu.elements)) {
         for (const subMenuKey in menu.elements) {
@@ -105,21 +96,53 @@ export default defineComponent({
         for (const subMenuKey in menu.elements) {
           const subMenu = (menu.elements as { [key: string]: Menu })[subMenuKey]
           this.initResultParamInput(subMenu, input[menu.input as string])
-          if (!menu.elements[subMenuKey].active) {
+          if (!menu.elements[subMenuKey].enabled) {
             delete input[subMenu.input as string]
           }
         }
       }
     },
-    setActive (menuKeys: string[], menuInputs: string[], active: boolean) {
+    toggleVisibleAll () {
+      this.setVisibleAll(!this.collapseAll)
+    },
+    setVisibleAll (newValue: boolean) {
+      this.collapseAll = newValue
+      for (const menuKey in this.configParameters) {
+        this.changeMenuVisible(this.configParameters[menuKey])
+      }
+    },
+    changeMenuVisible (menu: Menu) {
+      menu.visible = this.collapseAll
+      if (!Array.isArray(menu.elements)) {
+        for (const subMenuKey in menu.elements) {
+          this.changeMenuVisible((menu.elements as { [key: string]: Menu })[subMenuKey])
+        }
+      }
+    },
+    toggleEnableAll () {
+      this.enableAll = !this.enableAll
+      for (const menuKey in this.configParameters) {
+        this.changeMenuEnabled(this.configParameters[menuKey])
+      }
+      if (!this.enableAll) this.setVisibleAll(false)
+    },
+    changeMenuEnabled (menu: Menu) {
+      menu.enabled = this.enableAll
+      if (!Array.isArray(menu.elements)) {
+        for (const subMenuKey in menu.elements) {
+          this.changeMenuEnabled((menu.elements as { [key: string]: Menu })[subMenuKey])
+        }
+      }
+    },
+    setEnabled (menuKeys: string[], menuInputs: string[], enabled: boolean) {
       if (menuKeys.length !== 0) {
         let menu = this.configParameters[menuKeys[0]]
         for (let i = 1; i < menuKeys.length; i++) {
           menu = (menu.elements as { [key: string]: Menu })[menuKeys[i]]
         }
-        menu.active = active
+        menu.enabled = enabled
         let inputToAdd = null
-        if (active) {
+        if (enabled) {
           inputToAdd = JSON.parse(JSON.stringify(menuInputs.reduce((a, b) => a[b], this.internalParamInput)))
           this.initResultParamInput(menu, inputToAdd)
         }
@@ -151,36 +174,41 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-#theParameters {
-  background-color:rgb(5, 68, 104);
-  padding: 3px 20px;
+#the-parameters {
+  background-color: $background-secondary;
+  padding: 3px 20px 3px 15px;
 }
 
-.profile{
-    margin-bottom: 30px;
-    text-align: center;
+.profile {
+  margin-bottom: 30px;
+  text-align: center;
 }
 
-.profile img{
-    display: block;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 0 auto;
+.profile img {
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto;
 }
 
-.profile h3{
-    color: #ffffff;
-    margin: 10px 0 5px;
+.profile h3 {
+  color: #ffffff;
+  margin: 10px 0 5px;
 }
 
-.profile p{
-    color: rgb(255, 255, 255);
-    font-size: 14px;
+.profile p {
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+}
+
+#parameters-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 @media only screen and (min-width: 768px) {
-  #theParameters {
+  #the-parameters {
     height: 100%;
     min-width: 250px;
     display: flex;
@@ -204,23 +232,25 @@ export default defineComponent({
     -ms-overflow-style: -ms-autohiding-scrollbar;
   }
 
-  .group-flex {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    flex-wrap: wrap;
+  #parameters-actions {
+    grid-gap: 10px;
+    margin-bottom: 1em;
   }
-  .wrapper-checkbox-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-  }
-  .wrapper-checkbox-content-icon {
-    flex-grow: 1;
+
+  #parameters-actions button {
+    background: $background-primary;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 5px 5px 5px 10px;
     display: flex;
     align-items: center;
+    gap: 5px;
+  }
+
+  #parameters-actions button span {
+    flex: 1;
   }
 }
 
@@ -232,7 +262,7 @@ export default defineComponent({
 
 /* Hide scrollbar for IE, Edge and Firefox */
 #parameters {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 </style>

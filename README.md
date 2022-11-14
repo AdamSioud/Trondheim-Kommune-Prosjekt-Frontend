@@ -65,7 +65,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     │   ├── TheParametersDistanceInputPoint.vue
     │   └── TheParametersMenuCollapse.vue
     ├── helpers
-    │   ├── convertersParameters.ts
+    │   ├── convertersValueParameters.ts
     │   └── utils.ts
     ├── i18n.ts
     ├── locales
@@ -86,7 +86,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
         ├── components
         │   └── example.spec.ts
         └── helpers
-            ├── converters.spec.ts
             └── utils.spec.ts
 ├── tsconfig.json
 └── vue.config.js

@@ -1,6 +1,7 @@
 {
   "parameters": {
     "title": "Parameters",
+    "subtitle": "Kart",
     "point": {
       "label": "Marker",
       "add": "Add a new marker"

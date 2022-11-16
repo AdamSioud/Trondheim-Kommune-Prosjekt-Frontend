@@ -2,10 +2,10 @@
   <div class="card">
     <div class="title">
       <div class="name">{{ $t(name) }}</div>
-      <div class="checkbox"> Insert checkbox</div>
+      <div class="checkbox"></div>
     </div>
     <div class="diagram">
-      <AppDiagram :chart-data="chartData"></AppDiagram>
+      <AppDiagram :chart-data="chartData" @chart-ready="$emit('chartReady')"></AppDiagram>
     </div>
     <!--    <div class="text"> {{ text }}</div>-->
   </div>
@@ -34,6 +34,7 @@ export default defineComponent({
       }
     }
   },
+  emits: ['chartReady'],
   computed: {
     chartData () {
       const chartData = [['Population', 'Quantity']]
@@ -50,29 +51,27 @@ export default defineComponent({
 
 <style scoped lang="css">
 .card {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(12, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  background: rgba(26, 8, 8, 0.34);
+  flex: 1 1;
+  margin: 10px;
 }
 
-.diagram {
-  grid-area: 3 / 2 / 13 / 8;
-}
+/*.diagram {*/
+/*  grid-area: 3 / 2 / 13 / 8;*/
+/*}*/
 
-.title {
-  grid-area: 1 / 3 / 3 / 9;
-  display: flex;
-  flex-flow: row wrap;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-around;
-  margin-top: 4px;
-}
+/*.title {*/
+/*  grid-area: 1 / 3 / 1 / 9;*/
+/*  display: flex;*/
+/*  flex-flow: row wrap;*/
+/*  flex-wrap: wrap;*/
+/*  flex-direction: row;*/
+/*  justify-content: space-around;*/
+/*  margin-top: 4px;*/
+/*}*/
 
-.name {
-  font-weight: bold;
-}
+/*.name {*/
+/*  font-weight: bold;*/
+/*}*/
 
 </style>

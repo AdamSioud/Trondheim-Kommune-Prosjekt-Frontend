@@ -55,7 +55,8 @@ export interface Menu {
   datatype?: string | undefined,
   input?: string | undefined,
   color?: string | undefined,
-  active?: boolean | undefined,
+  enabled?: boolean | undefined,
+  visible?: boolean | undefined,
   elements?: Element[] | { [key: string]: Menu } | undefined
 }
 

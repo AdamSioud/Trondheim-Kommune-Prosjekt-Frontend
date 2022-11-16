@@ -334,7 +334,7 @@ export default defineComponent({
 }
 
 #range-slider {
-  background-color: rgb(250, 0, 0);
+  background-color: $input-secondary;
   height: 4px;
   border-radius: 10px;
   position: relative;
@@ -349,14 +349,14 @@ export default defineComponent({
   border-radius: 50%;
   transform: translate(-50%,-40%);
   z-index: 1;
-  border: #0365d618 solid 6px;
+  border: $input-primary solid 6px;
   box-sizing: border-box;
   cursor: pointer;
 }
 
 #range-slider-include {
   height: 100%;
-  background: #0366d6;
+  background: $input-primary;
   width: 80%;
   left: 10%;
   position: absolute;
@@ -379,9 +379,6 @@ export default defineComponent({
 
 <style lang="scss">
 .moving {
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
+  @include user-select-custom(none);
 }
 </style>

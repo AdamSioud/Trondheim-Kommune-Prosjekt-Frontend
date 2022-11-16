@@ -2,22 +2,41 @@
   "parameters": {
     "title": "Parameters",
     "subtitle": "Kart",
+    "menu": "Menu",
+    "actions": {
+      "enableAll": "Enable all",
+      "disableAll": "Disable all",
+      "collapseAll": "Collapse all",
+      "expendAll": "Expend all"
+    },
     "point": {
       "label": "Marker",
       "add": "Add a new marker"
+    },
+    "sliders": {
+      "weight": "Weight"
     },
     "price": {
       "title": "Price",
       "small": "Small",
       "medium": "Medium",
-      "large": "Large"
+      "large": "Large",
+      "sliderPrice": {
+        "label": "Price in NOK"
+      }
     },
     "age": {
       "title": "Age",
       "017": "0-17",
       "1834": "18-34",
       "3566": "35-66",
-      "67": "67+"
+      "67": "67+",
+      "checkboxes": {
+        "label": "Age ranges"
+      },
+      "sliderAge": {
+        "label": "Percentage"
+      }
     },
     "environment": {
       "title": "Environment",
@@ -51,6 +70,9 @@
     "tooltip": {
       "name": "Name",
       "score": "Score"
+    },
+    "legend": {
+      "title": "Match rate"
     }
   },
   "details": {

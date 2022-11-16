@@ -1,8 +1,8 @@
 <template>
-  <div class="menu-collapse-wrapper" :style="{backgroundColor: color, filter: 'brightness(' + (!internalActive ? '50' : '100') + '%)'}">
+  <div class="menu-collapse-wrapper" :style="{backgroundColor: color, filter: 'brightness(' + (!internalEnabled ? '50' : '100') + '%)'}">
     <div class="menu-collapse-title-wrapper">
       <input type="checkbox" :name="'checkbox' + title" :id="'checkbox' + title"
-             :checked="internalActive" @change="toggleActive">
+             :checked="internalEnabled" @change="toggleEnabled">
       <h3 class="menu-collapse-title" @click="toggleVisible">{{ title }}</h3>
     </div>
     <Transition name="menu-collapse"
@@ -37,12 +37,12 @@ export default defineComponent({
       default: true
     }
   },
-  emits: ['changeActive', 'update:modelValue', 'changeVisible', 'update:visible'],
+  emits: ['changeEnabled', 'update:modelValue', 'changeVisible', 'update:visible'],
   data () {
     return {
       internalVisible: this.visible,
       internalColor: this.color,
-      internalActive: this.modelValue
+      internalEnabled: this.modelValue
     }
   },
   methods: {
@@ -55,10 +55,10 @@ export default defineComponent({
     onEnter (el: HTMLElement) {
       el.style.height = el.scrollHeight + 'px'
     },
-    toggleActive () {
-      this.internalActive = !this.internalActive
-      this.$emit('changeActive', this.internalActive)
-      this.$emit('update:modelValue', this.internalActive)
+    toggleEnabled () {
+      this.internalEnabled = !this.internalEnabled
+      this.$emit('changeEnabled', this.internalEnabled)
+      this.$emit('update:modelValue', this.internalEnabled)
     },
     toggleVisible () {
       this.internalVisible = !this.internalVisible
@@ -96,7 +96,7 @@ export default defineComponent({
     cursor: pointer;
     font-size: 1.5rem;
     text-align: left;
-    user-select: none;
+    @include user-select-custom(none);
   }
   .menu-collapse-content {
     padding-bottom: 5px;

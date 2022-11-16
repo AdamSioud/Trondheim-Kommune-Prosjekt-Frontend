@@ -8,9 +8,23 @@ import i18n from './i18n'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 
-import { faHouse, faPerson, faChild, faPersonCane, faLocationDot, faLocationCrosshairs, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
+import {
+  faHouse,
+  faPerson,
+  faChild,
+  faPersonCane,
+  faLocationDot,
+  faLocationCrosshairs,
+  faPlus,
+  faXmark,
+  faCaretDown,
+  faAnglesDown,
+  faSquareCheck,
+  faSquareXmark
+} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faHouse, faPerson, faChild, faPersonCane, faLocationDot, faLocationCrosshairs, faPlus, faXmark)
+library.add(faHouse, faPerson, faChild, faPersonCane, faLocationDot, faLocationCrosshairs,
+  faPlus, faXmark, faCaretDown, faAnglesDown, faSquareCheck, faSquareXmark)
 
 const app = createApp(App)
 const pinia = createPinia()

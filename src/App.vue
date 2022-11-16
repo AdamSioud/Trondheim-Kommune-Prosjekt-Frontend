@@ -44,11 +44,10 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
   color: #ffffff;
-  background-color:rgb(121, 174, 204);
+  background-color: $background-primary;
 }
 .height100{
   height: 100%;
-  overflow: hidden;
 }
 
 .flex-column{
@@ -58,5 +57,11 @@ export default defineComponent({
 
 h1{
   font-size: 1.5rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .height100 {
+    overflow: hidden;
+  }
 }
 </style>

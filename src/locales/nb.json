@@ -4,10 +4,10 @@
     "subtitle": "Kart",
     "menu": "Menu",
     "actions": {
-      "enableAll": "Enable all",
-      "disableAll": "Disable all",
-      "collapseAll": "Collapse all",
-      "expendAll": "Expend all"
+      "enableAll": "Skru på alle",
+      "disableAll": "Skru av alle",
+      "collapseAll": "Slå sammen",
+      "expendAll": "Utvid"
     },
     "point": {
       "label": "Pin",
@@ -72,7 +72,7 @@
       "score": "Score"
     },
     "legend": {
-      "title": "Match rate"
+      "title": "Treffprosent"
     }
   },
   "details": {

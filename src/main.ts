@@ -20,11 +20,13 @@ import {
   faCaretDown,
   faAnglesDown,
   faSquareCheck,
-  faSquareXmark
+  faSquareXmark,
+  faArrowPointer,
+  faSliders
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faHouse, faPerson, faChild, faPersonCane, faLocationDot, faLocationCrosshairs,
-  faPlus, faXmark, faCaretDown, faAnglesDown, faSquareCheck, faSquareXmark)
+  faPlus, faXmark, faCaretDown, faAnglesDown, faSquareCheck, faSquareXmark, faArrowPointer, faSliders)
 
 const app = createApp(App)
 const pinia = createPinia()

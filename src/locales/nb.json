@@ -10,65 +10,65 @@
       "expendAll": "Expend all"
     },
     "point": {
-      "label": "Marker",
-      "add": "Add a new marker"
+      "label": "Pin",
+      "add": "Legg til en pin"
     },
     "sliders": {
-      "weight": "Weight"
+      "weight": "Prioritering"
     },
     "price": {
-      "title": "Price",
+      "title": "Pris",
       "small": "Small",
       "medium": "Medium",
       "large": "Large",
       "sliderPrice": {
-        "label": "Price in NOK"
+        "label": "Budsjett på boligkjøp"
       }
     },
     "age": {
-      "title": "Age",
+      "title": "Menneskene",
       "017": "0-17",
       "1834": "18-34",
       "3566": "35-66",
       "67": "67+",
       "checkboxes": {
-        "label": "Age ranges"
+        "label": "Aldersfordeling"
       },
       "sliderAge": {
-        "label": "Percentage"
+        "label": "Ønsket fordeling"
       }
     },
     "environment": {
-      "title": "Environment",
+      "title": "Bomiljø",
       "wellbeing": {
-        "title": "Well being"
+        "title": "Velvære"
       },
       "safety": {
-        "title": "Safety"
+        "title": "Trygghet"
       },
       "culture": {
-        "title": "Culture"
+        "title": "Kultur"
       },
       "outdoor": {
-        "title": "Outdoor"
+        "title": "Uteområder"
       },
       "transport": {
-        "title": "Transport"
+        "title": "Offentlig transport"
       },
       "walkway": {
-        "title": "Walkway"
+        "title": "Gangavstand"
       },
       "grocery": {
-        "title": "Grocery"
+        "title": "Nærbutikk"
       },
       "noise": {
-        "title": "Noise"
+        "title": "Støynivå"
       }
     }
   },
   "map": {
     "tooltip": {
-      "name": "Name",
+      "name": "Levekårssone",
       "score": "Score"
     },
     "legend": {
@@ -76,8 +76,8 @@
     }
   },
   "details": {
-    "age": "Age",
-    "price": "Price",
-    "neighborhood": "Environment"
+    "age": "Aldersfordeling",
+    "price": "Gjennomsnittlig eiendomspris",
+    "neighborhood": "Bomiljø"
   }
 }

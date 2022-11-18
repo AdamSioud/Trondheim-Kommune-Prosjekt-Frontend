@@ -5,6 +5,9 @@
         <div class="profile">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Trondheim_komm.svg/1200px-Trondheim_komm.svg.png" alt="profile_picture">
           <h1>Trondheim kommune <br> Kart</h1>
+          <font-awesome-icon icon="fa-solid fa-sliders" /><h4>Velg og prioriter ønsket parameter/ere fra 1 - 5 for å finne stedet som passer deg <br>
+            <font-awesome-icon icon="fa-solid fa-location-dot"/> Drop en pin, og sett ønsket radius, for gangavstand <br>
+            <font-awesome-icon icon="fa-solid fa-arrow-pointer" />Bruk pilen og dra i punktene dersom du ønsker å justere området ytterligere </h4>
         </div>
         <div id="parameters-actions">
           <button v-show="!enableAll" @click="toggleEnableAll">

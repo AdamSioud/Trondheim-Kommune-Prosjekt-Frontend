@@ -5,8 +5,12 @@
         <input type="checkbox" :name="'checkbox' + title" :id="'checkbox' + title"
                 :checked="internalEnabled" @change="toggleEnabled" :disabled="totallyDisabled">
       </label>
-      <h2 class="menu-collapse-title" @click="toggleVisible">{{ title }}</h2>
-      <font-awesome-icon icon="fa-solid fa-caret-down" :transform="{ rotate: internalVisible ? '0' : '90' }"/>
+      <div class="menu-collapse-title-toggle" @click="toggleVisible">
+        <h2 class="menu-collapse-title">{{ title }}</h2>
+        <div>
+          <font-awesome-icon icon="fa-solid fa-caret-down" :transform="{ rotate: internalVisible ? '0' : '90'}" />
+        </div>
+      </div>
     </div>
     <Transition name="menu-collapse"
                 @before-leave="onBeforeLeave" @leave="onLeave" @enter="onEnter">
@@ -224,6 +228,11 @@ export default defineComponent({
 }
 
 @media only screen and (min-width: 768px) {
+
+  .menu-collapse-wrapper {
+    //border-top: 3px solid grey;
+  }
+
   .menu-collapse-title-wrapper {
     display: flex;
     padding: 4px 0;
@@ -231,11 +240,18 @@ export default defineComponent({
   }
   .menu-collapse-title {
     flex-grow: 1;
-    cursor: pointer;
     font-size: 1.5rem;
     text-align: left;
-    @include user-select-custom(none);
   }
+
+  .menu-collapse-title-toggle {
+    flex-grow: 1;
+    display: flex;
+    align-items: stretch;
+    @include user-select-custom(none);
+    cursor: pointer;
+  }
+
   .menu-collapse-content {;
     margin-left: 1em;
   }

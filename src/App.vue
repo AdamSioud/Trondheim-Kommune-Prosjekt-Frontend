@@ -1,30 +1,18 @@
 
 <template>
   <div class="height100 flex-column">
-    <!-- Removed the navbar
-    <nav>
-      <router-link to="/">
-        Home
-      </router-link>
-      |
-      <router-link to="/about">
-        About
-      </router-link>
-      |
-      <router-link to="map">
-        Map
-      </router-link>
-    </nav>
-     -->
+    <app-modal/>
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import AppModal from '@/components/AppModal.vue'
 
 export default defineComponent({
   name: 'App',
+  components: { AppModal },
   mounted () {
     // window.addEventListener('resize', this.onresize)
   },

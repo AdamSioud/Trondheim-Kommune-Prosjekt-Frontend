@@ -7,7 +7,8 @@
       "enableAll": "Enable all",
       "disableAll": "Disable all",
       "collapseAll": "Collapse all",
-      "expendAll": "Expend all"
+      "expendAll": "Expend all",
+      "reset": "Reset"
     },
     "point": {
       "label": "Marker",
@@ -39,7 +40,7 @@
       }
     },
     "environment": {
-      "title": "Environment",
+      "title": "Neighborhood",
       "wellbeing": {
         "title": "Well being"
       },
@@ -74,5 +75,22 @@
     "legend": {
       "title": "Match rate"
     }
-  }
+  },
+  "error": {
+    "error": "Error",
+    "confFileError": {
+      "title" : "Configuration file error",
+      "message": "It seems that a configuration file was not loaded correctly.",
+      "advice": "You can try reloading the page!"
+    },
+    "serverError": {
+      "title": "Server error",
+      "message": "It seems that there is a problem on the server, if the problem persists, contact us!"
+    },
+    "modal": {
+      "ok": "OK",
+      "advice": "Advice : "
+    }
+  },
+  "average": "Average"
 }

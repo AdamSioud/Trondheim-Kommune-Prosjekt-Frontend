@@ -75,7 +75,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     ├── router
     │   └── index.ts
     ├── stores
-    │   └── points.ts
+    │   └── error.ts
     ├── type.ts
     └── views
         ├── AboutView.vue

@@ -1,29 +1,41 @@
 <template>
   <div id="the-parameters">
     <div id="parameters-wrapper">
+      <div id="language-option">
+        <app-locale-changer/>
+      </div>
       <div id="parameters" ref="divParameters">
         <div class="profile">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Trondheim_komm.svg/1200px-Trondheim_komm.svg.png" alt="profile_picture">
-          <h1>Trondheim kommune <br> Kart</h1>
-          <font-awesome-icon icon="fa-solid fa-sliders" /><h4>Velg og prioriter ønsket parameter/ere fra 1 - 5 for å finne stedet som passer deg <br>
-            <font-awesome-icon icon="fa-solid fa-location-dot"/> Drop en pin, og sett ønsket radius, for gangavstand <br>
-            <font-awesome-icon icon="fa-solid fa-arrow-pointer" />Bruk pilen og dra i punktene dersom du ønsker å justere området ytterligere </h4>
+          <h1>Trondheim kommune <br> {{ $t('parameters.subtitle') }}</h1>
+          <div id="advices">
+            <font-awesome-icon icon="fa-solid fa-sliders" class="fa-2x"/>
+            <h2>Velg og prioriter ønsket parameter/ere fra 1 - 5 for å finne stedet som passer deg</h2>
+            <font-awesome-icon icon="fa-solid fa-location-dot" class="fa-2x"/>
+            <h2>Drop en pin, og sett ønsket radius, for gangavstand</h2>
+            <font-awesome-icon icon="fa-solid fa-arrow-pointer" class="fa-2x"/>
+            <h2>Bruk pilen og dra i punktene dersom du ønsker å justere området ytterligere</h2>
+          </div>
         </div>
         <div id="parameters-actions">
-          <button v-show="!enableAll" @click="toggleEnableAll">
-            <font-awesome-icon icon="fa-solid fa-square-check" />
+          <button @click="reset" style="grid-column: 2 / span 2">
+            <font-awesome-icon icon="fa-solid fa-trash"/>
+            <span>{{ $t('parameters.actions.reset') }}</span>
+          </button>
+          <button v-show="!enableAll" @click="toggleEnableAll" class="action-enable">
+            <font-awesome-icon icon="fa-solid fa-square-check"/>
             <span>{{ $t('parameters.actions.enableAll') }}</span>
           </button>
-          <button v-show="enableAll" @click="toggleEnableAll">
-            <font-awesome-icon icon="fa-solid fa-square-xmark" />
+          <button v-show="enableAll" @click="toggleEnableAll" class="action-enable">
+            <font-awesome-icon icon="fa-solid fa-square-xmark"/>
             <span>{{ $t('parameters.actions.disableAll') }}</span>
           </button>
-          <button v-show="collapseAll" @click="toggleVisibleAll">
+          <button v-show="collapseAll" @click="toggleVisibleAll" class="action-collapse">
             <font-awesome-icon icon="fa-solid fa-angles-down" rotation="180"/>
             <span>{{ $t('parameters.actions.collapseAll') }}</span>
           </button>
-          <button v-show="!collapseAll" @click="toggleVisibleAll">
-            <font-awesome-icon icon="fa-solid fa-angles-down" />
+          <button v-show="!collapseAll" @click="toggleVisibleAll" class="action-collapse">
+            <font-awesome-icon icon="fa-solid fa-angles-down"/>
             <span>{{ $t('parameters.actions.expendAll') }}</span>
           </button>
         </div>
@@ -41,48 +53,70 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import TheParametersMenuCollapse from '@/components/TheParametersMenuCollapse.vue'
-import { ConfigParameters, Menu } from '@/type'
-import configParameters from '../assets/configParameters.json'
+import { ConfigParameters, JSONObject, JSONValue, Menu } from '@/type'
+import configParameters from '../assets/config_parameters.json'
+import paramInput from '../assets/param_input.json'
+import { getCookie, setCookie } from '@/helpers/cookiesUtils'
+import AppLocaleChanger from '@/components/AppLocaleChanger.vue'
 
 export default defineComponent({
   name: 'TheParameters',
   components: {
-    MenuCollapse: TheParametersMenuCollapse
-    // TheParametersDistanceInput
-  },
-  props: {
-    paramInput: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
+    MenuCollapse: TheParametersMenuCollapse,
+    AppLocaleChanger
   },
   emits: ['update:paramInput'],
   data () {
     return {
-      internalParamInput: JSON.parse(JSON.stringify(this.paramInput)),
-      resultParamInput: JSON.parse(JSON.stringify(this.paramInput)),
-      configParameters: configParameters as ConfigParameters,
+      internalParamInput: JSON.parse(JSON.stringify(paramInput)) as JSONObject,
+      resultParamInput: JSON.parse(JSON.stringify(paramInput)) as JSONObject,
+      configParameters: JSON.parse(JSON.stringify(configParameters)) as ConfigParameters,
       collapseAll: true,
       enableAll: true
     }
   },
   beforeMount () {
+    const parameters = getCookie('parameters')
+    const configuration = getCookie('configuration')
+    if (parameters !== null && configuration !== null) {
+      this.internalParamInput = JSON.parse(parameters)
+      this.resultParamInput = JSON.parse(parameters)
+      const config: ConfigParameters = JSON.parse(configuration)
+      for (const configKey in config) {
+        this.preInitConfigParameters(this.configParameters[configKey], config[configKey])
+      }
+
+      // console.log(parameters)
+      // console.log(config)
+      // console.log(JSON.parse(parameters))
+      // console.log(JSON.parse(config))
+    }
     for (const menu in this.configParameters) {
       this.initConfigParameters(this.configParameters[menu])
     }
   },
   mounted () {
-    for (const menu in this.configParameters) {
-      this.initResultParamInput(this.configParameters[menu], this.resultParamInput[this.configParameters[menu].input as string])
-      if (!this.configParameters[menu].enabled) {
-        delete this.resultParamInput[this.configParameters[menu].input as string]
-      }
-    }
-    this.$emit('update:paramInput', this.resultParamInput)
+    this.init()
   },
   methods: {
+    init () {
+      for (const menu in this.configParameters) {
+        this.initResultParamInput(this.configParameters[menu], this.resultParamInput[this.configParameters[menu].input as string])
+        if (!this.configParameters[menu].enabled) {
+          delete this.resultParamInput[this.configParameters[menu].input as string]
+        }
+      }
+      this.$emit('update:paramInput', this.resultParamInput)
+    },
+    preInitConfigParameters (menu: Menu, config: Menu) {
+      menu.enabled = config.enabled
+      menu.visible = config.visible
+      if (!Array.isArray(menu.elements)) {
+        for (const subMenuKey in menu.elements) {
+          this.preInitConfigParameters((menu.elements as { [key: string]: Menu })[subMenuKey], (config.elements as { [key: string]: Menu })[subMenuKey])
+        }
+      }
+    },
     initConfigParameters (menu: Menu) {
       if (menu.title === undefined) menu.title = 'parameters.menu'
       if (menu.enabled === undefined) menu.enabled = true
@@ -104,6 +138,23 @@ export default defineComponent({
           }
         }
       }
+    },
+    reset () {
+      this.configParameters = JSON.parse(JSON.stringify(configParameters))
+      for (const menu in this.configParameters) {
+        this.initConfigParameters(this.configParameters[menu])
+      }
+
+      console.log(JSON.stringify(this.internalParamInput))
+      console.log(JSON.stringify(this.resultParamInput))
+      this.internalParamInput = JSON.parse(JSON.stringify(paramInput))
+      this.resultParamInput = JSON.parse(JSON.stringify(paramInput))
+      // console.log(JSON.stringify(this.configParameters))
+      console.log('init')
+      this.init()
+      console.log(JSON.stringify(this.internalParamInput))
+      console.log(JSON.stringify(this.resultParamInput))
+      // console.log(JSON.stringify(this.configParameters))
     },
     toggleVisibleAll () {
       this.setVisibleAll(!this.collapseAll)
@@ -146,7 +197,7 @@ export default defineComponent({
         menu.enabled = enabled
         let inputToAdd = null
         if (enabled) {
-          inputToAdd = JSON.parse(JSON.stringify(menuInputs.reduce((a, b) => a[b], this.internalParamInput)))
+          inputToAdd = JSON.parse(JSON.stringify(menuInputs.reduce((a, b) => a[b] as JSONObject, this.internalParamInput)))
           this.initResultParamInput(menu, inputToAdd)
         }
         this.update(menuInputs, inputToAdd)
@@ -154,23 +205,49 @@ export default defineComponent({
     },
     changeValue (menuInputs: string[], input: string, value: unknown) {
       if (menuInputs.length !== 0) {
-        const menuInput = menuInputs.reduce((a, b) => a[b], this.internalParamInput)
-        menuInput[input] = value
+        const menuInput = menuInputs.reduce((a, b) => a[b] as JSONObject, this.internalParamInput)
+        menuInput[input] = value as JSONObject
         this.update(menuInputs, menuInput)
       }
     },
-    update (menuInputs: string[], value: object | null) {
+    update (menuInputs: string[], value: JSONValue | null) {
       let menu = this.resultParamInput
       let i = 0
       for (; i < menuInputs.length - 1; i++) {
-        menu = menu[menuInputs[i]]
+        menu = menu[menuInputs[i]] as JSONObject
       }
       if (value === null && menuInputs.length !== 0) {
         delete menu[menuInputs[i]]
       } else {
-        menu[menuInputs[i]] = value
+        menu[menuInputs[i]] = value as JSONValue
       }
+      setCookie('parameters', JSON.stringify(this.internalParamInput))
+      setCookie('configuration', this.createConfigurationCookie())
       this.$emit('update:paramInput', JSON.parse(JSON.stringify(this.resultParamInput)))
+    },
+    createConfigurationCookie (): string {
+      let configurationCookie = '{'
+      for (const menu in this.configParameters) {
+        if (configurationCookie !== '{') configurationCookie += ','
+        configurationCookie += '"' + menu + '":' + this.createConfigurationMenuCookie(this.configParameters[menu])
+      }
+      configurationCookie += '}'
+      return configurationCookie
+    },
+    createConfigurationMenuCookie (menu: Menu): string {
+      let configurationCookie = '{"enabled":' + menu.enabled + ','
+      configurationCookie += '"visible":' + menu.visible
+      if (!Array.isArray(menu.elements) && typeof menu.elements === 'object') {
+        configurationCookie += ',"elements":{'
+        const keys = Object.keys(menu.elements)
+        for (let i = 0; i < keys.length; i++) {
+          configurationCookie += '"' + keys[i] + '":' + this.createConfigurationMenuCookie((menu.elements as { [key: string]: Menu })[keys[i]])
+          if (i < keys.length - 1) configurationCookie += ','
+        }
+        configurationCookie += '}'
+      }
+      configurationCookie += '}'
+      return configurationCookie
     }
   }
 })
@@ -207,7 +284,7 @@ export default defineComponent({
 
 #parameters-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 @media only screen and (min-width: 768px) {
@@ -235,6 +312,29 @@ export default defineComponent({
     -ms-overflow-style: -ms-autohiding-scrollbar;
   }
 
+  #language-option {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    cursor: pointer;
+  }
+
+  #advices {
+    display: grid;
+    grid-template-columns: 40px 2fr;
+    grid-row-gap: 10px;
+    grid-column-gap: 7px;
+    margin-top: 10px;
+  }
+
+  #advices > svg {
+    margin: auto;
+  }
+
+  #advices > h2 {
+    text-align: left;
+  }
+
   #parameters-actions {
     grid-gap: 10px;
     margin-bottom: 1em;
@@ -250,6 +350,18 @@ export default defineComponent({
     display: flex;
     align-items: center;
     gap: 5px;
+  }
+
+  #parameters-actions button:hover {
+    @include brightness-hover()
+  }
+
+  .action-enable {
+    grid-column: 1 / span 2;
+  }
+
+  .action-collapse {
+    grid-column: 3 / span 2;
   }
 
   #parameters-actions button span {

@@ -7,7 +7,8 @@
       "enableAll": "Skru på alle",
       "disableAll": "Skru av alle",
       "collapseAll": "Slå sammen",
-      "expendAll": "Utvid"
+      "expendAll": "Utvid",
+      "reset": "Reset"
     },
     "point": {
       "label": "Pin",
@@ -26,7 +27,7 @@
       }
     },
     "age": {
-      "title": "Menneskene",
+      "title": "Befolkningsalder",
       "017": "0-17",
       "1834": "18-34",
       "3566": "35-66",
@@ -79,5 +80,22 @@
     "age": "Aldersfordeling",
     "price": "Gjennomsnittlig eiendomspris",
     "neighborhood": "Bomiljø"
-  }
+  },
+  "error": {
+    "error": "Error",
+    "confFileError": {
+      "title" : "Configuration file error",
+      "message": "It seems that a configuration file was not loaded correctly.",
+      "advice": "You can try reloading the page!"
+    },
+    "serverError": {
+      "title": "Server error",
+      "message": "It seems that there is a problem on the server, if the problem persists, contact us!"
+    },
+    "modal": {
+      "ok": "OK",
+      "advice": "Advice : "
+    }
+  },
+  "average": "Gjennomsnitt"
 }

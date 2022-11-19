@@ -4,3 +4,7 @@
   -ms-user-select: $value;
   user-select: $value;
 }
+
+@mixin brightness-hover($value: 85%) {
+  filter: brightness($value);
+}

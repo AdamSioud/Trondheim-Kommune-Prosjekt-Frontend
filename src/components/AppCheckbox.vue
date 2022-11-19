@@ -56,6 +56,14 @@ export default defineComponent({
       return this.modelValue
     }
   },
+  watch: {
+    internalChecked: {
+      handler (newValue) {
+        this.isChecked = this.internalChecked
+      },
+      immediate: true
+    }
+  },
   methods: {
     sendEvent (event: Event) {
       const checkbox = (event.target as HTMLInputElement)
@@ -63,9 +71,6 @@ export default defineComponent({
       this.$emit('input', checkbox.checked)
       this.isChecked = checkbox.checked
     }
-  },
-  mounted () {
-    this.isChecked = this.internalChecked
   }
 })
 </script>

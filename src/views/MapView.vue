@@ -1,6 +1,6 @@
 <template>
   <div id="map-view">
-    <the-parameters :param-input="paramInput" @update:paramInput="updateParamInput"/>
+    <the-parameters @update:paramInput="updateParamInput"/>
     <div id="map-and-details-wrapper">
 <!--      <span style="color: black; margin-bottom: 10px">{{ paramInput }}</span>-->
       <the-map :geo-json="geoJSON" :score="score" @click-on-zone="getDataForZone"/>
@@ -14,8 +14,11 @@ import { defineComponent } from 'vue'
 import TheParameters from '@/components/TheParameters.vue'
 import TheMap from '@/components/TheMap.vue'
 import TheDetails from '@/components/TheDetails.vue'
-import paramInput from '../assets/param_input.json'
 import { GeoJsonObject } from 'geojson'
+import { JSONObject } from '@/type'
+import { CustomError } from '@/classes/CustomError'
+import { mapWritableState } from 'pinia'
+import { useErrorStore } from '@/stores/error'
 
 export default defineComponent({
   name: 'MapView',
@@ -26,48 +29,70 @@ export default defineComponent({
   },
   data () {
     return {
-      paramInput: paramInput,
+      paramInput: null as JSONObject | null,
       geoJSON: null as GeoJsonObject | null,
       score: null,
       lastTimeoutID: 0,
       isAddingPoint: false,
-      zoneData: null
+      zoneData: null,
+      generalData: null
     }
   },
-  mounted () {
-    this.getGeoJSON()
+  computed: {
+    ...mapWritableState(useErrorStore, ['isError', 'message', 'title'])
   },
   methods: {
-    updateParamInput (res:never) {
-      // if (this.dataGeoJSON !== null) this.dataGeoJSON.geoJSON = null
-      // this.dataGeoJSON = null
+    updateParamInput (paramInput: never) {
       clearTimeout(this.lastTimeoutID)
-      this.paramInput = res
-      this.lastTimeoutID = setTimeout(() => {
-        this.getScore()
-      }, 500)
+      this.paramInput = paramInput
+      if (this.geoJSON === null) {
+        this.getGeoJSON()
+        this.getGeneralData()
+      } else {
+        this.lastTimeoutID = setTimeout(() => {
+          this.getScore()
+        }, 500)
+      }
     },
     getGeoJSON () {
+      if (this.paramInput === null) throw new CustomError(this.$t('error.confFileError.message'), this.$t('error.confFileError.title'), this.$t('error.confFileError.advice'))
       this.$axios.post('/map', this.paramInput).then(response => {
-        this.geoJSON = JSON.parse(response.data)
+        if (response.status === 200) this.geoJSON = JSON.parse(response.data)
       }).catch(error => {
-        console.log(error)
-      })
-    },
-    getScore () {
-      this.$axios.post('/score', this.paramInput).then(response => {
-        this.score = JSON.parse(response.data)
-      }).catch(error => {
-        console.log(error)
+        this.handleServerError(error)
       })
     },
     getDataForZone (id: number) {
+      if (id < 0) throw new CustomError('The zone `id` is less than 0')
       this.$axios.get(`/zone/${id}`).then(response => {
         console.log(JSON.parse(response.data))
-        this.zoneData = JSON.parse(response.data)
+        if (response.status === 200) this.zoneData = JSON.parse(response.data)
       }).catch(error => {
-        console.log(error)
+        this.handleServerError(error)
       })
+    },
+    getScore () {
+      if (this.paramInput === null) throw new CustomError(this.$t('error.confFileError.message'), this.$t('error.confFileError.title'), this.$t('error.confFileError.advice'))
+      this.$axios.post('/score', this.paramInput).then(response => {
+        if (response.status === 200) this.score = JSON.parse(response.data)
+      }).catch(error => {
+        this.handleServerError(error)
+      })
+    },
+    getGeneralData () {
+      if (this.paramInput === null) throw new CustomError(this.$t('error.confFileError.message'), this.$t('error.confFileError.title'), this.$t('error.confFileError.advice'))
+      this.$axios.get('/generaldata').then(response => {
+        if (response.status === 200) this.generalData = JSON.parse(response.data)
+        console.log(this.generalData)
+      }).catch(error => {
+        this.handleServerError(error)
+      })
+    },
+    handleServerError (error?: unknown) {
+      console.log(error)
+      this.title = this.$t('error.serverError.title')
+      this.message = this.$t('error.serverError.message')
+      this.isError = true
     }
   }
 })
@@ -102,6 +127,8 @@ export default defineComponent({
 
   #map-and-details-wrapper {
     margin: 1%;
+    overflow: hidden;
+    overflow-x: auto;
   }
 }
 

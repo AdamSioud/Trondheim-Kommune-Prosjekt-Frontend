@@ -1,42 +1,3 @@
-import { GeoJsonObject } from 'geojson'
-
-export interface PriceInput {
-  selected: string[],
-  budget: number
-}
-
-export interface AgeInput {
-  selected: string[],
-  percent: number
-}
-
-export interface EnvironmentInput {
-  weight: number
-}
-
-interface ParamInput{
-  // eslint-disable-next-line camelcase
-  price_input?: PriceInput,
-  // eslint-disable-next-line camelcase
-  age_input?: AgeInput,
-  // eslint-disable-next-line camelcase
-  wellBeing_input?: EnvironmentInput,
-  // eslint-disable-next-line camelcase
-  safety_input?: EnvironmentInput,
-  // eslint-disable-next-line camelcase
-  culture_input?: EnvironmentInput,
-  // eslint-disable-next-line camelcase
-  outdoor_input?: EnvironmentInput,
-  // eslint-disable-next-line camelcase
-  transport_input?: EnvironmentInput,
-  // eslint-disable-next-line camelcase
-  walkway_input?: EnvironmentInput,
-  // eslint-disable-next-line camelcase
-  noiseTraffic_input?: EnvironmentInput,
-  // eslint-disable-next-line camelcase
-  noiseOther_input?: EnvironmentInput
-}
-
 interface Element {
   type?: string | undefined,
   input?: string | undefined,
@@ -77,4 +38,15 @@ export interface FeatureProperties {
 export interface ZoneData {
   zoneName: string,
   [key: string]: unknown
+}
+
+export type JSONValue =
+  | string
+  | number
+  | boolean
+  | { [x: string]: JSONValue }
+  | Array<JSONValue>;
+
+export interface JSONObject {
+  [x: string]: JSONValue;
 }

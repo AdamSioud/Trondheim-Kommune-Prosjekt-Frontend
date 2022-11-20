@@ -54,8 +54,8 @@
 import { defineComponent } from 'vue'
 import TheParametersMenuCollapse from '@/components/TheParametersMenuCollapse.vue'
 import { ConfigParameters, JSONObject, JSONValue, Menu } from '@/type'
-import configParameters from '../assets/config_parameters.json'
-import paramInput from '../assets/param_input.json'
+import configParameters from '../assets/config/config_parameters.json'
+import paramInput from '../assets/config/param_input.json'
 import { getCookie, setCookie } from '@/helpers/cookiesUtils'
 import AppLocaleChanger from '@/components/AppLocaleChanger.vue'
 
@@ -85,11 +85,6 @@ export default defineComponent({
       for (const configKey in config) {
         this.preInitConfigParameters(this.configParameters[configKey], config[configKey])
       }
-
-      // console.log(parameters)
-      // console.log(config)
-      // console.log(JSON.parse(parameters))
-      // console.log(JSON.parse(config))
     }
     for (const menu in this.configParameters) {
       this.initConfigParameters(this.configParameters[menu])
@@ -145,16 +140,9 @@ export default defineComponent({
         this.initConfigParameters(this.configParameters[menu])
       }
 
-      console.log(JSON.stringify(this.internalParamInput))
-      console.log(JSON.stringify(this.resultParamInput))
       this.internalParamInput = JSON.parse(JSON.stringify(paramInput))
       this.resultParamInput = JSON.parse(JSON.stringify(paramInput))
-      // console.log(JSON.stringify(this.configParameters))
-      console.log('init')
       this.init()
-      console.log(JSON.stringify(this.internalParamInput))
-      console.log(JSON.stringify(this.resultParamInput))
-      // console.log(JSON.stringify(this.configParameters))
     },
     toggleVisibleAll () {
       this.setVisibleAll(!this.collapseAll)

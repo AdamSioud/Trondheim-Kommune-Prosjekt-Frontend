@@ -58,7 +58,7 @@ export default defineComponent({
   },
   watch: {
     internalChecked: {
-      handler (newValue) {
+      handler () {
         this.isChecked = this.internalChecked
       },
       immediate: true

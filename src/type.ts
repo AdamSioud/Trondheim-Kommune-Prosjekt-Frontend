@@ -13,7 +13,6 @@ interface Checkbox extends Element {
 
 export interface Menu {
   title?: string | undefined,
-  datatype?: string | undefined,
   input?: string | undefined,
   color?: string | undefined,
   enabled?: boolean | undefined,
@@ -35,18 +34,32 @@ export interface FeatureProperties {
   zoneName: string
 }
 
-export interface ZoneData {
-  zoneName: string,
-  [key: string]: unknown
-}
-
 export type JSONValue =
   | string
   | number
   | boolean
-  | { [x: string]: JSONValue }
+  | { [key: string]: JSONValue }
   | Array<JSONValue>;
 
 export interface JSONObject {
-  [x: string]: JSONValue;
+  [key: string]: JSONValue;
+}
+
+export interface ZoneData {
+  zoneName: string,
+  [key: string]: JSONObject | string
+}
+
+interface Card {
+  chartType: string,
+  propertyName: string,
+  head: string | string[],
+  chartOption?: JSONObject | undefined,
+  compareToGeneralData?: boolean | undefined,
+  generalDataPropertyName?: string | undefined,
+  data?: {[key: string]: string[]} | undefined
+}
+
+export interface ConfigDetails {
+  [key: string]: Card
 }

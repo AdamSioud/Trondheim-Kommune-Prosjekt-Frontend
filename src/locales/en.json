@@ -39,7 +39,7 @@
         "label": "Percentage"
       }
     },
-    "environment": {
+    "neighborhood": {
       "title": "Neighborhood",
       "wellbeing": {
         "title": "Well being"
@@ -90,7 +90,32 @@
     "modal": {
       "ok": "OK",
       "advice": "Advice : "
-    }
+    },
+    "notFound": "Not found",
+    "home": "Go to home"
   },
-  "average": "Average"
+  "details": {
+    "average": "Average",
+    "quantity": "Quantity",
+    "men": "Men",
+    "women": "Women",
+    "generalData": "Trondheim",
+    "age": {
+      "title": "@:parameters.age.title"
+    },
+    "price": {
+      "title": "@:parameters.price.title"
+    },
+    "neighborhood": {
+      "title": "@:parameters.neighborhood.title",
+      "wellbeing": "@:parameters.neighborhood.wellbeing.title",
+      "safety": "@:parameters.neighborhood.safety.title",
+      "culture": "@:parameters.neighborhood.culture.title",
+      "outdoor": "@:parameters.neighborhood.outdoor.title",
+      "transport":"@:parameters.neighborhood.transport.title",
+      "walkway": "@:parameters.neighborhood.walkway.title",
+      "grocery": "@:parameters.neighborhood.grocery.title",
+      "noise": "@:parameters.neighborhood.noise.title"
+    }
+  }
 }

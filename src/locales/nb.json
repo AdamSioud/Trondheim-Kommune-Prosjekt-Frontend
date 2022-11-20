@@ -39,7 +39,7 @@
         "label": "Ønsket fordeling"
       }
     },
-    "environment": {
+    "neighborhood": {
       "title": "Bomiljø",
       "wellbeing": {
         "title": "Velvære"
@@ -77,9 +77,28 @@
     }
   },
   "details": {
-    "age": "Aldersfordeling",
-    "price": "Gjennomsnittlig eiendomspris",
-    "neighborhood": "Bomiljø"
+    "average": "Gjennomsnitt",
+    "quantity": "Quantity",
+    "men": "Men",
+    "women": "Women",
+    "generalData": "Trondheim",
+    "age": {
+      "title": "@:parameters.age.title"
+    },
+    "price": {
+      "title": "@:parameters.price.title"
+    },
+    "neighborhood": {
+      "title": "@:parameters.neighborhood.title",
+      "wellbeing": "@:parameters.neighborhood.wellbeing.title",
+      "safety": "@:parameters.neighborhood.safety.title",
+      "culture": "@:parameters.neighborhood.culture.title",
+      "outdoor": "@:parameters.neighborhood.outdoor.title",
+      "transport":"@:parameters.neighborhood.transport.title",
+      "walkway": "@:parameters.neighborhood.walkway.title",
+      "grocery": "@:parameters.neighborhood.grocery.title",
+      "noise": "@:parameters.neighborhood.noise.title"
+    }
   },
   "error": {
     "error": "Error",
@@ -95,7 +114,8 @@
     "modal": {
       "ok": "OK",
       "advice": "Advice : "
-    }
-  },
-  "average": "Gjennomsnitt"
+    },
+    "notFound": "Siden ikke funnet",
+    "home": "Gå hjem"
+  }
 }

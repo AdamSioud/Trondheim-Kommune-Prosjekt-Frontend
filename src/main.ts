@@ -49,7 +49,7 @@ app.config.globalProperties.$axios = axiosApp
 
 app.use(i18n).use(pinia).use(router).component('font-awesome-icon', FontAwesomeIcon).component('font-awesome-layers', FontAwesomeLayers).mount('#trondheim-app')
 
-app.config.errorHandler = (err, vm, info) => {
+app.config.errorHandler = (err, vm) => {
   const errorStore = useErrorStore()
   if (typeof err === 'object' && err && 'stack' in err && 'message' in err) {
     errorStore.title = vm !== null ? vm.$t('error.error') : 'Error O'

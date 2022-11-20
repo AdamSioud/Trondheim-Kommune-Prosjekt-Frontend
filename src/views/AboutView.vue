@@ -14,10 +14,4 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-#testetts {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  flex-wrap: wrap;
-}
 </style>

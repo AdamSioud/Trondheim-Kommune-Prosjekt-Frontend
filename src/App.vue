@@ -1,4 +1,3 @@
-
 <template>
   <div class="height100 flex-column">
     <app-modal/>
@@ -12,16 +11,7 @@ import AppModal from '@/components/AppModal.vue'
 
 export default defineComponent({
   name: 'App',
-  components: { AppModal },
-  mounted () {
-    // window.addEventListener('resize', this.onresize)
-  },
-  methods: {
-    onresize () {
-      const app = document.getElementById('app')
-      if (app) app.style.maxHeight = '' + window.innerHeight
-    }
-  }
+  components: { AppModal }
 })
 </script>
 

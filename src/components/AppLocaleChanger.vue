@@ -24,9 +24,6 @@ export default defineComponent({
       isOpen: false
     }
   },
-  mounted () {
-    console.log(this.$i18n.availableLocales)
-  },
   methods: {
     open (event: Event) {
       event.preventDefault()
@@ -58,7 +55,7 @@ export default defineComponent({
 
 #locale-changer {
   position: relative;
-  z-index: 9999;
+  z-index: 9000;
 }
 
 #languages {

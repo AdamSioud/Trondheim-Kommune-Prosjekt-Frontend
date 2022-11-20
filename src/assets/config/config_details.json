@@ -1,0 +1,73 @@
+{
+  "price": {
+    "chartType": "ColumnChart",
+    "chartOption": {
+      "legend": "none",
+      "vAxis": {
+        "gridlines": {
+          "count": 5
+        },
+        "format": "currency"
+      },
+      "chartArea": {
+        "left": "25%",
+        "top": "11%",
+        "width": "68%",
+        "height": "75%"
+      },
+      "colors": ["#054468"]
+    },
+    "propertyName": "averagePrice",
+    "compareToGeneralData": true,
+    "generalDataPropertyName": "averagePrice",
+    "head": "details.average"
+  },
+  "age": {
+    "chartType": "PieChart",
+    "chartOption": {
+      "legend": {
+        "alignment": "center"
+      },
+      "chartArea": {
+        "left": "20%",
+        "top": "5%",
+        "width": "60%",
+        "height": "90%"
+      },
+      "colors": ["#054468", "#326588", "#5589aa", "#79aecc"]
+    },
+    "propertyName": "quantity",
+    "head": "details.quantity"
+  },
+  "neighborhood": {
+    "chartType": "ColumnChart",
+    "chartOption": {
+      "legend": "none",
+      "vAxis": {
+        "gridlines": {
+          "count": 5
+        },
+        "format": "percent"
+      },
+      "chartArea": {
+        "left": "10%",
+        "top": "10%",
+        "width": "86%",
+        "height": "70%"
+      },
+      "colors": ["#054468", "#79aecc"]
+    },
+    "propertyName": "portion",
+    "head": ["details.men", "details.women"],
+    "data": {
+      "details.neighborhood.culture": ["cultureM", "cultureW"],
+      "details.neighborhood.grocery": ["groceryStoresM", "groceryStoresW"],
+      "details.neighborhood.noise": ["noiseM", "noiseW"],
+      "details.neighborhood.outdoor": ["outdoorLifeM", "outdoorLifeW"],
+      "details.neighborhood.transport": ["publicTransportM", "publicTransportW"],
+      "details.neighborhood.safety": ["safetyM", "safetyW"],
+      "details.neighborhood.walkway": ["walkwayAndBikePathM", "walkwayAndBikePathW"],
+      "details.neighborhood.wellbeing": ["wellBeingM", "wellBeingW"]
+    }
+  }
+}

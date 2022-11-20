@@ -87,14 +87,14 @@
       }
     ]
   },
-  "environment": {
-    "title": "parameters.environment.title",
+  "neighborhood": {
+    "title": "parameters.neighborhood.title",
     "datatype": "share",
     "input": "environment",
     "color": "transparent",
     "elements": {
       "wellBeing": {
-        "title": "parameters.environment.wellbeing.title",
+        "title": "parameters.neighborhood.wellbeing.title",
         "datatype": "",
         "input": "well_being_input",
         "color": "transparent",
@@ -112,7 +112,7 @@
         ]
       },
       "safety": {
-        "title": "parameters.environment.safety.title",
+        "title": "parameters.neighborhood.safety.title",
         "datatype": "",
         "input": "safety_input",
         "color": "transparent",
@@ -130,7 +130,7 @@
         ]
       },
       "culture": {
-        "title": "parameters.environment.culture.title",
+        "title": "parameters.neighborhood.culture.title",
         "datatype": "",
         "input": "culture_input",
         "color": "transparent",
@@ -148,7 +148,7 @@
         ]
       },
       "outdoor": {
-        "title": "parameters.environment.outdoor.title",
+        "title": "parameters.neighborhood.outdoor.title",
         "datatype": "",
         "input": "outdoor_input",
         "color": "transparent",
@@ -166,7 +166,7 @@
         ]
       },
       "transport": {
-        "title": "parameters.environment.transport.title",
+        "title": "parameters.neighborhood.transport.title",
         "datatype": "",
         "input": "transport_input",
         "color": "transparent",
@@ -184,7 +184,7 @@
         ]
       },
       "walkway": {
-        "title": "parameters.environment.walkway.title",
+        "title": "parameters.neighborhood.walkway.title",
         "datatype": "",
         "input": "walkway_input",
         "color": "transparent",
@@ -200,7 +200,7 @@
         ]
       },
       "grocery": {
-        "title": "parameters.environment.grocery.title",
+        "title": "parameters.neighborhood.grocery.title",
         "datatype": "",
         "input": "grocery_input",
         "color": "transparent",
@@ -218,7 +218,7 @@
         ]
       },
       "noise": {
-        "title": "parameters.environment.noise.title",
+        "title": "parameters.neighborhood.noise.title",
         "datatype": "",
         "input": "noise_input",
         "color": "transparent",

@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import MapView from '../views/MapView.vue'
+import Error404View from '@/views/Error404View.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'map',
+    component: MapView
   },
   {
     path: '/about',
@@ -16,9 +17,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/map',
-    name: 'map',
-    component: () => import('../views/MapView.vue')
+    path: '/:pathMatch(.*)*',
+    component: Error404View
   }
 ]
 

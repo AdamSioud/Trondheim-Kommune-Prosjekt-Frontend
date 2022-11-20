@@ -4,7 +4,7 @@
     <div id="map-and-details-wrapper">
 <!--      <span style="color: black; margin-bottom: 10px">{{ paramInput }}</span>-->
       <the-map :geo-json="geoJSON" :score="score" @click-on-zone="getDataForZone"/>
-      <the-details :zone-data="zoneData"/>
+      <the-details :zone-data="zoneData" :general-data="generalData"/>
     </div>
   </div>
 </template>
@@ -34,8 +34,8 @@ export default defineComponent({
       score: null,
       lastTimeoutID: 0,
       isAddingPoint: false,
-      zoneData: null,
-      generalData: null
+      zoneData: undefined,
+      generalData: {}
     }
   },
   computed: {
@@ -65,7 +65,6 @@ export default defineComponent({
     getDataForZone (id: number) {
       if (id < 0) throw new CustomError('The zone `id` is less than 0')
       this.$axios.get(`/zone/${id}`).then(response => {
-        console.log(JSON.parse(response.data))
         if (response.status === 200) this.zoneData = JSON.parse(response.data)
       }).catch(error => {
         this.handleServerError(error)
@@ -83,13 +82,12 @@ export default defineComponent({
       if (this.paramInput === null) throw new CustomError(this.$t('error.confFileError.message'), this.$t('error.confFileError.title'), this.$t('error.confFileError.advice'))
       this.$axios.get('/generaldata').then(response => {
         if (response.status === 200) this.generalData = JSON.parse(response.data)
-        console.log(this.generalData)
       }).catch(error => {
         this.handleServerError(error)
       })
     },
     handleServerError (error?: unknown) {
-      console.log(error)
+      console.error(error)
       this.title = this.$t('error.serverError.title')
       this.message = this.$t('error.serverError.message')
       this.isError = true

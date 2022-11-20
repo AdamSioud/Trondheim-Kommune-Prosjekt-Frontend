@@ -122,7 +122,6 @@ export default defineComponent({
           iconAnchor: [11.5, 31]
         })
 
-        // console.log('Map clicked', 'lat' + event.latlng.lat, 'lng' + event.latlng.lng, 'x' + event.layerPoint.x, event.layerPoint.y)
         const layers: L.Layer[] = []
         layers.push(L.marker(event.latlng, { icon: svgIcon }))
 

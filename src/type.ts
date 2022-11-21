@@ -13,6 +13,7 @@ interface Checkbox extends Element {
 
 export interface Menu {
   title?: string | undefined,
+  help?: string | undefined,
   input?: string | undefined,
   color?: string | undefined,
   enabled?: boolean | undefined,
@@ -54,6 +55,8 @@ interface Card {
   chartType: string,
   propertyName: string,
   head: string | string[],
+  cardWidth?: string | undefined
+  propertyKey?: string | undefined,
   chartOption?: JSONObject | undefined,
   compareToGeneralData?: boolean | undefined,
   generalDataPropertyName?: string | undefined,
@@ -62,4 +65,15 @@ interface Card {
 
 export interface ConfigDetails {
   [key: string]: Card
+}
+
+export interface CookieOptions {
+  domain?: string,
+  path?: string,
+  sameSite?: 'Lax' | 'Strict' | 'None',
+  secure?: boolean,
+  httponly?: boolean,
+  maxAge?: number,
+  expires?: number | string,
+  custom?: string[][]
 }

@@ -6,7 +6,8 @@
                          transform="rotate-45" @click="closeDetails"/>
     </div>
     <div id="the-details-information">
-      <app-card v-for="(property, key) in data" :key="key" :title="'details.' + key + '.title'">
+      <app-card v-for="(property, key) in data" :key="key" :title="'details.' + key + '.title'"
+                :width="property.width">
         <g-chart class="chart" :type="property.type" :data="property.data"
                  :options="property.option" :settings="{ packages: ['corechart'], language: 'no' }"></g-chart>
       </app-card>
@@ -63,6 +64,7 @@ export default defineComponent({
 
         card.type = this.configDetails[configDetailsKey].chartType
         card.option = this.configDetails[configDetailsKey].chartOption !== undefined ? this.configDetails[configDetailsKey].chartOption as JSONObject : {}
+        card.width = this.configDetails[configDetailsKey].cardWidth !== undefined ? this.configDetails[configDetailsKey].cardWidth as string : ''
         card.data = data
         res[configDetailsKey] = card
       }
@@ -100,7 +102,8 @@ export default defineComponent({
         }
       } else {
         for (const zoneDataKey in this.zoneData[configDetailsKey] as JSONObject) {
-          data.push([zoneDataKey, ((this.zoneData[configDetailsKey] as JSONObject)[zoneDataKey] as JSONObject)[this.configDetails[configDetailsKey].propertyName] as number])
+          const name = this.configDetails[configDetailsKey].propertyKey ? this.$t(this.configDetails[configDetailsKey].propertyKey as string) : zoneDataKey
+          data.push([name, ((this.zoneData[configDetailsKey] as JSONObject)[zoneDataKey] as JSONObject)[this.configDetails[configDetailsKey].propertyName] as number])
         }
       }
       return data
@@ -140,18 +143,14 @@ export default defineComponent({
   justify-content: space-around;
   white-space: nowrap;
 }
-
-//.card-body{
-//  background: rgba(26, 8, 8, 0.34);
-//  width: 14rem;
-//  height: 12rem;
-//  border-radius: 10px;
-//  padding: 1px;
-//  color: rgb(249, 249, 249);
-//  font-size: 1em;
-//}
+#the-details-information {
+  flex-wrap: nowrap;
+  overflow: hidden;
+  overflow-x: auto;
+}
 
 @media only screen and (min-width: 768px) {
+
   #the-details {
     height: 250px;
     color: black;
@@ -176,7 +175,6 @@ export default defineComponent({
     right: 10px;
     cursor: pointer;
   }
-
   .chart {
     height: 160px;
     border-radius: 10px;
@@ -184,11 +182,4 @@ export default defineComponent({
   }
 }
 
-// TODO: Delete
-
-#the-details-information {
-  flex-wrap: nowrap;
-  overflow: hidden;
-  overflow-x: auto;
-}
 </style>

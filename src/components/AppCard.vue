@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :style="{width: internalWidth }">
     <div class="title">
       <div class="name">{{ $t(title) }}</div>
     </div>
@@ -18,6 +18,15 @@ export default defineComponent({
     title: {
       type: String,
       default: 'Title'
+    },
+    width: {
+      type: String,
+      default: '500px'
+    }
+  },
+  computed: {
+    internalWidth () {
+      return this.width || '500px'
     }
   }
 })
@@ -33,7 +42,6 @@ export default defineComponent({
   padding: 10px;
   box-sizing: border-box;
   display: inline-block;
-  min-width: 500px;
 }
 
 .card > .title {

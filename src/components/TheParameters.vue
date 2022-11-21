@@ -1,21 +1,22 @@
 <template>
   <div id="the-parameters">
     <div id="parameters-wrapper">
-      <div id="language-option">
-        <app-locale-changer/>
-      </div>
       <div id="parameters" ref="divParameters">
+        <div id="language-option">
+          <app-locale-changer/>
+        </div>
         <div class="profile">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Trondheim_komm.svg/1200px-Trondheim_komm.svg.png" alt="profile_picture">
           <h1>Trondheim kommune <br> {{ $t('parameters.subtitle') }}</h1>
           <div id="advices">
             <font-awesome-icon icon="fa-solid fa-sliders" class="fa-2x"/>
-            <h2>Velg og prioriter ønsket parameter/ere fra 1 - 5 for å finne stedet som passer deg</h2>
+            <h2>{{ $t('parameters.advices.parameters') }}</h2>
             <font-awesome-icon icon="fa-solid fa-location-dot" class="fa-2x"/>
-            <h2>Drop en pin, og sett ønsket radius, for gangavstand</h2>
+            <h2>{{ $t('parameters.advices.marker') }}</h2>
             <font-awesome-icon icon="fa-solid fa-arrow-pointer" class="fa-2x"/>
-            <h2>Bruk pilen og dra i punktene dersom du ønsker å justere området ytterligere</h2>
+            <h2>{{ $t('parameters.advices.details') }}</h2>
           </div>
+          <router-link to="about" id="link-about">{{ $t('parameters.more') }}</router-link>
         </div>
         <div id="parameters-actions">
           <button @click="reset" style="grid-column: 2 / span 2">
@@ -40,9 +41,9 @@
           </button>
         </div>
         <menu-collapse v-for="(menu, key) in configParameters" :key="key"
-                       :title="$t(menu.title)" :color="menu.color" :model-value="menu.enabled"
-                       :elements="menu.elements" :input="menu.input" :menu-key="key"
-                       :param-input="internalParamInput[menu.input]" :visible="menu.visible"
+                       :title="$t(menu.title ? menu.title : '')" :help="$t(menu.help ? menu.help : '')" :color="menu.color"
+                       :model-value="menu.enabled" :elements="menu.elements" :input="menu.input"
+                       :menu-key="key" :param-input="internalParamInput[menu.input]" :visible="menu.visible"
                        @change-enabled="isEnabled => setEnabled([key], [menu.input], isEnabled)"
                        @change-value="changeValue" @set-enabled="setEnabled" @change-visible="(isVisible) => {menu.visible = isVisible}"/>
       </div>
@@ -275,6 +276,10 @@ export default defineComponent({
   grid-template-columns: repeat(4, 1fr);
 }
 
+#link-about {
+  color: white;
+}
+
 @media only screen and (min-width: 768px) {
   #the-parameters {
     height: 100%;
@@ -302,7 +307,7 @@ export default defineComponent({
 
   #language-option {
     position: absolute;
-    right: 0;
+    left: 10px;
     top: 10px;
     cursor: pointer;
   }
@@ -312,7 +317,8 @@ export default defineComponent({
     grid-template-columns: 40px 2fr;
     grid-row-gap: 10px;
     grid-column-gap: 7px;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
   }
 
   #advices > svg {

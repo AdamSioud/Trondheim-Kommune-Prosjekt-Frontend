@@ -1,6 +1,7 @@
 {
   "price": {
     "title": "parameters.price.title",
+    "help": "parameters.price.help",
     "datatype": "mean",
     "input": "price_input",
     "color": "transparent",
@@ -12,8 +13,8 @@
         "functionConverter": "toNOK",
         "type": "slider",
         "input": "budget",
-        "min": 1000000,
-        "max": 7000000,
+        "min": 2000000,
+        "max": 8000000,
         "step": 10000
       },
       {
@@ -28,6 +29,7 @@
   },
   "age": {
     "title": "parameters.age.title",
+    "help": "parameters.age.help",
     "datatype": "share",
     "input": "age_input",
     "color": "transparent",
@@ -89,12 +91,14 @@
   },
   "neighborhood": {
     "title": "parameters.neighborhood.title",
+    "help": "parameters.neighborhood.help",
     "datatype": "share",
     "input": "environment",
     "color": "transparent",
     "elements": {
       "wellBeing": {
         "title": "parameters.neighborhood.wellbeing.title",
+        "help": "parameters.neighborhood.wellbeing.help",
         "datatype": "",
         "input": "well_being_input",
         "color": "transparent",
@@ -113,6 +117,7 @@
       },
       "safety": {
         "title": "parameters.neighborhood.safety.title",
+        "help": "parameters.neighborhood.safety.help",
         "datatype": "",
         "input": "safety_input",
         "color": "transparent",
@@ -131,6 +136,7 @@
       },
       "culture": {
         "title": "parameters.neighborhood.culture.title",
+        "help": "parameters.neighborhood.culture.help",
         "datatype": "",
         "input": "culture_input",
         "color": "transparent",
@@ -149,6 +155,7 @@
       },
       "outdoor": {
         "title": "parameters.neighborhood.outdoor.title",
+        "help": "parameters.neighborhood.outdoor.help",
         "datatype": "",
         "input": "outdoor_input",
         "color": "transparent",
@@ -167,6 +174,7 @@
       },
       "transport": {
         "title": "parameters.neighborhood.transport.title",
+        "help": "parameters.neighborhood.transport.help",
         "datatype": "",
         "input": "transport_input",
         "color": "transparent",
@@ -185,6 +193,7 @@
       },
       "walkway": {
         "title": "parameters.neighborhood.walkway.title",
+        "help": "parameters.neighborhood.walkway.help",
         "datatype": "",
         "input": "walkway_input",
         "color": "transparent",
@@ -201,6 +210,7 @@
       },
       "grocery": {
         "title": "parameters.neighborhood.grocery.title",
+        "help": "parameters.neighborhood.grocery.help",
         "datatype": "",
         "input": "grocery_input",
         "color": "transparent",
@@ -219,6 +229,7 @@
       },
       "noise": {
         "title": "parameters.neighborhood.noise.title",
+        "help": "parameters.neighborhood.noise.help",
         "datatype": "",
         "input": "noise_input",
         "color": "transparent",

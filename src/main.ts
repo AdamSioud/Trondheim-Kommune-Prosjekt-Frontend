@@ -26,11 +26,13 @@ import {
   faXmark,
   faSliders
 } from '@fortawesome/free-solid-svg-icons'
+import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import { useErrorStore } from '@/stores/error'
 import { CustomError } from '@/classes/CustomError'
 
 library.add(faHouse, faPerson, faChild, faPersonCane, faLocationDot, faLocationCrosshairs,
-  faPlus, faXmark, faCaretDown, faAnglesDown, faSquareCheck, faSquareXmark, faTrash, faLanguage, faArrowPointer, faSliders)
+  faPlus, faXmark, faCaretDown, faAnglesDown, faSquareCheck, faSquareXmark, faTrash, faLanguage,
+  faArrowPointer, faSliders, faCircleQuestion)
 
 const app = createApp(App)
 const pinia = createPinia()

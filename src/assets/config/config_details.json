@@ -7,17 +7,20 @@
         "gridlines": {
           "count": 5
         },
-        "format": "currency"
+        "format": "currency",
+        "ticks": [2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000]
       },
       "chartArea": {
-        "left": "25%",
+        "left": "30%",
         "top": "11%",
-        "width": "68%",
-        "height": "75%"
+        "width": "65%",
+        "height": "73%"
       },
       "colors": ["#054468"]
     },
+    "cardWidth": "350px",
     "propertyName": "averagePrice",
+    "propertyKey": "details.zone",
     "compareToGeneralData": true,
     "generalDataPropertyName": "averagePrice",
     "head": "details.average"
@@ -29,25 +32,27 @@
         "alignment": "center"
       },
       "chartArea": {
-        "left": "20%",
+        "left": "10%",
         "top": "5%",
-        "width": "60%",
+        "width": "90%",
         "height": "90%"
       },
       "colors": ["#054468", "#326588", "#5589aa", "#79aecc"]
     },
+    "cardWidth": "300px",
     "propertyName": "quantity",
     "head": "details.quantity"
   },
   "neighborhood": {
     "chartType": "ColumnChart",
     "chartOption": {
-      "legend": "none",
+      "legend": "top",
       "vAxis": {
         "gridlines": {
           "count": 5
         },
-        "format": "percent"
+        "format": "percent",
+        "ticks": [0, 0.2, 0.4, 0.6, 0.8, 1]
       },
       "chartArea": {
         "left": "10%",
@@ -57,6 +62,7 @@
       },
       "colors": ["#054468", "#79aecc"]
     },
+    "cardWidth": "600px",
     "propertyName": "portion",
     "head": ["details.men", "details.women"],
     "data": {

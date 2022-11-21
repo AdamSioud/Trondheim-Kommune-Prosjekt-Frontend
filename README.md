@@ -1,8 +1,21 @@
-# front-trondheim-kommune-kundeprosjekt
+# Trondheim Kommune Kundeprosjekt
 
-## Project setup
+## Presentation
+Trondheim Kommune has commissioned a group of students to create a prototype to find out the best place to live in Trondheim according to certain criteria
+
+This project is divided into two parts, this repository is the interface part (frontend).
+
+You can find the server part (backend) here: https://github.com/AdamSioud/Trondheim-Kommune-Kundeprosjekt
+
+## Installation (Windows and Mac)
+### Project setup
 ```
 npm install
+```
+
+### In ``.env.local``
+```
+VUE_APP_BASE_URL=http://localhost:5001/
 ```
 
 ### Compiles and hot-reloads for development
@@ -25,8 +38,16 @@ npm run test:unit
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Installation (Docker)
+### Build the image
+```
+docker build -f DockerFile -t front-trondheim .
+```
+
+### Run the image
+```
+docker run -p 8081:80 front-trondheim:latest 
+```
 
 ## Folder structure
 <pre>
@@ -84,7 +105,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ├── tests
     └── unit
         ├── components
-        │   └── example.spec.ts
         └── helpers
             └── utils.spec.ts
 ├── tsconfig.json

@@ -40,7 +40,8 @@ export default defineComponent({
       map: null as L.Map | null,
       geoJSONLayer: null as L.GeoJSON | null,
       isAddingPoint: false,
-      layerGroupDistance: null as L.LayerGroup | null
+      layerGroupDistance: null as L.LayerGroup | null,
+      legend: null as L.Control | null
     }
   },
   computed: {
@@ -62,9 +63,34 @@ export default defineComponent({
       if (newScore !== null && this.geoJSONLayer !== null) {
         this.geoJSONLayer.eachLayer((layer: L.Layer) => {
           const id = ((layer as L.LayerGroup).feature as Feature).id as number
-          layer.getTooltip()?.setContent(this.tooltipName + ': ' + newScore.zoneName[id] + '<br> ' + this.tooltipScore + ': ' + newScore.score[id])
+          layer.getTooltip()?.setContent(this.tooltipName + ': ' + newScore.zoneName[id] + '<br>' + this.tooltipScore + ': ' + newScore.score[id] + '%')
           ;(layer as L.GeoJSON).setStyle(this.getStyle(newScore.score[id]))
         })
+      }
+    },
+    '$i18n.locale' () {
+      if (this.geoJSONLayer !== null) {
+        this.geoJSONLayer.eachLayer((layer: L.Layer) => {
+          if (layer.getTooltip()) {
+            let newContent
+            const content = (layer.getTooltip() as L.Tooltip).getContent()
+            if (content && typeof content !== 'function') {
+              if (typeof content !== 'string') {
+                newContent = (content as HTMLElement).innerHTML
+              } else {
+                newContent = content as string
+              }
+
+              newContent = newContent.replace(/^[a-zA-Zåø ]+:/i, this.tooltipName + ':').replace(/<br>[a-zA-Zåø ]+:/i, '<br>' + this.tooltipScore + ':')
+              layer.getTooltip()?.setContent(newContent)
+            }
+          }
+        })
+      }
+      if (this.legend !== null) {
+        if (this.legend.getContainer()) {
+          (this.legend.getContainer() as HTMLElement).children[0].innerHTML = this.$t('map.legend.title')
+        }
       }
     }
   },
@@ -99,6 +125,7 @@ export default defineComponent({
       }
 
       legend.addTo(this.map as L.Map)
+      this.legend = legend
     },
     setMarkerControl (): void {
       const markerControl = new L.Control({ position: 'topright' })
@@ -163,9 +190,9 @@ export default defineComponent({
     },
     onEachFeatureHandler (feature: Feature<GeometryObject, FeatureProperties>, layer: L.Layer): void {
       // const popup = L.popup().setContent(feature.properties.zoneName)
-      layer.bindTooltip(feature.properties.zoneName, {
+      layer.bindTooltip(this.tooltipName + ': ' + feature.properties.zoneName + '<br>' + this.tooltipScore + ': ' + feature.properties.score + '%', {
         direction: 'top',
-        sticky: true, // TODO: 27/10/2022 Decide if it should be true or false
+        sticky: true,
         // permanent: true,
         className: 'display-tooltip'
       })
@@ -232,7 +259,7 @@ export default defineComponent({
     cursor: pointer;
   }
 
-  #the-map-add-marker:hover{
+  #the-map-add-marker:hover {
     background: $map-layer-control-background-hover;
   }
 }

@@ -3,6 +3,12 @@
     "title": "Parameters",
     "subtitle": "Map",
     "menu": "Menu",
+    "more": "More >>",
+    "advices": {
+      "parameters": "Select and weight the desired parameter(s) from 1 to 5 to find the right place for you",
+      "marker": "Drop a marker and find out the walking distance (5, 10 and 15 minutes)",
+      "details": "Use the mouse and click on the zone if you want to have more information"
+    },
     "actions": {
       "enableAll": "Enable all",
       "disableAll": "Disable all",
@@ -19,15 +25,16 @@
     },
     "price": {
       "title": "Price",
-      "small": "Small",
-      "medium": "Medium",
-      "large": "Large",
+      "help": "The \"price\" option is based on the average selling price in the zone. You can move the slider to adjust the price you want.",
+      "content": "Explanation of the \"price\" option",
       "sliderPrice": {
         "label": "Price in NOK"
       }
     },
     "age": {
       "title": "Age",
+      "help": "The \"age\" option is based on the age distribution in the zone. You can select age ranges and move the slider to adjust the percentage of the selected ranges.",
+      "content": "Explanation of the \"age\" option",
       "017": "0-17",
       "1834": "18-34",
       "3566": "35-66",
@@ -41,39 +48,82 @@
     },
     "neighborhood": {
       "title": "Neighborhood",
+      "help": "The \"neighborhood\" option is based on the satisfaction of the people in the zone.",
+      "content": "Explanation of the \"neighborhood\" option",
       "wellbeing": {
-        "title": "Well being"
+        "title": "Well-being",
+        "help": "The well-being of the neighborhood",
+        "content": "Explanation of the \"well-being\" option"
       },
       "safety": {
-        "title": "Safety"
+        "title": "Safety",
+        "help": "Is the neighborhood safe?",
+        "content": "Explanation of the \"safety\" option"
       },
       "culture": {
-        "title": "Culture"
+        "title": "Culture",
+        "help": "Is there good access to culture in the neighborhood?",
+        "content": "Explanation of the \"culture\" option"
       },
       "outdoor": {
-        "title": "Outdoor"
+        "title": "Outdoor",
+        "help": "Is nature easily accessible? Is there enough outdoor space?",
+        "content": "Explanation of the \"outdoor\" option"
       },
       "transport": {
-        "title": "Transport"
+        "title": "Transport",
+        "help": "Is there good access to public transport?",
+        "content": "Explanation of the \"transport\" option"
       },
       "walkway": {
-        "title": "Walkway"
+        "title": "Walkway",
+        "help": "Are there enough sidewalks and bike paths?",
+        "content": "Explanation of the \"walkway\" option"
       },
       "grocery": {
-        "title": "Grocery"
+        "title": "Grocery",
+        "help": "Is there enough access to grocery stores",
+        "content": "Explanation of the \"grocery\" option"
       },
       "noise": {
-        "title": "Noises"
+        "title": "Noises",
+        "help": "Is the neighborhood quiet?",
+        "content": "Explanation of the \"noise\" option"
       }
     }
   },
   "map": {
     "tooltip": {
       "name": "Name",
-      "score": "Score"
+      "score": "Match rate"
     },
     "legend": {
       "title": "Match rate"
+    }
+  },
+  "details": {
+    "average": "Average",
+    "quantity": "Quantity",
+    "men": "Men",
+    "women": "Women",
+    "zone": "Zone",
+    "generalData": "Trondheim",
+    "age": {
+      "title": "@:parameters.age.title"
+    },
+    "price": {
+      "title": "@:parameters.price.title"
+    },
+    "neighborhood": {
+      "title": "@:parameters.neighborhood.title",
+      "wellbeing": "@:parameters.neighborhood.wellbeing.title",
+      "safety": "@:parameters.neighborhood.safety.title",
+      "culture": "@:parameters.neighborhood.culture.title",
+      "outdoor": "@:parameters.neighborhood.outdoor.title",
+      "transport":"@:parameters.neighborhood.transport.title",
+      "walkway": "@:parameters.neighborhood.walkway.title",
+      "grocery": "@:parameters.neighborhood.grocery.title",
+      "noise": "@:parameters.neighborhood.noise.title"
     }
   },
   "error": {
@@ -94,28 +144,12 @@
     "notFound": "Not found",
     "home": "Go to home"
   },
-  "details": {
-    "average": "Average",
-    "quantity": "Quantity",
-    "men": "Men",
-    "women": "Women",
-    "generalData": "Trondheim",
-    "age": {
-      "title": "@:parameters.age.title"
-    },
-    "price": {
-      "title": "@:parameters.price.title"
-    },
-    "neighborhood": {
-      "title": "@:parameters.neighborhood.title",
-      "wellbeing": "@:parameters.neighborhood.wellbeing.title",
-      "safety": "@:parameters.neighborhood.safety.title",
-      "culture": "@:parameters.neighborhood.culture.title",
-      "outdoor": "@:parameters.neighborhood.outdoor.title",
-      "transport":"@:parameters.neighborhood.transport.title",
-      "walkway": "@:parameters.neighborhood.walkway.title",
-      "grocery": "@:parameters.neighborhood.grocery.title",
-      "noise": "@:parameters.neighborhood.noise.title"
-    }
+  "languages": {
+    "en": "English",
+    "nb": "Norwegian"
+  },
+  "about": {
+    "title": "How does the app work?",
+    "return": "Return to the map >>"
   }
 }

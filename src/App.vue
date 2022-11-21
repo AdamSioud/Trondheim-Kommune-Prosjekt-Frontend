@@ -8,10 +8,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import AppModal from '@/components/AppModal.vue'
+import { getCookie } from '@/helpers/cookiesUtils'
 
 export default defineComponent({
   name: 'App',
-  components: { AppModal }
+  components: { AppModal },
+  mounted () {
+    const lang = getCookie('language')
+    if (lang && this.$i18n.availableLocales.includes(lang)) this.$i18n.locale = lang
+  }
 })
 </script>
 

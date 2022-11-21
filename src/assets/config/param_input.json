@@ -1,13 +1,13 @@
 {
   "price_input": {
-    "budget": 1200000,
+    "budget": 2200000,
     "weight": 4
   },
   "age_input": {
     "selected": [
       "0-17"
     ],
-    "percent": 40,
+    "percent": 20,
     "weight": 4
   },
   "environment": {

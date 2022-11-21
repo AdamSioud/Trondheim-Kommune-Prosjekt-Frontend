@@ -7,7 +7,7 @@
       <div v-if="isOpen" id="languages">
         <div v-for="(lang, i) in this.$i18n.availableLocales" :key="`Lang${i}`" :class="{selected:lang === $i18n.locale }"
              @click="changeLanguage(lang)">
-          {{ lang }}
+          {{ $t('languages.' + lang) }}
         </div>
       </div>
     </Transition>
@@ -16,6 +16,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { setCookie } from '@/helpers/cookiesUtils'
 
 export default defineComponent({
   name: 'AppLocaleChanger',
@@ -32,6 +33,8 @@ export default defineComponent({
     },
     changeLanguage (lang: string) {
       this.$i18n.locale = lang
+      // 31536000000 = 1 year
+      setCookie('language', lang, { expires: 31536000000 })
       this.isOpen = false
     }
   }
@@ -61,10 +64,9 @@ export default defineComponent({
 #languages {
   background-color: white;
   color: black;
-  border-radius: 15px;
   position: absolute;
-  transform: translateX(-15%);
   overflow: hidden;
+  border-radius: 3px 10px 10px 10px;
 }
 
 #languages > div {

@@ -5,12 +5,6 @@ interface Element {
   items?: Element[] | undefined
 }
 
-interface Checkbox extends Element {
-  title?: string,
-  picture?: string,
-  size?: string
-}
-
 export interface Menu {
   title?: string | undefined,
   help?: string | undefined,
@@ -23,11 +17,6 @@ export interface Menu {
 
 export interface ConfigParameters {
   [key: string]: Menu
-}
-
-export interface Point {
-  label?: string,
-  point?: number[]
 }
 
 export interface FeatureProperties {

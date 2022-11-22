@@ -98,7 +98,6 @@ In [``/src/type.ts``](/src/type.ts) we can find the type `ConfigDetails` which d
 ## Folder structure
 
 <pre>
-
 .
 ├── README.md
 ├── babel.config.js
@@ -114,17 +113,16 @@ In [``/src/type.ts``](/src/type.ts) we can find the type `ConfigDetails` which d
     │   ├── logo.png
     │   ├── param_input.json
     │   └── stylesheets
+    │       ├── _mixins.scss
+    │       ├── _variables.scss
     │       └── reset.css
     ├── components
-    │   ├── AppAge.vue
     │   ├── AppCard.vue
     │   ├── AppCheckbox.vue
     │   ├── AppDiagram.vue
     │   ├── AppEnvironment.vue
     │   ├── AppMenuCollapse.vue
-    │   ├── AppPrice.vue
     │   ├── AppSlider.vue
-    │   ├── HelloI18n.vue
     │   ├── HelloWorld.vue
     │   ├── TheDetails.vue
     │   ├── TheMap.vue
@@ -143,19 +141,18 @@ In [``/src/type.ts``](/src/type.ts) we can find the type `ConfigDetails` which d
     ├── router
     │   └── index.ts
     ├── stores
-    │   └── error.ts
+    │   └── points.ts
     ├── type.ts
     └── views
         ├── AboutView.vue
         ├── HomeView.vue
         └── MapView.vue
 ├── tests
-    └── unit
-        ├── components
-        └── helpers
-            └── utils.spec.ts
+    ├── unit
+    ├── components
+    │   └── example.spec.ts
+    └── helpers
+        └── utils.spec.ts
 ├── tsconfig.json
 └── vue.config.js
-.
-
 </pre>

@@ -95,6 +95,9 @@ export default defineComponent({
     this.init()
   },
   methods: {
+    /**
+     * Initialize the parameters to be sent to the server according to what is in config_parameters.json
+     */
     init () {
       for (const menu in this.configParameters) {
         this.initResultParamInput(this.configParameters[menu], this.resultParamInput[this.configParameters[menu].input as string])
@@ -104,6 +107,11 @@ export default defineComponent({
       }
       this.$emit('update:paramInput', this.resultParamInput)
     },
+    /**
+     * Initialize a menu based on config (cookie)
+     * @param menu The menu to initialize
+     * @param config The config object (probably get from cookie)
+     */
     preInitConfigParameters (menu: Menu, config: Menu) {
       menu.enabled = config.enabled
       menu.visible = config.visible
@@ -113,6 +121,10 @@ export default defineComponent({
         }
       }
     },
+    /**
+     * Set default values for each Menu if necessary
+     * @param menu The menu to set default values
+     */
     initConfigParameters (menu: Menu) {
       if (menu.title === undefined) menu.title = 'parameters.menu'
       if (menu.enabled === undefined) menu.enabled = true
@@ -124,6 +136,11 @@ export default defineComponent({
         }
       }
     },
+    /**
+     * Initialize the parameters to be sent to the server
+     * @param menu
+     * @param input
+     */
     initResultParamInput (menu: Menu, input: any) {
       if (!Array.isArray(menu.elements)) {
         for (const subMenuKey in menu.elements) {
@@ -135,6 +152,9 @@ export default defineComponent({
         }
       }
     },
+    /**
+     * Resets the parameters
+     */
     reset () {
       this.configParameters = JSON.parse(JSON.stringify(configParameters))
       for (const menu in this.configParameters) {
@@ -145,15 +165,26 @@ export default defineComponent({
       this.resultParamInput = JSON.parse(JSON.stringify(paramInput))
       this.init()
     },
+    /**
+     * Toggle all the menus (collapse/extend)
+     */
     toggleVisibleAll () {
       this.setVisibleAll(!this.collapseAll)
     },
+    /**
+     * Set visible on all menus (collapse/extend)
+     * @param newValue Collapse or not
+     */
     setVisibleAll (newValue: boolean) {
       this.collapseAll = newValue
       for (const menuKey in this.configParameters) {
         this.changeMenuVisible(this.configParameters[menuKey])
       }
     },
+    /**
+     * Change the visible for a menu according to ``this.collapseAll``
+     * @param menu The menu to change
+     */
     changeMenuVisible (menu: Menu) {
       menu.visible = this.collapseAll
       if (!Array.isArray(menu.elements)) {
@@ -162,6 +193,9 @@ export default defineComponent({
         }
       }
     },
+    /**
+     * Toggle all the menus (enable/disable)
+     */
     toggleEnableAll () {
       this.enableAll = !this.enableAll
       for (const menuKey in this.configParameters) {
@@ -169,6 +203,10 @@ export default defineComponent({
       }
       if (!this.enableAll) this.setVisibleAll(false)
     },
+    /**
+     * Change the enabled for a menu according to ``this.enableAll``
+     * @param menu The menu to change
+     */
     changeMenuEnabled (menu: Menu) {
       menu.enabled = this.enableAll
       if (!Array.isArray(menu.elements)) {
@@ -177,6 +215,12 @@ export default defineComponent({
         }
       }
     },
+    /**
+     * Set "enabled" to a menu and update the JSON object of parameters to send to the server
+     * @param menuKeys Menu keys to browse the JSON and get the right menu to change
+     * @param menuInputs The key(s) of the menu inputs to get the basic input in param_input.json and change it
+     * @param enabled The new value in the menu
+     */
     setEnabled (menuKeys: string[], menuInputs: string[], enabled: boolean) {
       if (menuKeys.length !== 0) {
         let menu = this.configParameters[menuKeys[0]]
@@ -192,6 +236,12 @@ export default defineComponent({
         this.update(menuInputs, inputToAdd)
       }
     },
+    /**
+     * Changes a value for the JSON object of parameters to send to the server
+     * @param menuInputs The key(s) of the menu inputs to get the basic input in param_input.json and change it
+     * @param input The name to the input to change
+     * @param value The new value to set to the input
+     */
     changeValue (menuInputs: string[], input: string, value: unknown) {
       if (menuInputs.length !== 0) {
         const menuInput = menuInputs.reduce((a, b) => a[b] as JSONObject, this.internalParamInput)
@@ -199,6 +249,12 @@ export default defineComponent({
         this.update(menuInputs, menuInput)
       }
     },
+    /**
+     * Update the JSON object of parameters to send to the server
+     * Set the cookies and send an event to the parent
+     * @param menuInputs The key(s) of the menu inputs to change
+     * @param value The new value
+     */
     update (menuInputs: string[], value: JSONValue | null) {
       let menu = this.resultParamInput
       let i = 0
@@ -214,6 +270,9 @@ export default defineComponent({
       setCookie('configuration', this.createConfigurationCookie())
       this.$emit('update:paramInput', JSON.parse(JSON.stringify(this.resultParamInput)))
     },
+    /**
+     * Create the string to be registered in cookie for this.configParameters
+     */
     createConfigurationCookie (): string {
       let configurationCookie = '{'
       for (const menu in this.configParameters) {
@@ -223,6 +282,10 @@ export default defineComponent({
       configurationCookie += '}'
       return configurationCookie
     },
+    /**
+     * Create the string to be registered in cookie for a menu
+     * @param menu The menu to store in cookie
+     */
     createConfigurationMenuCookie (menu: Menu): string {
       let configurationCookie = '{"enabled":' + menu.enabled + ','
       configurationCookie += '"visible":' + menu.visible

@@ -18,7 +18,7 @@ npm install
 ```
 
 ### In ``.env.local``
-
+This should be set before build the docker app or run serve
 ```
 VUE_APP_BASE_URL=http://localhost:5001/
 ```
@@ -93,6 +93,15 @@ In this file, we can find the configuration to manage the details interface.
 It is here that we will define how to take into account the results of the server and how to display the diagrams
 
 In [``/src/type.ts``](/src/type.ts) we can find the type `ConfigDetails` which describes the structure of the file
+</details>
+
+<details>
+<summary><code>convertersValueParameters.ts</code></summary>
+
+This file is located [``/src/helpers/convertersValueParameters.ts``](/src/helpers/convertersValueParameters.ts)
+
+In this file you can create converters to display a value in a certain format
+The converters functions take one argument which is the value and should return a string
 </details>
 
 ## Folder structure

@@ -6,7 +6,7 @@
     "more": "Mer >>",
     "advices": {
       "parameters": "Velg og prioriter ønsket parameter/ere fra 1 - 5 for å finne stedet som passer deg",
-      "marker": "Drop en pin, og sett ønsket radius, for gangavstand",
+      "marker": "Dropp en pin, og sett ønsket radius, for gangavstand",
       "details": "Bruk pilen og dra i punktene dersom du ønsker å justere området ytterligere"
     },
     "actions": {

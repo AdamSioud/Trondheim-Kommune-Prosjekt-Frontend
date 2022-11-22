@@ -137,33 +137,64 @@ export default defineComponent({
     }
   },
   methods: {
+    /**
+     * For the animation
+     * @param el the element to animate
+     */
     onBeforeLeave (el: HTMLElement) {
       el.style.height = el.scrollHeight + 'px'
     },
+    /**
+     * For the animation
+     * @param el the element to animate
+     */
     onLeave (el: HTMLElement) {
       el.style.height = '0'
     },
+    /**
+     * For the animation
+     * @param el the element to animate
+     */
     onEnter (el: HTMLElement) {
       el.style.height = el.scrollHeight + 'px'
     },
+    /**
+     * Handler to enable/disable a menu
+     * @param newValue The new value for enabled
+     */
     setEnabled (newValue: boolean) {
       this.internalEnabled = newValue
       this.$emit('changeEnabled', this.internalEnabled)
       this.$emit('update:modelValue', this.internalEnabled)
     },
+    /**
+     * Toggle enabled and visible
+     */
     toggleEnabled () {
       this.setEnabled(!this.internalEnabled)
       this.setVisible(this.internalEnabled)
     },
+    /**
+     * Set collapse/extend for a menu
+     * @param newValue The new value for ``visible``
+     */
     setVisible (newValue: boolean) {
       this.internalVisible = newValue
       this.$emit('changeVisible', this.internalVisible)
       this.$emit('update:visible', this.internalVisible)
     },
+    /**
+     * Toggle visible
+     */
     toggleVisible () {
       this.setVisible(!this.internalVisible)
     },
     manageArray: manageArray,
+    /**
+     * Call a function in `/src/helpers/convertersValueParameters.ts`
+     * @param functionName The function to call
+     * @param value The value to change
+     */
     callConverterFunction (functionName: string, value: never) {
       const fn = Converters[functionName as keyof typeof Converters]
       try {
@@ -173,10 +204,22 @@ export default defineComponent({
         return value
       }
     },
+    /**
+     * Sends an event to the parent to indicate the change in value
+     * @param menuInputs The key(s) of the menu inputs to get the basic input in param_input.json and change it
+     * @param input The name to the input to change
+     * @param value The new value to set to the input
+     */
     emitChangeValue (menuInputs: string[], input: string, value: unknown) {
       menuInputs.unshift(this.input)
       this.$emit('changeValue', menuInputs, input, value)
     },
+    /**
+     * Sends an event to the parent to indicate the change in ``enabled``
+     * @param menuKeys Menu keys to browse the JSON and get the right menu to change
+     * @param menuInputs The key(s) of the menu inputs to get the basic input in param_input.json and change it
+     * @param enabled The new value in the menu
+     */
     emitSetEnabled (menuKeys: string[], menuInputs: string[], enabled: boolean) {
       if (!this.internalEnabled) return
       menuKeys.unshift(this.menuKey)

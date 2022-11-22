@@ -107,6 +107,9 @@ export default defineComponent({
     ;(this.map as L.Map).on('click', this.clickOnMapHandler)
   },
   methods: {
+    /**
+     * Set the legend of the map
+     */
     setLegend () {
       const legend = new L.Control({ position: 'bottomright' })
 
@@ -127,6 +130,9 @@ export default defineComponent({
       legend.addTo(this.map as L.Map)
       this.legend = legend
     },
+    /**
+     * Set the button which allows to add the marker
+     */
     setMarkerControl (): void {
       const markerControl = new L.Control({ position: 'topright' })
 
@@ -136,6 +142,10 @@ export default defineComponent({
 
       markerControl.addTo(this.map as L.Map)
     },
+    /**
+     * Handler for when the user click on the map
+     * @param event The event fired
+     */
     clickOnMapHandler (event: L.LeafletMouseEvent): void {
       if (this.isAddingPoint) {
         const svgIcon = L.divIcon({
@@ -171,6 +181,9 @@ export default defineComponent({
         this.isAddingPoint = false
       }
     },
+    /**
+     * Update the GeoJSONLayer to add it on the map
+     */
     updateGeoJSONLayer (): void {
       if (this.map != null) {
         if (this.geoJSONLayer !== null) {
@@ -185,9 +198,18 @@ export default defineComponent({
         }
       }
     },
+    /**
+     * Style for each zone in GeoJSONLayer
+     * @param feature The feature to apply the style
+     */
     styleHandler (feature: Feature<GeometryObject, FeatureProperties> | undefined): L.PathOptions {
       return this.getStyle(feature?.properties.score)
     },
+    /**
+     * Handler for each zone in GeoJSONLayer
+     * @param feature The feature to apply the handler
+     * @param layer The GeoJSONLayer
+     */
     onEachFeatureHandler (feature: Feature<GeometryObject, FeatureProperties>, layer: L.Layer): void {
       // const popup = L.popup().setContent(feature.properties.zoneName)
       layer.bindTooltip(this.tooltipName + ': ' + feature.properties.zoneName + '<br>' + this.tooltipScore + ': ' + feature.properties.score + '%', {
@@ -202,6 +224,10 @@ export default defineComponent({
         }
       })
     },
+    /**
+     * Return a style according to the score
+     * @param score The score of a zone
+     */
     getStyle (score: number | undefined): L.PathOptions {
       const color = this.getColorAttribute(score)
       return {
@@ -213,6 +239,10 @@ export default defineComponent({
         className: 'zone-class'
       }
     },
+    /**
+     * Return a color according to the score
+     * @param score THe score of a zone
+     */
     getColorAttribute (score: number | undefined): string {
       if (typeof score === 'undefined') score = 0
       return score < 20 ? '#ffffcc' :
@@ -220,10 +250,16 @@ export default defineComponent({
         score < 60 ? '#41b6c4' :
         score < 80 ? '#2c7fb8' : '#253494'
     },
+    /**
+     * Handler when the user wants to add the marker
+     */
     addMarker (): void {
       L.DomUtil.addClass((this.map as L.Map).getContainer(), 'marker-cursor-enabled')
       this.isAddingPoint = true
     },
+    /**
+     * Handler when the user removes the marker
+     */
     removeMarker (): void {
       this.layerGroupDistance?.removeFrom(this.map as L.Map)
       this.layerGroupDistance = null

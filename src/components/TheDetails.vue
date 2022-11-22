@@ -78,6 +78,10 @@ export default defineComponent({
     }
   },
   methods: {
+    /**
+     * Generate the header for the diagrams
+     * @param headConfig The configuration of the head
+     */
     generateHeader (headConfig: string | string[]): string[] {
       const head = ['data']
       if (Array.isArray(headConfig)) {
@@ -89,6 +93,10 @@ export default defineComponent({
       }
       return head
     },
+    /**
+     * Generate data for the diagrams
+     * @param configDetailsKey The key to get the data
+     */
     generateData (configDetailsKey: string): (string | number)[][] {
       const data: (string | number)[][] = []
       const dataConfig = this.configDetails[configDetailsKey].data
@@ -108,6 +116,10 @@ export default defineComponent({
       }
       return data
     },
+    /**
+     * Generate the data for the municipality
+     * @param configDetailsKey The key to get the general data
+     */
     generateGeneralData (configDetailsKey: string): (string | number)[][] {
       const data = []
       if (this.configDetails[configDetailsKey].compareToGeneralData && typeof this.configDetails[configDetailsKey].generalDataPropertyName !== 'undefined') {
@@ -119,11 +131,11 @@ export default defineComponent({
       }
       return data
     },
+    /**
+     * Handler to close the details part
+     */
     closeDetails () {
       this.display = false
-    },
-    chartReady () {
-      this.counterOfChartsNotReady--
     }
   }
 })

@@ -98,10 +98,11 @@ In [``/src/type.ts``](/src/type.ts) we can find the type `ConfigDetails` which d
 ## Folder structure
 
 <pre>
-.
+├── DockerFile
 ├── README.md
 ├── babel.config.js
 ├── jest.config.js
+├── nginx.conf
 ├── node_modules
 ├── package-lock.json
 ├── package.json
@@ -109,29 +110,31 @@ In [``/src/type.ts``](/src/type.ts) we can find the type `ConfigDetails` which d
 ├── src
     ├── App.vue
     ├── assets
-    │   ├── configParameters.json
-    │   ├── logo.png
-    │   ├── param_input.json
+    │   ├── config
+    │   │   ├── config_details.json
+    │   │   ├── config_parameters.json
+    │   │   └── param_input.json
     │   └── stylesheets
     │       ├── _mixins.scss
     │       ├── _variables.scss
     │       └── reset.css
+    ├── classes
+    │   └── CustomError.ts
     ├── components
     │   ├── AppCard.vue
     │   ├── AppCheckbox.vue
-    │   ├── AppDiagram.vue
-    │   ├── AppEnvironment.vue
+    │   ├── AppLocaleChanger.vue
     │   ├── AppMenuCollapse.vue
+    │   ├── AppModal.vue
     │   ├── AppSlider.vue
-    │   ├── HelloWorld.vue
     │   ├── TheDetails.vue
     │   ├── TheMap.vue
     │   ├── TheParameters.vue
-    │   ├── TheParametersDistanceInput.vue
-    │   ├── TheParametersDistanceInputPoint.vue
     │   └── TheParametersMenuCollapse.vue
     ├── helpers
+    │   ├── convertersParameters.ts
     │   ├── convertersValueParameters.ts
+    │   ├── cookiesUtils.ts
     │   └── utils.ts
     ├── i18n.ts
     ├── locales
@@ -141,18 +144,18 @@ In [``/src/type.ts``](/src/type.ts) we can find the type `ConfigDetails` which d
     ├── router
     │   └── index.ts
     ├── stores
-    │   └── points.ts
+    │   └── error.ts
     ├── type.ts
     └── views
         ├── AboutView.vue
-        ├── HomeView.vue
+        ├── Error404View.vue
         └── MapView.vue
 ├── tests
-    ├── unit
-    ├── components
-    │   └── example.spec.ts
-    └── helpers
-        └── utils.spec.ts
+    └── unit
+        └── helpers
+            ├── converters.spec.ts
+            ├── cookiesUtils.spec.ts
+            └── utils.spec.ts
 ├── tsconfig.json
 └── vue.config.js
 </pre>
